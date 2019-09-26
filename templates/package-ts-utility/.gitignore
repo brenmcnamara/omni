@@ -1,8 +1,9 @@
 # Mac
 .DS_Store
 
-# Node
-node_modules/
+# Npm
+
+# Yarn
 
 # Typescript
-dist/
+dist

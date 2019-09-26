@@ -1,0 +1,16 @@
+{
+   "name": "@{{ projectName }}/{{ packageName }}",
+   "version": "1.0.0",
+   "description": "{{ packageDescription }}",
+   "main": "index.js",
+   "author": "{{ author }}",
+   "scripts": {
+
+   },
+   "dependencies": {
+
+   },
+   "devDependencies": {
+
+   }
+}
