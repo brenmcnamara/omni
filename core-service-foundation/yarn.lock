@@ -698,6 +698,15 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@nine-point/core-foundation@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@nine-point/core-foundation/-/core-foundation-1.0.0.tgz#73b13a236d621444951f885ff838919909287d66"
+  integrity sha512-nFZ9EfbrZEIuMGmiipK/D9qaZ9vKHrBTB/pOWYwdRt2B1s9gsTGGwp8UNKF7ujNvyqccyj9fT+p80LKfAcwDhw==
+  dependencies:
+    "@types/node" "^12.7.8"
+    fp-ts "^2.0.5"
+    io-ts "^2.0.1"
+
 "@types/jest-diff@*":
   version "20.0.1"
   resolved "https://registry.yarnpkg.com/@types/jest-diff/-/jest-diff-20.0.1.tgz#35cc15b9c4f30a18ef21852e255fdb02f6d59b89"
