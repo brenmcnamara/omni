@@ -3,7 +3,7 @@ import * as t from 'io-ts';
 import { either } from 'fp-ts/lib/Either';
 import { Ref } from './Ref';
 
-export interface ModelStub<TType extends string> {
+export interface ModelRaw<TType extends string> {
   createdAt: Date;
   id: string;
   isDeleted: boolean;
@@ -23,7 +23,7 @@ export const tDate = new t.Type<Date, string, unknown>(
   a => a.toISOString(),
 );
 
-export function tModelStub<TType extends string>(type: TType) {
+export function tModelRaw<TType extends string>(type: TType) {
   return t.type({
     createdAt: tDate,
     id: t.string,
@@ -34,10 +34,10 @@ export function tModelStub<TType extends string>(type: TType) {
   });
 }
 
-export class Model<TType extends string, TRaw extends ModelStub<TType>> {
+export class Model<TType extends string, TRaw extends ModelRaw<TType>> {
   private raw: TRaw;
 
-  static t<TType extends string, TRaw extends ModelStub<TType>>(): t.Type<
+  static t<TType extends string, TRaw extends ModelRaw<TType>>(): t.Type<
     TRaw,
     Object,
     unknown

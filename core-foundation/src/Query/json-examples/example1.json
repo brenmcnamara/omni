@@ -1,0 +1,24 @@
+{
+  "type": "Query",
+  "queryType": "UserQuery",
+  "childNodes": [
+    {
+      "type": "QueryModifier",
+      "modifierType": "where",
+      "property": "firstName",
+      "operator": "equals",
+      "value": "Brendan"
+    },
+    {
+      "type": "QueryModifier",
+      "modifierType": "order-by",
+      "property": "id",
+      "direction": "ASCENDING"
+    },
+    {
+      "type": "QueryModifier",
+      "modifierType": "limit",
+      "count": 5
+    }
+  ]
+}

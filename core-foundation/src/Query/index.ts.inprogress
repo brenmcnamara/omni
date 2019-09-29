@@ -1,0 +1,269 @@
+import * as t from 'io-ts';
+
+import { Edge } from '../Edge';
+import { Model, ModelRaw } from '../Model';
+import { Ref } from '../Ref';
+
+// LEARNINGS:
+//   - SOME CONCEPT OF AN INTERFACE. FOR EXAMPLE, POSTABLE REPRESENTS MODELS OF THINGS THAT
+//     YOU CAN POST TO: PAGES, GROUPS, etc... LIKEABLE IS A SET OF MODELS THAT CAN BE LIKED:
+//     PHOTOS, POSTS, etc...
+//   - NEED TO GENERATE THE ORDERING RULES OF INDIVIDUAL PROPERTIES: DATES, BOOLEANS, etc...
+//     WOULD ALSO LIKE TO DEFINE CUSTOM ORDERING RULES ON SOME PROPERTIES.
+//   - USING AN ABSTRACT TYPE TO REPRESENT A REFERENCE OF ONE OR MORE OBJECTS. THE UNDERLYING
+//     DATA TYPE CAN BE AN ACTUAL REFERENCE TO A MODEL, ANOTHER QUERY THAT RETURNS A SET OF
+//     MODELS, OR SOMETHING ELSE.
+//       - CAN USE THIS ABSTRACT TYPE ALSO TO GENERATE DECLARATIVE DATA STRUCTURES OF THE
+//         QUERIES. BASICALLY, WE CAN FORCE EXECUTE ALL THE QUERY FUNCTIONS WITH PLACEHOLDER
+//         REFERENCES TO SEE HOW THEY ARE BEING USED. THE RESULTING QUERY CAN THEN BE EVALUATED
+//         TO SOME DECLARATIVE DATA STRUCTURE REPRESENTING THE QUERY. THAT DATASTRUCTURE CAN BE
+//         USED LIKE ANY OTHER PIECE OF DATA.
+//    - MULTIPLE WAYS A QUERY CAN BE APPLIED:
+//      - SEND WITH HTTP REQUEST TO GET A RESPONSE
+//      - OPEN A SOCKET THAT CONTINUOUSLY SENDS DATA MATCHING THE QUERY: HOW WOULD THIS LOOK FOR
+//        ORDERED QUERIES. MAYBE INITIALLY, WE WOULD NOT SUPPORT ORDERED QUERIES FOR OPEN SOCKETS.
+//      - FILTER THE RESULTS WITHIN THE CLIENT.
+//      - APPLE QUERIES AS REACT HOOKS THAT ARE LISTENING FOR DATA CHANGES.
+//      - MAKE QUERIES WORK WITH RX STREAMS SO WE CAN HAVE SOME ADVANCED OPERATORS LIKE REPLAY AND
+//        DEBOUNCING.
+//    - CAN HAVE SMART COMPACTING OF QUERIES. FOR EXAMPLE, IF THERE IS A QUERY OPEN FOR ALL EVENTS
+//      CREATED BY A PARTICULAR USER AND ANOTHER QUERY OPEN FOR ALL EVENTS CREATED BY THAT USER BUT
+//      BETWEEN SOME DATES, WE COULD MAKE THE LATTER QUERY A SUBSCRIBER TO THE FORMER AND JUST FILTER
+//      THE RESULTS THAT QUERY COMES BACK WITH. WOULD NEED TO SIT DOWN AND OUTLINE THE PRECISE RULES
+//      THIS WOULD INVOLVE.
+//
+
+// QUESTIONS:
+//  - HOW CAN WE ENCAPSULATE THE DECISION MAKING OF A QUERY BEFORE ALL THE DATA IS FETCHED?
+//  - NEED TO SOMEHOW USE THE RESULTS OF A PREVIOUS QUERY BEFORE THE RESULTS COME IN. NEED
+//    SOMETHING LIKE A PLACEHOLDER.
+
+// NOTE: EDGE CASES THAT DON'T WORK WELL WITH ADD EXTENSIONS:
+//  - RECURSION
+//  - OTHER QUERIES IN THE SAME FILE THAT USE THE EXTENSION (AND NEED TYPING).
+//  - WANT THESE GENERATES AND CLAUSES TO BE COMPOSABLE. NOT SURE IF THIS IS THE BEST WAY.
+//    THE IDEAL WOULD BE THAT THESE WOULD BE STANDALONE.
+
+// ON THE ACTUAL MODIFIER CLAUSES OF THE QUERY. FOR EXAMPLE, A QUERY WITH AN ORDERED MODIFIER
+// WILL RETURN AN ORDERED COLLECTION.
+
+// GENERATORS:
+// EVERY QUERY HAS A SET OF GENERATORS. THESE GENERATORS ARE LIKE THE PROPERTIES OF THE
+// RESOLVED TYPE. FOR EXAMPLE, A USER QUERY RESOLVES TO A USER. A USER HAS PROPERTIES
+// FIRST NAME, LAST NAME, AND BIRTHDAY. WE CAN USE THESE PROPERTIES TO GENERATE NEW QUERIES.
+// "genFirstName" CALLED ON A USER WILL GENERATE A NEW QUERY FOR THE FIRST NAMES OF THE USERS.
+// BECAUSE THE firstName PROPERTY OF USER IS TYPE "STRING", THIS QUERY RESOLVES TO STRING.
+
+// QUERY GENERATORS:
+// A QUERY CAN GENERATE ANOTHER QUERY SUCH THAT THE RESOLVED TYPE OF A QUERY IS ANOTHER QUERY.
+// THIS IS ANALOGOUS TO HAVING A COLLECTION OF COLLECTIONS OR A LIST OF LISTS. NOTE THAT QUERIES
+// CAN BE ORDERED OR UNORDERED.
+
+// MODIFIERS:
+// A MODIFIER TAKES AN EXISTING QUERY AND ADDS CLAUSES TO IT THAT WOULD MODIFY THE OUTPUT OF THE QUERY.
+//  - "WHERE" MODIFIERS FILTER THE RESULT OF THE QUERY DOWN.
+//  - "ORDER_BY" MODIFIERS DEFINE AN ORDERING OF THE RESULT
+//  - "LIMIT" AND "OFFSET" MODIFIERS LIMIT THE NUMBER OF RESULTS.
+//    - QUESTION: DOES IT MAKE SENSE TO HAVE LIMITS ON NON-ORDERED COLLECTIONS?
+
+// QUERY WHERE OPERATORS:
+//  - DATE: BEFORE, AFTER, DURING
+//  - INT: GT, LT, GTE, LTE, EQ, NE
+//  - BOOLEAN: IS_TRUE, IS_FALSE
+//  - STRING: EQ, NE, STARTS_WITH, ENDS_WITH, CONTAINS, NOT_CONTAINS
+//  - SET: CONTAINS, NOT_CONTAINS
+//  - STRUCT: RECURSIVELY DEFINED OPERATORS OF THE OTHER TYPES
+//    - NEED TO SEPARATE THE TYPE FROM THE OPERATOR BECAUSE THE COMBINATION OF THE TWO CAN
+//      LEAD TO AN UNREASONABLE NUMBER OF OPERATIONS IF WE HAVE STRUCT OF STRUCT OF STRUCT.
+//  - INTERFACE:
+
+// QUERY HIGHER ORDER OPERATORS:
+// THESE ARE OPERATORS THAT WORK ON THE QUERIES THEMSELVES.
+//   NOTE: MAY JUST LOOK INTO HAVING RX STREAMS HERE. WE WOULD GET A LOT OF THESE FOR
+//         FREE.
+//
+// - union: UNION OF 2 QUERIES
+// - intersection: INTERSECTION OF 2 QUERIES
+// - difference: TAKES A QUERY AND SUBSTRACTS ELEMENTS FROM ANOTHER QUERY
+// - map:
+// - flatMap:
+// - flatten: TAKES NESTED QUERIES AND FLATTENS IT INTO A QUERY
+
+// EXTENSIBILITY:
+//   THE DOCS SHOULD BE EXTENSIBLE SUCH THAT:
+//     - YOU CAN ADD CUSTOM TYPES
+//     - YOU CAN ADD CUSTOM OPERATORS
+//       - SPECIFY THE TYPE THE OPERATOR EXISTS FOR
+//       - SPECIFY A MECHANISM TO SERIALIZE / UNSERIALIZE THE OPERATOR
+//       - SPECIFY SOME CODE TO EXECUTE THE MODIFIER
+
+// COMPOSIBILITY:
+//   YOU CAN CREATE AN OPERATION (LIKE A FUNCTION) THAT GENERATES A QUERY.
+//   YOU SHOULD BE ABLE TO REUSE THESE QUERIES TO GENERATE NEW QUERIES.
+
+// SERIALIZABLE:
+//   A QUERY NEEDS TO BE SERIALIZABLE. BECAUSE WE WILL NEED THE ABILITY TO PROVIDE
+//   PARAMS INTO A QUERY, WE WOULD NEED A WAY TO SERIALIZE THE TYPES OF THESE PARAMS
+//   AND INDICATE THEY ARE DYNAMIC VARIABLES.
+
+// GRAPHQL SUPPORT:
+//   THIS NEEDS TO WORK SEEMLESSLY WITH GRAPH QL. SHOULD BE ABLE TO GENERATE GRAPH QL SCHEMAS
+//   OR GENERATE QUERIES FROM GRAPH QL SCHEMAS.
+
+// RANDOM:
+//  - WOULD LIKE TO DEFINE A DATA TYPE FOR TIME INTERVAL. TIME INTERVALS COULD BE REPRESENTED
+//    BY SOME DISCREET UNITS, LIKE SECONDS. BUT IF WE WANT TO SUPPORT SOMETHING LIKE A TIME
+//    INTERVAL FOR A DAY OR A MONTH, THE LENGTH OF TIME THAT REPRESENTS IS HIGHLY CONTEXTUAL.
+//    ALSO, WONDERING HOW THIS WOULD WORK ACROSS CALENDARS.
+//  - PROPERTIES OF DATA:
+//    - CAN BE PERSISTED / CACHED / STORED
+//    - CAN BE THE INPUT OR OUTPUT OF CODE
+//  - PROPERTIES OF CODE:
+//    - CAN BE EXECUTED
+
+// TYPES
+
+interface QueryTypeBuilderOptions<TName extends string, TType, TOperators> {
+  name: TName;
+  operators: {
+    [name in keyof TOperators]: TOperators[name];
+  };
+  ordering?: QueryTypeOrderingBuilderOptions<TType>;
+}
+
+interface QueryTypeOperatorBuilderOptions<
+  TName extends string,
+  TInput,
+  TParams extends Array<any>
+> {
+  eval: (...params: TParams) => (input: TInput) => boolean;
+
+  name: TName;
+
+  tInput: t.Type<TInput>;
+
+  tParams: { [K in keyof TParams]: t.Type<TParams[K]> };
+}
+
+interface QueryTypeOrderingBuilderOptions<TType> {
+  eval: (val1: TType, val2: TType) => number;
+}
+
+class Query<TName extends string, TType, TOperators> {
+  private options: QueryTypeBuilderOptions<TName, TType, TOperators>;
+
+  static build<TName extends string, TType, TOperators>(
+    options: QueryTypeBuilderOptions<TName, TType, TOperators>,
+  ): Query<TName, TType, TOperators> {
+    return new Query(options);
+  }
+
+  constructor(options: QueryTypeBuilderOptions<TName, TType, TOperators>) {
+    this.options = options;
+  }
+
+  get name(): TName {
+    return this.options.name;
+  }
+}
+
+const qString = Query.build({
+  name: 'STRING',
+
+  operators: {
+    equals: {
+      eval: (param: string, param2: number) => (input: string) =>
+        param === input,
+
+      name: 'STRING.EQUALS',
+
+      tInput: t.string,
+
+      tParams: [t.string],
+    },
+  },
+});
+
+const qInt = Query.build({
+  name: 'INT',
+
+  operators: {
+    gt: {
+      eval: (param: number) => (input: number) => input > param,
+
+      name: 'INT.GREATER_THAN',
+
+      tInput: t.Int,
+
+      tParams: [t.Int],
+    },
+
+    gte: {
+      eval: (param: number) => (input: number) => input >= param,
+
+      name: 'INT.GREATER_THAN_OR_EQUAL_TO',
+
+      tInput: t.Int,
+
+      tParams: [t.Int],
+    },
+
+    lt: {
+      eval: (param: number) => (input: number) => input < param,
+
+      name: 'INT.LESS_THAN',
+
+      tInput: t.Int,
+
+      tParams: [t.Int],
+    },
+
+    lte: {
+      eval: (param: number) => (input: number) => input <= param,
+
+      name: 'INT.LESS_THAN_OR_EQUAL_TO',
+
+      tInput: t.Int,
+
+      tParams: [t.Int],
+    },
+  },
+
+  ordering: {
+    eval: (val1: number, val2: number) => val1 - val2,
+  },
+});
+
+// USER QUERY
+
+const qUser = Query.build({
+  genFirstName: qString,
+
+  genLastName: qString,
+
+  genFriends: qExecutable(qUser => () => {
+    // Maps the resolved type from user to friend state.
+    const friendsState1 = Schema()
+      .genFriendsState()
+      .where(_ => _.From.equals(qUser));
+
+    const friendsState2 = Schema()
+      .genFriendsState()
+      .where(_ => _.To.equals(qUser));
+
+    // Map the resolved type from friend state back to user, following the pointer
+    // along the edge.
+    const friends1 = friendsState1.genTo();
+    const friends2 = friendsState2.genFrom();
+
+    return qUnion(friends1, friends2);
+  }),
+});
+
+// Query posts that are between any 2 friends of the session user.
+
+// Query representing pages the session user is following or one of his top 10 closest friends is following.
+
+// Query representing groups that the session user has posted to within the last 10 days
+
+// Query representing all the things the user liked in the last 10 days.

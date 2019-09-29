@@ -1,0 +1,42 @@
+{
+  "type": "Function",
+  "params": [
+    {
+      "type": "query",
+      "paramType": "UserQuery"
+    }
+  ],
+  "childNodes": [
+    {
+      "type": "Query",
+      "queryType": "UserQuery",
+      "childNodes": [
+        {
+          "type": "Let",
+          "symbol": "friendsState",
+          "symbolType": "FriendsStateQuery",
+          "childNodes": [
+            {
+              "type": "Query",
+              "queryType": "FriendsStateQuery",
+              "childNodes": [
+                {
+                  "type": "QueryModifier",
+                  "modifierType": "where",
+                  "property": "from",
+                  "operator": "equals",
+                  "value": "$query"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "QueryGenerator",
+          "property": "to",
+          "value": "$friendsState"
+        }
+      ]
+    }
+  ]
+}
