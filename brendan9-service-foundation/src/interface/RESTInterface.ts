@@ -1,7 +1,7 @@
 import { RESTEndpoint } from './RESTEndpoint';
 
 export interface RESTInterfaceOptions {
-  endpoints: RESTEndpoint<any>[];
+  endpoints: RESTEndpoint<any, any>[];
 }
 
 export class RESTInterface {

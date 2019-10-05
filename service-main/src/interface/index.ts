@@ -1,17 +1,17 @@
 import * as t from 'io-ts';
 
 import {
-  RESTEndpoints,
+  RESTGETEndpoint,
   RESTInterface,
-} from '@nine-point/core-service-foundation/interface';
+} from '@brendan9/service-foundation/interface';
 
 export default RESTInterface.build({
-  endpoints: [
-    RESTEndpoints.buildGET({
+  endpoints: {
+    root: RESTGETEndpoint.build({
       pattern: '/',
       tResponse: t.type({
         hello: t.literal('world'),
       }),
     }),
-  ],
+  },
 });
