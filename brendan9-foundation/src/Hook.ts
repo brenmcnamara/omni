@@ -1,13 +1,11 @@
-export interface Hook<TParam, TReturn> {
-  new (options: {
-    onNext: (value: TParam) => Promise<TReturn>;
-    onCompletion: () => Promise<void>;
-    onError: (error: Error) => Promise<void>;
-  }): Hook<TParam, TReturn>;
+import { Subscription } from './Subscription';
+
+export interface HookOptions<TParam, TReturn> {
+  onError: (error: Error) => Promise<TReturn>;
+  onCompletion: () => Promise<void>;
+  onNext: (params: TParam) => Promise<void>;
 }
 
-export interface PausableHook<TParam, TReturn> extends Hook<TParam, TReturn> {
-  pause: () => void;
-
-  run: () => void;
+export interface Hook<TParam, TReturn> {
+  register: (options: HookOptions<TParam, TReturn>) => Subscription;
 }
