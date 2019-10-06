@@ -18,7 +18,9 @@ export class RESTGETEndpointHook<TResponsePayload>
     this.options = options;
   }
 
-  public register(options: HookOptions<RESTGETRequest>): Subscription {
+  public register(
+    options: HookOptions<RESTGETRequest, RESTResponse<TResponsePayload>>,
+  ): Subscription {
     if (this.hookOptions) {
       throw Error('Cannot register more than once for an endpoint hook');
     }

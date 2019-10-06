@@ -27,7 +27,7 @@
     "typescript": "^3.6.3"
   },
   "dependencies": {
-    "@brendan9/foundation": "../brendan9-foundation/",
+    "@brendan9/foundation": "../brendan9-foundation",
     "@types/node": "^12.7.8",
     "fp-ts": "^2.0.5",
     "io-ts": "^2.0.1"

@@ -698,7 +698,15 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@brendan9/foundation@../brendan9-foundation/":
+"@brendan9/foundation@../brendan9-foundation":
+  version "1.0.0"
+  dependencies:
+    "@brendan9/service-foundation" "../brendan9-service-foundation/"
+    "@types/node" "^12.7.8"
+    fp-ts "^2.0.5"
+    io-ts "^2.0.1"
+
+"@brendan9/service-foundation@../brendan9-service-foundation/":
   version "1.0.0"
   dependencies:
     "@types/node" "^12.7.8"

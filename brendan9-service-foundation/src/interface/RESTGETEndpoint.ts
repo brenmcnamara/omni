@@ -14,7 +14,7 @@ interface RESTGETEndpointOptions<TPattern extends string, TResponse> {
 export class RESTGETEndpoint<TResponsePayload>
   implements RESTEndpoint<RESTGETRequest, RESTResponse<TResponsePayload>> {
   private hook: RESTGETEndpointHook<TResponsePayload> | null = null;
-  
+
   private options: RESTGETEndpointOptions<any, any>;
 
   constructor(options: RESTGETEndpointOptions<any, any>) {
@@ -37,12 +37,12 @@ export class RESTGETEndpoint<TResponsePayload>
 
   public createHook(
     cb: (request: RESTGETRequest) => Promise<RESTResponse<TResponsePayload>>,
-  ): Hook<RESTGETRequest, RESTResponse> {
+  ): Hook<RESTGETRequest, RESTResponse<TResponsePayload>> {
     if (this.hook) {
       throw Error('Cannot create more than one hook per GET');
     }
 
-    const hook = new RESTGETEndpointHook({ tResponse: this.options.tResponse });
+    const hook = new RESTGETEndpointHook<TResponsePayload>({});
 
     const onNext = cb;
     const onCompletion = async () => {};
