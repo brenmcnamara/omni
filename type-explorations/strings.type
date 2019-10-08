@@ -1,0 +1,21 @@
+
+# String typing is much richer than in most languages. A string represents
+# a sequential list of characters. The 'String' type defines a generic sequence
+# of characters and is the most general from of a string.
+
+# The most strict form of string type is a string literal, which is a string
+# that perfectly matches a pre-defined sequence of characters.
+# The type 'hello' represents a string that perfectly matches the string of
+# characters 'hello'.
+
+# All modern languages support the generic string type, and some languages
+# support the string literal type (or a type which is a union of string
+# literals). However, we can add more nuanced string typing using string
+# lists.
+
+# Regex constraints: A string can be constrained by a regex. Under the hood,
+# every string constraint is a regex constraint.
+# TODO: Is there a reasonable algorithm to determine if a regex constraint is
+# a subset of another constraint.
+
+

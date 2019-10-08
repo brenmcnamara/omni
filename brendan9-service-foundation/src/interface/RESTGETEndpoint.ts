@@ -6,18 +6,18 @@ import { RESTGETEndpointHook } from './RESTGETEndpointHook';
 import { RESTGETRequest } from './RESTGETRequest';
 import { RESTResponse } from './RESTResponse';
 
-interface RESTGETEndpointOptions<TPattern extends string, TResponse> {
+interface RESTGETEndpointOptions<TPattern extends string, TResponsePayload> {
   pattern: TPattern;
-  tResponse: t.Type<TResponse>;
+  tResponse: t.Type<TResponsePayload>;
 }
 
 export class RESTGETEndpoint<TResponsePayload>
   implements RESTEndpoint<RESTGETRequest, RESTResponse<TResponsePayload>> {
   private hook: RESTGETEndpointHook<TResponsePayload> | null = null;
 
-  private options: RESTGETEndpointOptions<any, any>;
+  private options: RESTGETEndpointOptions<any, TResponsePayload>;
 
-  constructor(options: RESTGETEndpointOptions<any, any>) {
+  constructor(options: RESTGETEndpointOptions<any, TResponsePayload>) {
     this.options = options;
   }
 

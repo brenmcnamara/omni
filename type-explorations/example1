@@ -1,0 +1,41 @@
+# Basic rules of the typing system:
+
+# Every type is a set of constraints.
+# Type A is subtype of type B if it conforms to all the same constraints as B.
+# Type A and type B are equivalent if they contain the same set of constraints.
+
+# CONSTRAINTS:
+
+# Property constraints: A type can have a set of names properties. The
+# properties can be ordered or unordered.
+
+# NOTES ON DATE AND DATE TIME
+
+- DATETIME: is a totally time-agnostic scalar that represents the same point
+  in time independent of locale.
+
+- DATE: this is not locale-agnostic, since the start and end of a day depends
+  on a number of factors:
+  - the start and end of a day depends on the calendar (Gregorian vs Badi).
+    Therefore, the concept of a day is tied to the Calendar is refers to.
+    - Within the Gregorian calendar, we have leap years, time zones, and
+      daylight savings which can change the start time and duration of a date.
+
+# PROVIDED VALUES
+
+# Type is a subtype of Int
+type PositiveInt
+    where Self is Int
+    where Self > 0
+
+type Person
+    where Self is Struct
+    where .firstName is String
+    where .lastName is String
+    where .birthday is Gregorian.Date
+
+# Functional type, where the type itself defines a simple function. The return
+# type is a string since it is using a string templatization operation.
+type PersonRoute
+    where Self.TParams is (id: String),
+    where Self.TReturn is `/api/person/{{ Self.TParams.id }}`

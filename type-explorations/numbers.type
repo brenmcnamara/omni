@@ -1,0 +1,21 @@
+
+scalar Int.
+
+# The following are examples of subtypes of int:
+
+#   - [0, Inf): Non-negative integers.
+#   - (-Inf, 0): Negative integers.
+#   - [0, 2]: Integers 0, 1, and 2.
+#   - {0, 1, 2, 5}: Integers 0, 1, 2, and 5.
+
+# Integer operations preserve and create new constraints whenever possible.
+# Below are some examples:
+
+# Plus Operator Examples
+Int + Int => Int
+[0, Inf) + {1} => [1, Inf)
+[0, 2] + {5, 10, 12} => {5, 6, 7, 10, 11, 12, 13, 14}
+
+# Multiplication Operator Examples
+
+(-Inf, 0) * (-Inf, 0) => (0, Inf)

@@ -1,0 +1,6 @@
+
+# A function type defines a mapping between an ordered list of named types
+# to a single return type.
+
+# A function that maps to a single possible value can be generated at
+# compile time.

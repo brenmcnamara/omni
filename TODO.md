@@ -5,6 +5,7 @@
 - [] Define Rest Server Interface
 
   - [] Make sure that rest build api is setup
+  - [] Explore Justin's patterns for defining routes
   - [] Plugin rest interface with express server
 
 - [] Define service and api for downloading secure keys

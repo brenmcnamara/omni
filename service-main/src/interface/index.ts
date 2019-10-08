@@ -15,3 +15,7 @@ export default RESTInterface.build({
     }),
   },
 });
+
+const path = route`brendan/${{ id: t.string }}`;
+
+function route<T>(...obj: Array<T>) {}

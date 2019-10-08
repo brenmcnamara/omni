@@ -1,17 +1,28 @@
 import { RESTEndpoint } from './RESTEndpoint';
 
-export interface RESTInterfaceOptions {
-  endpoints: RESTEndpoint<any, any>[];
+export interface RESTInterfaceOptions<
+  TEndpoints extends { [P in keyof TEndpoints]: TEndpoints[P] }
+> {
+  endpoints: TEndpoints;
 }
 
-export class RESTInterface {
-  private options: RESTInterfaceOptions;
+// TODO: Better typing.
+export class RESTInterface<
+  TEndpoints extends { [P in keyof TEndpoints]: TEndpoints[P] }
+> {
+  private options: RESTInterfaceOptions<TEndpoints>;
 
-  static build(options: RESTInterfaceOptions) {
+  public endpoints(): TEndpoints {
+    return this.options.endpoints;
+  }
+
+  static build<TEndpoints extends { [P in keyof TEndpoints]: TEndpoints[P] }>(
+    options: RESTInterfaceOptions<TEndpoints>,
+  ) {
     return new RESTInterface(options);
   }
 
-  constructor(options: RESTInterfaceOptions) {
+  constructor(options: RESTInterfaceOptions<TEndpoints>) {
     this.options = options;
   }
 }

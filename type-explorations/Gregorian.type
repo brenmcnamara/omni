@@ -1,0 +1,7 @@
+
+scalar Date
+
+# TODO: Figure out standardized timezone names.
+type Timezone where Self is
+    | 'Africa/Abidjan'
+    | 'America/Los_Angeles'
