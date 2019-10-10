@@ -8,6 +8,8 @@ const app = express();
 
 for (const endpoint of Object.values(Interface.endpoints)) {
   let expressMethodBuilder;
+  let buildRequest;
+
   switch (endpoint.httpMethod) {
     case 'DELETE':
       expressMethodBuilder = app.delete;
