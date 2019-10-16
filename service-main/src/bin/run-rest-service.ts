@@ -1,6 +1,5 @@
-import * as RequestBuilder from './RequestBuilder';
 import express from 'express';
-import Interface from './interface';
+import Interface from '../interface';
 
 import { Interface as InterfaceType } from '@brendan9/service-foundation';
 
@@ -24,7 +23,7 @@ function buildExpressHandler(
   switch (endpoint.httpMethod) {
     case 'GET':
       app.get(endpoint.pattern, async (req, res) => {
-        const request = RequestBuilder.buildGETRequest(req);
+        const request: InterfaceType.RESTGETRequest = {};
         const response = await endpoint.genCall(request);
         // TODO: Should make this more general than just JSON.
         res.status(response.status).json(response.payload);

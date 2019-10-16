@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/bin/run-rest-service.js"
   },
   "author": "Brendan McNamara",
   "license": "ISC",
