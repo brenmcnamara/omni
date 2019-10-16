@@ -1,9 +1,8 @@
 import * as t from 'io-ts';
 
-import {
-  RESTGETEndpoint,
-  RESTInterface,
-} from '@brendan9/service-foundation/interface';
+import { Interface } from '@brendan9/service-foundation';
+
+const { RESTGETEndpoint, RESTInterface } = Interface;
 
 export default RESTInterface.build({
   endpoints: {

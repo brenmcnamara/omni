@@ -1,10 +1,3 @@
-import { Hook } from '@brendan9/foundation';
-import { RESTResponse } from './RESTResponse';
+import { RESTGETEndpoint } from './RESTGETEndpoint';
 
-export interface RESTEndpoint<TRequest, TResponse extends RESTResponse<any>> {
-  createHook: (
-    cb: (request: TRequest) => Promise<TResponse>,
-  ) => Hook<TRequest, TResponse>;
-  httpMethod: 'GET' | 'POST' | 'PUT' | 'DELETE';
-  pattern: string;
-}
+export type RESTEndpoint = RESTGETEndpoint<any, any>;

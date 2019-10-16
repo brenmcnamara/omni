@@ -1,7 +1,7 @@
 import * as t from 'io-ts';
 
 import { Hook } from '@brendan9/foundation';
-import { RESTEndpoint } from './RESTEndpoint';
+import { RESTEndpointBase } from './RESTEndpointBase';
 import { RESTGETEndpointHook } from './RESTGETEndpointHook';
 import { RESTGETRequest } from './RESTGETRequest';
 import { RESTResponse } from './RESTResponse';
@@ -17,7 +17,7 @@ interface RESTGETEndpointOptions<
 }
 
 export class RESTGETEndpoint<TParamsPayload, TResponsePayload>
-  implements RESTEndpoint<RESTGETRequest, RESTResponse<TResponsePayload>> {
+  implements RESTEndpointBase<RESTGETRequest, RESTResponse<TResponsePayload>> {
   private hook: RESTGETEndpointHook<TResponsePayload> | null = null;
 
   private options: RESTGETEndpointOptions<

@@ -1,19 +1,10 @@
 import Interface from '../interface';
 
-import { RequestJSONResponse } from '@nine-point/core-service-founation/interface';
+import { Interface as InterfaceType } from '@brendan9/service-foundation';
 
-const Hooks = [
+export const Hooks = [
   Interface.endpoints.root.createHook(async () => {
-    return new RequestJSONResponse({ hello: 'world' });
+    console.log('Calling hook');
+    return InterfaceType.RESTResponse.Success({ hello: 'world' });
   }),
 ];
-
-export function configure() {
-  const subscriptions = Hooks.map(h => h.run());
-
-  return {
-    remove: () => {
-      subscriptions.forEach(s => s.remove());
-    },
-  };
-}

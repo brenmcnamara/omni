@@ -1,43 +1,36 @@
-import express from 'express';
-import path from 'path';
+import './hooks';
 
+import * as RequestBuilder from './RequestBuilder';
+import express from 'express';
 import Interface from './interface';
+
+import { Interface as InterfaceType } from '@brendan9/service-foundation';
 
 const PORT = 3000;
 const app = express();
 
 for (const endpoint of Object.values(Interface.endpoints)) {
-  let expressMethodBuilder;
-  let buildRequest;
-
-  switch (endpoint.httpMethod) {
-    case 'DELETE':
-      expressMethodBuilder = app.delete;
-      break;
-    case 'GET':
-      expressMethodBuilder = app.get;
-      break;
-    case 'POST':
-      expressMethodBuilder = app.post;
-      break;
-    case 'PUT':
-      expressMethodBuilder = app.put;
-      break;
-  }
-
-  expressMethodBuilder(endpoint.pattern, (req, res) => {
-    // (1) Process request.
-    // (2) Call the hook on the endpoint.
-    // (3) Get the response from calling the hook.
-    // (4) Pass the req, res pair to the returned response, which should have a method to handle
-    //     the express response.
-  });
+  buildExpressHandler(app, endpoint);
 }
-
-app.get('/', (req, res) => {
-  res.json({ hello: 'world' });
-});
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
+
+// UTILITIES
+
+function buildExpressHandler(
+  app: express.Express,
+  endpoint: InterfaceType.RESTEndpoint,
+) {
+  switch (endpoint.httpMethod) {
+    case 'GET':
+      app.get(endpoint.pattern, async (req, res) => {
+        const request = RequestBuilder.buildGETRequest(req);
+        const response = await endpoint.genCall(request);
+        // TODO: Should make this more general than just JSON.
+        res.status(response.status).json(response.payload);
+      });
+      break;
+  }
+}

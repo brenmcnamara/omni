@@ -1,4 +1,4 @@
-import { RESTEndpoint } from './RESTEndpoint';
+import { RESTEndpointBase } from './RESTEndpointBase';
 
 export interface RESTInterfaceOptions<
   TEndpoints extends { [P in keyof TEndpoints]: TEndpoints[P] }
@@ -12,7 +12,7 @@ export class RESTInterface<
 > {
   private options: RESTInterfaceOptions<TEndpoints>;
 
-  public endpoints(): TEndpoints {
+  public get endpoints(): TEndpoints {
     return this.options.endpoints;
   }
 
