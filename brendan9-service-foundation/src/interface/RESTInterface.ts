@@ -1,5 +1,3 @@
-import { RESTEndpointBase } from './RESTEndpointBase';
-
 export interface RESTInterfaceOptions<
   TEndpoints extends { [P in keyof TEndpoints]: TEndpoints[P] }
 > {

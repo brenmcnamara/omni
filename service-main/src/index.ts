@@ -1,5 +1,3 @@
-import './hooks';
-
 import * as RequestBuilder from './RequestBuilder';
 import express from 'express';
 import Interface from './interface';
