@@ -1,14 +1,14 @@
 import unwrapGaxiosData from './unwrapGaxiosData';
 
-import { DeconstructedPromise } from '@brendan9/foundation';
 import { calendar_v3, google } from 'googleapis';
+import { DeconstructedPromise } from '@brendan9/foundation';
 import { JWT } from 'google-auth-library';
 
 export interface Configuration {
   jwt: JWT;
 }
 
-export class CalendarAPI {
+export class API {
   private calendar = google.calendar('v3');
   private didFinishConfiguring: boolean = false;
   private onFinishConfiguring = new DeconstructedPromise<Configuration>();
@@ -19,13 +19,7 @@ export class CalendarAPI {
     }
 
     this.didFinishConfiguring = true;
-
-    try {
-      await configuration.jwt.authorize();
-      this.onFinishConfiguring.resolve(configuration);
-    } catch (error) {
-      this.onFinishConfiguring.reject(error);
-    }
+    this.onFinishConfiguring.resolve(configuration);
   }
 
   public async genFetchCalendars(): Promise<calendar_v3.Schema$CalendarList> {

@@ -14,12 +14,14 @@ runSuspendedScript(async () => {
 
   console.log('... Setting up rest server endpoints');
 
-  const queue: InterfaceType.NestedEndpoints[] = [Interface.endpoints];
-  let nextEndpoint: InterfaceType.NestedEndpoints | undefined;
+  const queue: InterfaceType.NestedEndpoints = Interface.endpoints;
+  let nextEndpoint:
+    | InterfaceType.RESTEndpoint
+    | InterfaceType.NestedEndpoints
+    | undefined;
 
   while ((nextEndpoint = queue.shift())) {
     if (Array.isArray(nextEndpoint)) {
-      // @ts-ignore: This is fine
       queue.unshift.apply(queue, nextEndpoint);
     } else {
       buildExpressHandler(app, nextEndpoint);
@@ -41,10 +43,23 @@ function buildExpressHandler(
     case 'GET':
       app.get(endpoint.pattern, async (req, res) => {
         const request: InterfaceType.RESTGETRequest = {};
-        const response = await endpoint.genCall(request);
-        // TODO: Should make this more general than just JSON.
-        res.status(response.status).json(response.payload);
+
+        try {
+          const response = await endpoint.genCall(request);
+          res.status(response.status).json(response.payload);
+        } catch (error) {
+          const errorMessage = getErrorMessage(error);
+          res.status(500).json({ errorMessage });
+        }
       });
       break;
+  }
+}
+
+function getErrorMessage(error: any): string {
+  try {
+    return error.toString();
+  } catch (_) {
+    return 'Unknown Error';
   }
 }

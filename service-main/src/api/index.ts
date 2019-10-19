@@ -31,6 +31,7 @@ class API {
       this.onFinishConfiguring.resolve();
     } catch (error) {
       this.onFinishConfiguring.reject(error);
+      throw error;
     }
   }
 
@@ -45,7 +46,7 @@ class API {
   // FETCH CONFIGURATIONS
 
   private createGSuiteConfiguration(): GSuite.Configuration {
-    const PATH_TO_GSUITE = path.resolve(__dirname, '../../env/main/gsuite');
+    const PATH_TO_GSUITE = path.resolve(__dirname, '../../../env/main/gsuite');
     const PATH_TO_CONFIG = path.resolve(PATH_TO_GSUITE, 'config.json');
     const PATH_TO_CREDS = path.resolve(PATH_TO_GSUITE, 'credentials.json');
 

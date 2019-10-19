@@ -4,7 +4,7 @@ export interface NestedEndpoints
   extends Array<NestedEndpoints | RESTEndpoint> {}
 
 export interface RESTInterfaceOptions {
-  endpoints: NestedEndpoints[];
+  endpoints: NestedEndpoints;
 }
 
 export class RESTInterface {
