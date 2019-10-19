@@ -1,17 +1,25 @@
+import API from '../api';
 import express from 'express';
 import Interface from '../rest-server';
+import runSuspendedScript from './utils/runSuspendedScript';
 
 import { Interface as InterfaceType } from '@brendan9/service-foundation';
 
 const PORT = 3000;
 const app = express();
 
-for (const endpoint of Object.values(Interface.endpoints)) {
-  buildExpressHandler(app, endpoint);
-}
+runSuspendedScript(async () => {
+  console.log('... Configuring API');
+  await API.genConfigure();
 
-app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
+  console.log('... Setting up rest server endpoints');
+  for (const endpoint of Object.values(Interface.endpoints)) {
+    buildExpressHandler(app, endpoint);
+  }
+
+  app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`);
+  });
 });
 
 // UTILITIES

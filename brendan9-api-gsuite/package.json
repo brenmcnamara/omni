@@ -1,0 +1,37 @@
+{
+  "name": "@brendan9/api-gsuite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Brendan McNamara",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.6.2",
+    "@babel/core": "^7.6.2",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "@babel/preset-typescript": "^7.6.0",
+    "@types/jest": "^24.0.18",
+    "prettier": "^1.18.2",
+    "rimraf": "^3.0.0",
+    "ts-jest": "^24.1.0",
+    "tslint": "^5.20.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.6.3"
+  },
+  "dependencies": {
+    "@brendan9/foundation": "../brendan9-foundation/",
+    "@brendan9/service-foundation": "../brendan9-service-foundation/",
+    "@types/node": "^12.7.8",
+    "fp-ts": "^2.0.5",
+    "googleapis": "^44.0.0",
+    "io-ts": "^2.0.1"
+  }
+}
