@@ -1,26 +1,24 @@
-export interface RESTInterfaceOptions<
-  TEndpoints extends { [P in keyof TEndpoints]: TEndpoints[P] }
-> {
-  endpoints: TEndpoints;
+import { RESTEndpoint } from './RESTEndpoint';
+
+export interface NestedEndpoints
+  extends Array<NestedEndpoints | RESTEndpoint> {}
+
+export interface RESTInterfaceOptions {
+  endpoints: NestedEndpoints[];
 }
 
-// TODO: Better typing.
-export class RESTInterface<
-  TEndpoints extends { [P in keyof TEndpoints]: TEndpoints[P] }
-> {
-  private options: RESTInterfaceOptions<TEndpoints>;
+export class RESTInterface {
+  private options: RESTInterfaceOptions;
 
-  public get endpoints(): TEndpoints {
-    return this.options.endpoints;
-  }
-
-  static build<TEndpoints extends { [P in keyof TEndpoints]: TEndpoints[P] }>(
-    options: RESTInterfaceOptions<TEndpoints>,
-  ) {
+  static build(options: RESTInterfaceOptions) {
     return new RESTInterface(options);
   }
 
-  constructor(options: RESTInterfaceOptions<TEndpoints>) {
+  constructor(options: RESTInterfaceOptions) {
     this.options = options;
+  }
+
+  public get endpoints(): NestedEndpoints {
+    return this.options.endpoints;
   }
 }

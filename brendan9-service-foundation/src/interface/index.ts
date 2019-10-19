@@ -1,12 +1,13 @@
+import { NestedEndpoints, RESTInterface } from './RESTInterface';
 import { RESTDELETERequest } from './RESTDELETERequest';
 import { RESTEndpoint } from './RESTEndpoint';
 import { RESTGETEndpoint } from './RESTGETEndpoint';
 import { RESTGETRequest } from './RESTGETRequest';
-import { RESTInterface } from './RESTInterface';
 import { RESTPOSTRequest } from './RESTPOSTRequest';
 import { RESTPUTRequest } from './RESTPUTRequest';
 import { RESTResponse } from './RESTResponse';
 
+export { NestedEndpoints };
 export { RESTDELETERequest };
 export { RESTEndpoint };
 export { RESTGETEndpoint };

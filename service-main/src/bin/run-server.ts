@@ -13,8 +13,17 @@ runSuspendedScript(async () => {
   await API.genConfigure();
 
   console.log('... Setting up rest server endpoints');
-  for (const endpoint of Object.values(Interface.endpoints)) {
-    buildExpressHandler(app, endpoint);
+
+  const queue: InterfaceType.NestedEndpoints[] = [Interface.endpoints];
+  let nextEndpoint: InterfaceType.NestedEndpoints | undefined;
+
+  while ((nextEndpoint = queue.shift())) {
+    if (Array.isArray(nextEndpoint)) {
+      // @ts-ignore: This is fine
+      queue.unshift.apply(queue, nextEndpoint);
+    } else {
+      buildExpressHandler(app, nextEndpoint);
+    }
   }
 
   app.listen(PORT, () => {
