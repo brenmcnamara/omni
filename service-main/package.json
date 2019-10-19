@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/bin/run-rest-service.js"
+    "start-server": "node dist/bin/run-server.js"
   },
   "author": "Brendan McNamara",
   "license": "ISC",
@@ -16,6 +16,7 @@
     "@types/node": "^12.7.8",
     "express": "^4.17.1",
     "fp-ts": "^2.0.5",
+    "googleapis": "^44.0.0",
     "io-ts": "^2.0.1"
   },
   "devDependencies": {

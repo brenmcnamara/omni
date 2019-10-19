@@ -1,5 +1,5 @@
 import express from 'express';
-import Interface from '../interface';
+import Interface from '../rest-server';
 
 import { Interface as InterfaceType } from '@brendan9/service-foundation';
 

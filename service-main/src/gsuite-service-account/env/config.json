@@ -1,0 +1,9 @@
+{
+  "eventCalendarID": "sfbahai.org_efmgq0aq7p812o762igi86in3c@group.calendar.google.com",
+  "scopes": [
+    "https://www.googleapis.com/auth/admin.directory.user",
+    "https://www.googleapis.com/auth/admin.directory.group",
+    "https://www.googleapis.com/auth/calendar"
+  ],
+  "user": "brendan@sfbahai.org"
+}
