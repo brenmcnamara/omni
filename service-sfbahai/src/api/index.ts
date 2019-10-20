@@ -1,17 +1,17 @@
+import * as Calendar from './CalendarAPI';
 import * as Firebase from './FirebaseAPI';
 import * as fs from 'fs';
 import * as GSuite from '@brendan9/api-gsuite';
 import * as path from 'path';
-import * as SFBahaiCalendar from './SFBahaiCalendarAPI';
 import * as Reservation from './ReservationAPI';
 
 import { DeconstructedPromise } from '@brendan9/foundation';
 
 class API {
+  private _Calendar = new Calendar.API();
   private _Firebase = new Firebase.API();
   private _GSuite = new GSuite.API();
   private _Reservation = new Reservation.API();
-  private _SFBahaiCalendar = new SFBahaiCalendar.API();
 
   private didStartConfiguring: boolean = false;
   private onFinishConfiguring = new DeconstructedPromise<void>();
@@ -29,9 +29,7 @@ class API {
         this._GSuite.genConfigure(this.createGSuiteConfiguration()),
       ]);
 
-      await this._SFBahaiCalendar.genConfigure(
-        this.createSFBahaiCalendarConfiguration(),
-      );
+      await this._Calendar.genConfigure(this.createCalendarConfiguration());
 
       await this._Reservation.genConfigure(
         this.createReservationConfiguration(),
@@ -48,8 +46,8 @@ class API {
     return this._GSuite;
   }
 
-  public get SFBahaiCalendar(): SFBahaiCalendar.API {
-    return this._SFBahaiCalendar;
+  public get SFBahaiCalendar(): Calendar.API {
+    return this._Calendar;
   }
 
   public get Reservation(): Reservation.API {
@@ -90,7 +88,7 @@ class API {
     return configuration;
   }
 
-  private createSFBahaiCalendarConfiguration(): SFBahaiCalendar.Configuration {
+  private createCalendarConfiguration(): Calendar.Configuration {
     return { dependencies: { GSuite: this.GSuite } };
   }
 

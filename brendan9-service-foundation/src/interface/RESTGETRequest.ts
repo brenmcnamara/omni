@@ -1,1 +1,3 @@
-export interface RESTGETRequest {}
+export interface RESTGETRequest<TParams> {
+  params: TParams;
+}

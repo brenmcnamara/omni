@@ -42,18 +42,38 @@ function buildExpressHandler(
   switch (endpoint.httpMethod) {
     case 'GET':
       app.get(endpoint.pattern, async (req, res) => {
-        const request: InterfaceType.RESTGETRequest = {};
+        console.log(req.params, req.query);
+        const request: InterfaceType.RESTGETRequest<any> = { params: {} };
 
         try {
           const response = await endpoint.genCall(request);
           res.status(response.status).json(response.payload);
         } catch (error) {
-          const errorMessage = getErrorMessage(error);
-          res.status(500).json({ errorMessage });
+          handleError(res, error);
         }
       });
       break;
   }
+}
+
+function handleError(res: express.Response, error: any) {
+  let errorResponse: InterfaceType.RESTResponse<any>;
+
+  if (error instanceof InterfaceType.RESTResponse) {
+    if (error.status < 400) {
+      errorResponse = InterfaceType.RESTResponse.ServerError({
+        errorMessage: 'Trying to throw successful response',
+      });
+    } else {
+      errorResponse = error;
+    }
+  } else {
+    errorResponse = InterfaceType.RESTResponse.ServerError({
+      errorMessage: getErrorMessage(error),
+    });
+  }
+
+  res.status(errorResponse.status).json(errorResponse.payload);
 }
 
 function getErrorMessage(error: any): string {

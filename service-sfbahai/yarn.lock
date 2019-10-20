@@ -253,10 +253,8 @@
     fp-ts "^2.0.5"
     io-ts "^2.0.1"
 
-"@brendan9/service-foundation@^1.0.2":
+"@brendan9/service-foundation@../brendan9-service-foundation/":
   version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@brendan9/service-foundation/-/service-foundation-1.0.2.tgz#e1c6927a3e6d672954d73fb7da29203f50325d64"
-  integrity sha512-pz6GnxS4nDXsZO4n8js8iGVSuWedk5rn2MO/Bxby19nE1J/qlIzrXh6ahUf9U54PexZ/KOg5H7Kzewl82JgO3g==
   dependencies:
     "@brendan9/foundation" "^1.0.2"
     "@types/node" "^12.7.8"

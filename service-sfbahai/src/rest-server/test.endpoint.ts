@@ -17,7 +17,7 @@ class TestEndpoint
   public tResponse = t.type({});
 
   public async genCall(
-    request: Interface.RESTGETRequest,
+    request: Interface.RESTGETRequest<Params>,
   ): Promise<Interface.RESTResponse<ResponsePayload>> {
     const payload: ResponsePayload = {};
     return Interface.RESTResponse.Success(payload);

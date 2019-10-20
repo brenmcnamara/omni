@@ -1,5 +1,5 @@
 import * as Firebase from '../FirebaseAPI';
-import * as SFBahaiCalendar from '../SFBahaiCalendarAPI';
+import * as Calendar from '../CalendarAPI';
 import * as ReservationRequest from './ReservationRequest.model';
 import * as ReservationResponse from './ReservationResponse.model';
 
@@ -8,7 +8,7 @@ import { DeconstructedPromise } from '@brendan9/foundation';
 export interface Configuration {
   dependencies: {
     Firebase: Firebase.API;
-    SFBahaiCalendar: SFBahaiCalendar.API;
+    SFBahaiCalendar: Calendar.API;
   };
 }
 

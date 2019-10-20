@@ -1,6 +1,6 @@
 version: "3"
 services:
-  main:
-    build: ./service-main
+  sfbahai:
+    build: ./service-sfbahai
     ports:
       - "3000:3000"
