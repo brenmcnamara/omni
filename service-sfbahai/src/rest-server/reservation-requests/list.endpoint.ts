@@ -6,17 +6,21 @@ import { Interface } from '@brendan9/service-foundation';
 
 export interface Params {}
 
+export interface Query {}
+
 export interface ResponsePayload {
   data: ReservationRequest.ModelRaw[];
 }
 
 class CalendarListEndpoint
-  implements Interface.RESTGETEndpoint<Params, ResponsePayload> {
+  implements Interface.RESTGETEndpoint<Params, Query, ResponsePayload> {
   public httpMethod: 'GET' = 'GET';
 
   public pattern = '/reservationRequests';
 
   public tParams = t.type({});
+
+  public tQuery = t.type({});
 
   // TODO: More precise type.
   public tResponse = t.type({
@@ -24,7 +28,7 @@ class CalendarListEndpoint
   });
 
   public async genCall(
-    request: Interface.RESTGETRequest<Params>,
+    request: Interface.RESTGETRequest<Params, Query>,
   ): Promise<Interface.RESTResponse<ResponsePayload>> {
     const models = await API.Reservation.genFetchReservationRequests({});
     return Interface.RESTResponse.Success({

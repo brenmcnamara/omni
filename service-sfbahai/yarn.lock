@@ -253,7 +253,7 @@
     fp-ts "^2.0.5"
     io-ts "^2.0.1"
 
-"@brendan9/service-foundation@../brendan9-service-foundation/":
+"@brendan9/service-foundation@../brendan9-service-foundation":
   version "1.0.2"
   dependencies:
     "@brendan9/foundation" "^1.0.2"

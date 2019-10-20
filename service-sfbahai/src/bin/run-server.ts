@@ -1,9 +1,11 @@
+import * as t from 'io-ts';
 import API from '../api';
 import express from 'express';
 import Interface from '../rest-server';
 import runSuspendedScript from './utils/runSuspendedScript';
 
 import { Interface as InterfaceType } from '@brendan9/service-foundation';
+import { either } from 'fp-ts';
 
 const PORT = 3000;
 const app = express();
@@ -41,18 +43,62 @@ function buildExpressHandler(
 ) {
   switch (endpoint.httpMethod) {
     case 'GET':
-      app.get(endpoint.pattern, async (req, res) => {
-        console.log(req.params, req.query);
-        const request: InterfaceType.RESTGETRequest<any> = { params: {} };
+      app.get(
+        endpoint.pattern,
+        createRequestHandler(endpoint, async (req, res) => {
+          const request: InterfaceType.RESTGETRequest<any, any> = {
+            params: req.params,
+            query: req.query,
+          };
 
-        try {
           const response = await endpoint.genCall(request);
           res.status(response.status).json(response.payload);
-        } catch (error) {
-          handleError(res, error);
-        }
-      });
+        }),
+      );
       break;
+  }
+}
+
+function createRequestHandler(
+  endpoint: InterfaceType.RESTEndpoint,
+  cb: (req: express.Request, res: express.Response) => Promise<void>,
+) {
+  return async (req: express.Request, res: express.Response) => {
+    try {
+      validateRequest(endpoint, req);
+      await cb(req, res);
+    } catch (error) {
+      handleError(res, error);
+      return;
+    }
+  };
+}
+
+function validateRequest(
+  endpoint: InterfaceType.RESTEndpoint,
+  req: express.Request,
+) {
+  switch (endpoint.httpMethod) {
+    case 'GET':
+      const decodedQuery = endpoint.tQuery.decode(req.query);
+      if (tIsError(decodedQuery)) {
+        throw InterfaceType.RESTResponse.BadRequest({
+          errorMessage: 'Bad Request Query',
+        });
+      }
+
+      const decodedParams = endpoint.tParams.decode(req.params);
+      if (tIsError(decodedParams)) {
+        throw InterfaceType.RESTResponse.BadRequest({
+          errorMessage: 'Bad Request Params',
+        });
+      }
+      break;
+
+    default:
+      throw InterfaceType.RESTResponse.ServerError({
+        errorMessage: `Unsupported http method: ${endpoint.httpMethod}`,
+      });
   }
 }
 
@@ -82,4 +128,8 @@ function getErrorMessage(error: any): string {
   } catch (_) {
     return 'Unknown Error';
   }
+}
+
+function tIsError(either: either.Either<t.Errors, any>): boolean {
+  return either._tag === 'Left';
 }
