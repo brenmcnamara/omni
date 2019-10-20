@@ -1,10 +1,11 @@
-import { API as GSuiteAPI } from '@brendan9/api-gsuite';
+import * as GSuite from '@brendan9/api-gsuite';
+
 import { DeconstructedPromise } from '@brendan9/foundation';
 import { calendar_v3 } from 'googleapis';
 
 export interface Configuration {
   dependencies: {
-    GSuite: GSuiteAPI;
+    GSuite: GSuite.API;
   };
 }
 

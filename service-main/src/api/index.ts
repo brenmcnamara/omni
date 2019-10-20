@@ -1,12 +1,16 @@
+import * as Firebase from './FirebaseAPI';
 import * as fs from 'fs';
 import * as GSuite from '@brendan9/api-gsuite';
 import * as path from 'path';
 import * as SFBahaiCalendar from './SFBahaiCalendarAPI';
+import * as Reservation from './ReservationAPI';
 
 import { DeconstructedPromise } from '@brendan9/foundation';
 
 class API {
+  private _Firebase = new Firebase.API();
   private _GSuite = new GSuite.API();
+  private _Reservation = new Reservation.API();
   private _SFBahaiCalendar = new SFBahaiCalendar.API();
 
   private didStartConfiguring: boolean = false;
@@ -20,12 +24,17 @@ class API {
     this.didStartConfiguring = true;
 
     try {
-      // TODO: Could create a dependency graph of apis and automate
-      // the configuration.
+      await Promise.all([
+        this._Firebase.genConfigure(this.createFirebaseConfiguration()),
+        this._GSuite.genConfigure(this.createGSuiteConfiguration()),
+      ]);
 
-      await this._GSuite.genConfigure(this.createGSuiteConfiguration());
       await this._SFBahaiCalendar.genConfigure(
         this.createSFBahaiCalendarConfiguration(),
+      );
+
+      await this._Reservation.genConfigure(
+        this.createReservationConfiguration(),
       );
 
       this.onFinishConfiguring.resolve();
@@ -43,7 +52,25 @@ class API {
     return this._SFBahaiCalendar;
   }
 
+  public get Reservation(): Reservation.API {
+    return this._Reservation;
+  }
+
   // FETCH CONFIGURATIONS
+
+  private createFirebaseConfiguration(): Firebase.Configuration {
+    const PATH_TO_FIREBASE = path.join(__dirname, '../../../env/main/firebase');
+    const PATH_TO_CONFIG = path.join(PATH_TO_FIREBASE, '/config.json');
+    const PATH_TO_CREDS = path.join(PATH_TO_FIREBASE, '/credentials.json');
+
+    const config = JSON.parse(fs.readFileSync(PATH_TO_CONFIG).toString());
+    const credential = JSON.parse(fs.readFileSync(PATH_TO_CREDS).toString());
+
+    return {
+      credential,
+      databaseURL: config.databaseURL,
+    };
+  }
 
   private createGSuiteConfiguration(): GSuite.Configuration {
     const PATH_TO_GSUITE = path.resolve(__dirname, '../../../env/main/gsuite');
@@ -65,6 +92,15 @@ class API {
 
   private createSFBahaiCalendarConfiguration(): SFBahaiCalendar.Configuration {
     return { dependencies: { GSuite: this.GSuite } };
+  }
+
+  private createReservationConfiguration(): Reservation.Configuration {
+    return {
+      dependencies: {
+        Firebase: this._Firebase,
+        SFBahaiCalendar: this.SFBahaiCalendar,
+      },
+    };
   }
 }
 

@@ -34,16 +34,11 @@ export function tModelRaw<TType extends string>(type: TType) {
   });
 }
 
-export class Model<TType extends string, TRaw extends ModelRaw<TType>> {
-  private raw: TRaw;
-
-  static t<TType extends string, TRaw extends ModelRaw<TType>>(): t.Type<
-    TRaw,
-    Object,
-    unknown
-  > {
-    throw Error('Expecting subclass to implement t');
-  }
+export abstract class Model<
+  TType extends string,
+  TRaw extends ModelRaw<TType>
+> {
+  protected raw: TRaw;
 
   constructor(raw: TRaw) {
     this.raw = raw;
@@ -79,5 +74,9 @@ export class Model<TType extends string, TRaw extends ModelRaw<TType>> {
       refType: this.modelType,
       type: 'REF',
     };
+  }
+
+  public toJSON(): TRaw {
+    return this.raw;
   }
 }
