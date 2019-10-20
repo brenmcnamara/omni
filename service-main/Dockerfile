@@ -6,12 +6,20 @@ FROM node:12.12.0-alpine
 
 WORKDIR /usr/app
 
+RUN apk add yarn
+
 COPY package*.json ./
 
-COPY yarn.lock ./yarn.lock
+COPY yarn.lock ./
 
-RUN apk add yarn && yarn install && yarn build
+COPY .npmrc ./
+
+RUN yarn install
+
+COPY . .
+
+RUN yarn build
 
 EXPOSE 3000
 
-CMD ["yarn", "start-server"]
+ENTRYPOINT ["yarn", "start-server"]
