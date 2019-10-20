@@ -224,36 +224,41 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@brendan9/api-gsuite@../brendan9-api-gsuite":
-  version "1.0.0"
+"@brendan9/api-gsuite@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@brendan9/api-gsuite/-/api-gsuite-1.0.2.tgz#a127f3470dc849a2a7a64899761b88259ec84954"
+  integrity sha512-SSxbOSljxA/K6KedByyP+lRWNlOs6TJAm4NgNTcuKzYVOv92hYWsA0M8OVIfy46Db9t4LHqJvv83oj6ju4sQWg==
   dependencies:
-    "@brendan9/foundation" "../brendan9-foundation/"
-    "@brendan9/service-foundation" "../brendan9-service-foundation/"
+    "@brendan9/foundation" "^1.0.2"
     "@types/node" "^12.7.8"
     fp-ts "^2.0.5"
     googleapis "^44.0.0"
     io-ts "^2.0.1"
 
-"@brendan9/foundation@../brendan9-foundation", "@brendan9/foundation@../brendan9-foundation/":
-  version "1.0.0"
+"@brendan9/foundation@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@brendan9/foundation/-/foundation-1.0.2.tgz#05f312cc34d1e13fb8747381079a35db27afdf8a"
+  integrity sha512-iAKJCfIQHpd7CrXZLIWLObTtEw1Kh9lMqW22hsexiv42o6TmJvEYnnLr4ZGBlZX8z53X2vQLZra8PJxZ5U436Q==
   dependencies:
-    "@brendan9/service-foundation" "../brendan9-service-foundation/"
     "@types/node" "^12.7.8"
     fp-ts "^2.0.5"
     io-ts "^2.0.1"
 
-"@brendan9/model@../brendan9-model":
-  version "1.0.0"
+"@brendan9/model@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@brendan9/model/-/model-1.0.1.tgz#46e55f3bd513b1ebe246874795251c8500883f97"
+  integrity sha512-zSC1l+jRaCqoRKa2N/wwuVV1zfK4EQSK5uFAaNWvawrVwo3fj1LpJ3I2AvBK+f9Y55996eh9/UtzYyCjoxFiuA==
   dependencies:
-    "@brendan9/service-foundation" "../brendan9-service-foundation/"
     "@types/node" "^12.7.8"
     fp-ts "^2.0.5"
     io-ts "^2.0.1"
 
-"@brendan9/service-foundation@../brendan9-service-foundation", "@brendan9/service-foundation@../brendan9-service-foundation/":
-  version "1.0.0"
+"@brendan9/service-foundation@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@brendan9/service-foundation/-/service-foundation-1.0.2.tgz#e1c6927a3e6d672954d73fb7da29203f50325d64"
+  integrity sha512-pz6GnxS4nDXsZO4n8js8iGVSuWedk5rn2MO/Bxby19nE1J/qlIzrXh6ahUf9U54PexZ/KOg5H7Kzewl82JgO3g==
   dependencies:
-    "@brendan9/foundation" "../brendan9-foundation"
+    "@brendan9/foundation" "^1.0.2"
     "@types/node" "^12.7.8"
     fp-ts "^2.0.5"
     io-ts "^2.0.1"

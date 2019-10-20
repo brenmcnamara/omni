@@ -59,7 +59,7 @@ class API {
   // FETCH CONFIGURATIONS
 
   private createFirebaseConfiguration(): Firebase.Configuration {
-    const PATH_TO_FIREBASE = path.join(__dirname, '../../../env/main/firebase');
+    const PATH_TO_FIREBASE = path.join(__dirname, '../../env/firebase');
     const PATH_TO_CONFIG = path.join(PATH_TO_FIREBASE, '/config.json');
     const PATH_TO_CREDS = path.join(PATH_TO_FIREBASE, '/credentials.json');
 
@@ -73,7 +73,7 @@ class API {
   }
 
   private createGSuiteConfiguration(): GSuite.Configuration {
-    const PATH_TO_GSUITE = path.resolve(__dirname, '../../../env/main/gsuite');
+    const PATH_TO_GSUITE = path.resolve(__dirname, '../../env/gsuite');
     const PATH_TO_CONFIG = path.resolve(PATH_TO_GSUITE, 'config.json');
     const PATH_TO_CREDS = path.resolve(PATH_TO_GSUITE, 'credentials.json');
 
