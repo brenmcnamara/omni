@@ -12,7 +12,7 @@ export interface ResponsePayload {
   data: ReservationRequest.ModelRaw[];
 }
 
-class CalendarListEndpoint
+class ReservationRequestsListEndpoint
   implements Interface.RESTGETEndpoint<Params, Query, ResponsePayload> {
   public httpMethod: 'GET' = 'GET';
 
@@ -30,11 +30,24 @@ class CalendarListEndpoint
   public async genCall(
     request: Interface.RESTGETRequest<Params, Query>,
   ): Promise<Interface.RESTResponse<ResponsePayload>> {
-    const models = await API.Reservation.genFetchReservationRequests({});
+    const [requests, responses] = await Promise.all([
+      API.Reservation.genQueryReservationRequest(c =>
+        c.where('isDeleted', '==', false).orderBy('createdAt', 'desc'),
+      ),
+      API.Reservation.genQueryReservationResponses(c =>
+        c.where('isDeleted', '==', false),
+      ),
+    ]);
+
+    const openRequests = requests.filter(
+      request =>
+        !responses.some(response => response.requestRef.refID === request.id),
+    );
+
     return Interface.RESTResponse.Success({
-      data: models.map(m => m.toJSON()),
+      data: openRequests.map(m => m.toJSON()),
     });
   }
 }
 
-export default new CalendarListEndpoint();
+export default new ReservationRequestsListEndpoint();

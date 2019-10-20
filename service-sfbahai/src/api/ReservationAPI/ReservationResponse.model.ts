@@ -25,4 +25,24 @@ export class Model extends Core.Model<typeof MODEL_TYPE, ModelRaw> {
   static createRef(refID: string) {
     return { refID, refType: MODEL_TYPE, type: 'REF' };
   }
+
+  get notes(): string {
+    return this.raw.notes;
+  }
+
+  get requestRef(): ReservationRequest.Ref {
+    return this.raw.requestRef;
+  }
+
+  get responderEmail(): string {
+    return this.raw.responderEmail;
+  }
+
+  get responderName(): string {
+    return this.raw.responderName;
+  }
+
+  get responseStatus(): 'ACCEPT' | 'DECLINE' {
+    return this.raw.responseStatus;
+  }
 }

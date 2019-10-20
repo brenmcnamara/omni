@@ -15,7 +15,7 @@
     "@brendan9/api-gsuite": "^1.0.2",
     "@brendan9/foundation": "^1.0.2",
     "@brendan9/model": "^1.0.1",
-    "@brendan9/service-foundation": "../brendan9-service-foundation",
+    "@brendan9/service-foundation": "^1.1.0",
     "@types/express": "^4.17.1",
     "@types/node": "^12.11.1",
     "express": "^4.17.1",
