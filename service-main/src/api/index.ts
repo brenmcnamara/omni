@@ -64,7 +64,7 @@ class API {
   }
 
   private createSFBahaiCalendarConfiguration(): SFBahaiCalendar.Configuration {
-    return { dependency: { gsuite: this.GSuite } };
+    return { dependencies: { GSuite: this.GSuite } };
   }
 }
 

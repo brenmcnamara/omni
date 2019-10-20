@@ -12,7 +12,7 @@
   "author": "Brendan McNamara",
   "license": "ISC",
   "dependencies": {
-    "@brendan9/api-gsuite": "../brendan9-api-gsuite/",
+    "@brendan9/api-gsuite": "../brendan9-api-gsuite",
     "@brendan9/foundation": "../brendan9-foundation/",
     "@brendan9/service-foundation": "../brendan9-service-foundation",
     "@types/express": "^4.17.1",

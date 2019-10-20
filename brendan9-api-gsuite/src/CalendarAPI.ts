@@ -31,4 +31,17 @@ export class API {
 
     return unwrapGaxiosData(response);
   }
+
+  public async genFetchCalendar(
+    calendarID: string,
+  ): Promise<calendar_v3.Schema$Calendar> {
+    const configuration = await this.onFinishConfiguring;
+
+    const response = await this.calendar.calendars.get({
+      auth: configuration.jwt,
+      calendarId: calendarID,
+    });
+
+    return unwrapGaxiosData(response);
+  }
 }

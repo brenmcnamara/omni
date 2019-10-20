@@ -224,7 +224,7 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@brendan9/api-gsuite@../brendan9-api-gsuite/":
+"@brendan9/api-gsuite@../brendan9-api-gsuite":
   version "1.0.0"
   dependencies:
     "@brendan9/foundation" "../brendan9-foundation/"
