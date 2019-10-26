@@ -56,6 +56,21 @@ function buildExpressHandler(
         }),
       );
       break;
+
+    case 'POST':
+      app.post(
+        endpoint.pattern,
+        createRequestHandler(endpoint, async (req, res) => {
+          const request: InterfaceType.RESTPOSTRequest<any, any, any> = {
+            body: req.body,
+            params: req.params,
+            query: req.query,
+          };
+
+          const response = await endpoint.genCall(request);
+          res.status(response.status).json(response.payload);
+        }),
+      );
   }
 }
 
@@ -79,7 +94,7 @@ function validateRequest(
   req: express.Request,
 ) {
   switch (endpoint.httpMethod) {
-    case 'GET':
+    case 'GET': {
       const decodedQuery = endpoint.tQuery.decode(req.query);
       if (tIsError(decodedQuery)) {
         throw InterfaceType.RESTResponse.BadRequest({
@@ -94,11 +109,31 @@ function validateRequest(
         });
       }
       break;
+    }
 
-    default:
-      throw InterfaceType.RESTResponse.ServerError({
-        errorMessage: `Unsupported http method: ${endpoint.httpMethod}`,
-      });
+    case 'POST': {
+      const decodedQuery = endpoint.tQuery.decode(req.query);
+      if (tIsError(decodedQuery)) {
+        throw InterfaceType.RESTResponse.BadRequest({
+          errorMessage: 'Bad Request Query',
+        });
+      }
+
+      const decodedParams = endpoint.tParams.decode(req.params);
+      if (tIsError(decodedParams)) {
+        throw InterfaceType.RESTResponse.BadRequest({
+          erroressage: 'Bad Request Params',
+        });
+      }
+
+      const decodedBody = endpoint.tBody.decode(req.body);
+      if (tIsError(decodedBody)) {
+        throw InterfaceType.RESTResponse.BadRequest({
+          errorMessage: 'Bad Request Body',
+        });
+      }
+      break;
+    }
   }
 }
 
