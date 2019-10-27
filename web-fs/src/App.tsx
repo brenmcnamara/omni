@@ -2,8 +2,8 @@ import './App.css';
 
 import classnames from 'classnames';
 import FileTree from './file-tree/FileTree';
-import FileViewer from './file-viewer/FileViewer';
 import LeftPane from './LeftPane';
+import MarkdownEditor from './file-editor/MarkdownEditor';
 import React from 'react';
 import RightPane from './RightPane';
 import TrueSeeker from './content/true-seeker';
@@ -15,9 +15,9 @@ const App: React.FC = () => {
         <FileTree />
       </LeftPane>
       <RightPane>
-        <FileViewer classes={{ root: classnames('padding-all-12') }}>
+        <MarkdownEditor classes={{ root: classnames('padding-all-12') }}>
           <TrueSeeker />
-        </FileViewer>
+        </MarkdownEditor>
       </RightPane>
     </div>
   );

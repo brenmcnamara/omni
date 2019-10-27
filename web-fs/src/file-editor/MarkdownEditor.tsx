@@ -1,4 +1,4 @@
-import './FileViewer.css';
+import './MarkdownEditor.css';
 
 import classnames from 'classnames';
 import React from 'react';
@@ -8,17 +8,16 @@ import { ClassValue } from 'classnames/types';
 interface Classes {
   root?: ClassValue;
 }
-
 interface Props {
   children?: React.ReactNode;
   classes?: Classes;
 }
 
-const FileViewer: React.FC<Props> = (props: Props) => {
+const MarkdownEditor: React.FC<Props> = (props: Props) => {
   return (
     <div
       className={classnames(
-        'FileViewer-root',
+        'MarkdownEditor-root',
         props.classes && props.classes.root,
       )}
     >
@@ -27,4 +26,4 @@ const FileViewer: React.FC<Props> = (props: Props) => {
   );
 };
 
-export default FileViewer;
+export default MarkdownEditor;
