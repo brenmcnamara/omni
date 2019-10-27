@@ -1,0 +1,22 @@
+.App {
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.App-LeftPane {
+  border-right: solid 1px #efefef;
+  max-width: 300px;
+  min-width: 300px;
+  overflow: auto;
+  width: 300px;
+}
+
+.App-RightPane {
+  flex-grow: 1;
+  overflow: auto;
+}

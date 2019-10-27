@@ -1,0 +1,41 @@
+.FileTreeItem-root {
+  align-items: center;
+  background-color: white;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  height: 36px;
+  transition: background-color 0.2s;
+}
+
+.FileTreeItem-root:hover:not(.FileTreeItem-selected) {
+  background-color: #efefef;
+}
+
+.FileTreeItem-selected {
+  color: white;
+  background-color: #3498db;
+}
+
+.FileTreeItem-name {
+  flex-grow: 1;
+}
+
+.FileTreeItem-more {
+  display: none;
+}
+
+.FileTreeItem-root:hover .FileTreeItem-more {
+  display: block;
+  padding: 8px;
+}
+
+.FileTreeItem-more {
+  opacity: 0.4;
+  transition: opacity 0.2s;
+}
+
+.FileTreeItem-more:hover {
+  opacity: 1;
+}
