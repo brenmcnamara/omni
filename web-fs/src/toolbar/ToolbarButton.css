@@ -5,13 +5,7 @@
   flex-direction: row;
   height: 24px;
   justify-content: center;
-  opacity: 0.4;
-  transition: opacity 0.2s;
   width: 24px;
-}
-
-.ToolbarButton-root:hover {
-  opacity: 1;
 }
 
 .DarkLightModeToolbarButton-isDarkMode img {

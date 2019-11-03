@@ -21,9 +21,9 @@ const App: React.FC = () => {
         <FileTree />
       </LeftPane>
       <RightPane>
-        <Toolbar />
         <TrueSeeker />
       </RightPane>
+      <Toolbar />
     </div>
   );
 };

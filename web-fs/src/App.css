@@ -27,4 +27,5 @@
 .App-RightPane {
   flex-grow: 1;
   overflow: auto;
+  padding-right: 56px; /* Avoid the toolbar */
 }
