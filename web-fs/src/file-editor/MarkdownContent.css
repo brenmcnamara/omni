@@ -35,7 +35,7 @@
 }
 
 .MarkdownContent-tags-tagContainer {
-  margin-bottom: 11px; /* need approx 7px offset for line height adjustment below */
+  margin-bottom: 6px;
 }
 
 .MarkdownContent-tags-tag {
@@ -43,8 +43,4 @@
   background-color: #efefef;
   border-radius: 4px;
   padding: 4px 12px;
-}
-
-.MarkdownContent-tags-tag .FontStyle-doc-p {
-  line-height: 20px; /* need to custom adjust the line height so everything lines up */
 }

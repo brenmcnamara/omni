@@ -74,7 +74,7 @@ export const Tags: React.FC<Tags$Props> = (props: Tags$Props) => {
       </div>
       <div className="MarkdownContent-sectionContent">
         {props.tags.map(tag => (
-          <div className={classnames('MarkdownContent-tags')}>
+          <div className={classnames('MarkdownContent-tags')} key={tag}>
             <Tag tag={tag} />
           </div>
         ))}
@@ -89,12 +89,7 @@ interface Tag$Props {
 
 const Tag: React.FC<Tag$Props> = (props: Tag$Props) => {
   return (
-    <div
-      className={classnames(
-        'MarkdownContent-tags-tagContainer',
-        'margin-bottom-4',
-      )}
-    >
+    <div className={classnames('MarkdownContent-tags-tagContainer')}>
       <span className={classnames('MarkdownContent-tags-tag')}>
         <Text fontColorStyle="secondary" fontStyle="doc-p">
           {props.tag}

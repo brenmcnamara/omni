@@ -1,15 +1,29 @@
 import './ToolbarButton.css';
 
+import classnames from 'classnames';
 import React from 'react';
 
+import { ClassValue } from 'classnames/types';
+
+interface Classes {
+  root: ClassValue;
+}
 interface Props {
-  icon: string;
+  children?: React.ReactNode;
+  classes?: Classes;
+  onClick: () => void;
 }
 
 const ToolbarButton: React.FC<Props> = (props: Props) => {
   return (
-    <div className="ToolbarButton-root">
-      <img className="img-size-16" src={props.icon} />
+    <div
+      className={classnames(
+        'ToolbarButton-root',
+        props.classes && props.classes.root,
+      )}
+      onClick={() => props.onClick()}
+    >
+      {props.children}
     </div>
   );
 };

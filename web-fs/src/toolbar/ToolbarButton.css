@@ -13,3 +13,13 @@
 .ToolbarButton-root:hover {
   opacity: 1;
 }
+
+.DarkLightModeToolbarButton-isDarkMode img {
+  transform: rotate(-180deg);
+  transition: transform 0.4s;
+}
+
+.DarkLightModeToolbarButton-isLightMode img {
+  transform: rotate(0deg);
+  transition: transform 0.4s;
+}
