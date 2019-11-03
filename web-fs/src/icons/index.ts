@@ -1,3 +1,4 @@
+import arrowRight from './arrow-right.svg';
 import collapse from './collapse.svg';
 import connections from './connections.svg';
 import contrast from './contrast.svg';
@@ -7,6 +8,7 @@ import expand from './expand.svg';
 import folder from './folder.svg';
 import more from './more.svg';
 
+export { arrowRight };
 export { collapse };
 export { connections };
 export { contrast };

@@ -40,13 +40,13 @@ const FileTreeItem: React.FC<Props> = (props: Props) => {
         <div
           className="FileTreeItem-spacer"
           style={{
-            backgroundColor: 'red',
             width: props.indent * INDENT_SIZE_PX,
           }}
         />
         <Icon
           classes={{
             root: classnames({
+              'FileTreeItem-icon': true,
               'img-size-16': true,
               'img-white': props.isSelected,
               [themeClassName]: !props.isSelected,

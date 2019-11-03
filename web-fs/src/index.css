@@ -111,6 +111,18 @@ p {
 
 /* IMAGES */
 
+.img-size-4 {
+  width: 4px;
+}
+
+.img-size-6 {
+  width: 6px;
+}
+
+.img-size-8 {
+  width: 8px;
+}
+
 .img-size-12 {
   width: 12px;
 }

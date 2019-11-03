@@ -1,54 +1,32 @@
 import './FileTree.css';
 
 import FileTreeItem from './FileTreeItem';
+import GroupTreeItem from './GroupTreeItem';
 import React from 'react';
 
-import { connections, document, diamond, folder } from '../icons';
+import { arrowRight, document, diamond } from '../icons';
 
 interface Props {}
 
 const FileTree: React.FC<Props> = (props: Props) => {
   return (
     <div className="FileTree-root">
-      <FileTreeItem icon={folder} indent={0} isSelected={false} name="9point" />
-      <FileTreeItem icon={folder} indent={0} isSelected={false} name="Bahá'i" />
+      <GroupTreeItem indent={0} isOpen={false} name="9point" />
+      <GroupTreeItem indent={0} isOpen={true} name="Bahá'i" />
       <FileTreeItem
         icon={document}
         indent={1}
         isSelected={true}
-        name="Group Hooks"
-      />
-      <FileTreeItem
-        icon={document}
-        indent={1}
-        isSelected={false}
         name="True Seeker"
       />
-      <FileTreeItem icon={folder} indent={0} isSelected={false} name="Books" />
-      <FileTreeItem
-        icon={folder}
-        indent={0}
-        isSelected={false}
-        name="Designs"
-      />
-      <FileTreeItem
-        icon={document}
-        indent={1}
-        isSelected={false}
-        name="Group Hooks"
-      />
+      <GroupTreeItem indent={0} isOpen={false} name="Books" />
+      <GroupTreeItem indent={0} isOpen={true} name="Designs" />
       <FileTreeItem icon={diamond} indent={1} isSelected={false} name="Findi" />
       <FileTreeItem
         icon={diamond}
         indent={1}
         isSelected={false}
         name="HiddenWords"
-      />
-      <FileTreeItem
-        icon={connections}
-        indent={0}
-        isSelected={false}
-        name="Connections"
       />
     </div>
   );
