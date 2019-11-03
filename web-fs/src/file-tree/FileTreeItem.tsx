@@ -2,6 +2,7 @@ import './FileTreeItem.css';
 
 import classnames from 'classnames';
 import React from 'react';
+import Text from '../Text';
 
 import { more } from '../icons';
 
@@ -22,6 +23,7 @@ const FileTreeItem: React.FC<Props> = (props: Props) => {
         [props.className || '']: Boolean(props.className),
         'FileTreeItem-root': true,
         'FileTreeItem-selected': props.isSelected,
+        'margin-bottom-4': true,
         'margin-horiz-8': true,
         'padding-horiz-8': true,
       })}
@@ -37,13 +39,19 @@ const FileTreeItem: React.FC<Props> = (props: Props) => {
         })}
         src={props.icon}
       />
-      <p className={classnames('FileTreeItem-name', 'margin-left-12')}>
-        {props.name}
-      </p>
+      <div className={classnames('margin-left-12', 'FileTreeItem-name')}>
+        <Text
+          fontColorStyle="primary"
+          fontMode={props.isSelected ? 'dark' : 'light'}
+          fontStyle="primary"
+        >
+          {props.name}
+        </Text>
+      </div>
       <img
         className={classnames({
           'FileTreeItem-more': true,
-          'img-size-20': true,
+          'img-size-12': true,
           'img-white': props.isSelected,
         })}
         src={more}

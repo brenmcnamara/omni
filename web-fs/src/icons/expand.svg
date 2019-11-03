@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="44px" height="44px" viewBox="0 0 44 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>1067-enter-fullscreen-toolbar@2x</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Assets" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-936.000000, -916.000000)" fill="#000000" fill-rule="nonzero">
+            <g id="Icons-44" transform="translate(22.000000, 22.000000)">
+                <g id="1067-enter-fullscreen-toolbar@2x" transform="translate(914.000000, 894.000000)">
+                    <path d="M19,24 C18.724,24 18.474,24.112 18.293,24.293 L2,40.586 L2,27 C2,26.447 1.553,26 1,26 C0.447,26 0,26.447 0,27 L0,43 C0,43.553 0.447,44 1,44 L17,44 C17.553,44 18,43.553 18,43 C18,42.447 17.553,42 17,42 L3.414,42 L19.707,25.707 C19.888,25.526 20,25.276 20,25 C20,24.447 19.553,24 19,24 Z M43,0 L27,0 C26.447,0 26,0.447 26,1 C26,1.553 26.447,2 27,2 L40.586,2 L24.293,18.293 C24.112,18.474 24,18.725 24,19 C24,19.553 24.447,20 25,20 C25.276,20 25.526,19.889 25.707,19.707 L42,3.414 L42,17 C42,17.553 42.447,18 43,18 C43.553,18 44,17.553 44,17 L44,1 C44,0.447 43.553,0 43,0 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

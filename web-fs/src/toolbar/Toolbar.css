@@ -1,0 +1,7 @@
+.Toolbar-root {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+  padding: 0 8px;
+}

@@ -1,0 +1,10 @@
+.FileEditorTitle-root {
+  border-bottom: solid #efefef 1px;
+  color: black;
+  margin-bottom: 20px;
+}
+
+.FileEditorTitle-root h1 {
+  font-size: 20px;
+  font-weight: bold;
+}

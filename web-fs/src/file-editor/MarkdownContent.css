@@ -1,0 +1,50 @@
+.MarkdownContent-root {
+}
+
+.MarkdownContent-section {
+  display: flex;
+  flex-direction: row;
+  margin: 20px 0;
+}
+
+.MarkdownContent-sectionLabel {
+  min-width: 30px;
+  max-width: 30px;
+}
+
+.MarkdownContent-sectionSelector {
+  cursor: pointer;
+  opacity: 0.4;
+  transition: opacity 0.2s;
+}
+
+.MarkdownContent-sectionSelector:hover {
+  opacity: 1;
+}
+
+.MarkdownContent-sectionSelector-p {
+  line-height: 22px;
+}
+
+.MarkdownContent-sectionContent {
+}
+
+.MarkdownContent-tags {
+  display: flex;
+  flex-direction: column;
+}
+
+.MarkdownContent-tags-tagContainer {
+  margin-bottom: 11px; /* need approx 7px offset for line height adjustment below */
+}
+
+.MarkdownContent-tags-tag {
+  cursor: pointer;
+  background-color: #efefef;
+  border-radius: 4px;
+  padding: 4px 12px;
+}
+
+.MarkdownContent-tags-tag .FontStyle-doc-p {
+  line-height: 20px; /* need to custom adjust the line height so everything lines up */
+}

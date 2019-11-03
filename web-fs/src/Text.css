@@ -1,0 +1,53 @@
+.FontStyle-primary {
+  font-size: 13px;
+}
+
+.FontStyle-primaryBold {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.FontStyle-heavy {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.FontStyle-doc-p {
+  font-size: 15px;
+  line-height: 24px;
+}
+
+.FontStyle-doc-h1 {
+  font-size: 22px;
+  font-weight: bold;
+  line-height: 28px;
+}
+
+.FontStyle-doc-h3 {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.FontMode-light.FontColorStyle-primary {
+  color: black;
+}
+
+.FontMode-dark.FontColorStyle-primary {
+  color: white;
+}
+
+.FontMode-light.FontColorStyle-secondary {
+  color: #444;
+}
+
+.FontMode-dark.FontColorStyle-secondary {
+  color: #aaa;
+}
+
+.FontMode-light.FontColorStyle-tertiary {
+  color: #aaa;
+}
+
+.FontMode-dark.FontColorStyle-tertiary {
+  color: #aaa;
+}

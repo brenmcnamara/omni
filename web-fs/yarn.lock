@@ -886,6 +886,13 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@brendan9/model@../brendan9-model/":
+  version "1.0.1"
+  dependencies:
+    "@types/node" "^12.7.8"
+    fp-ts "^2.0.5"
+    io-ts "^2.0.1"
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.3.tgz#099139eaec7ebf07a27c1786a3ff64f39464d2ef"
@@ -1301,6 +1308,11 @@
   version "12.11.7"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.11.7.tgz#57682a9771a3f7b09c2497f28129a0462966524a"
   integrity sha512-JNbGaHFCLwgHn/iCckiGSOZ1XYHsKFwREtzPwSGCVld1SGhOlmZw2D4ZI94HQCrBHbADzW9m4LER/8olJTRGHA==
+
+"@types/node@^12.7.8":
+  version "12.12.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.5.tgz#66103d2eddc543d44a04394abb7be52506d7f290"
+  integrity sha512-KEjODidV4XYUlJBF3XdjSH5FWoMCtO0utnhtdLf1AgeuZLOrRbvmU/gaRCVg7ZaQDjVf3l84egiY0mRNe5xE4A==
 
 "@types/prop-types@*":
   version "15.7.3"
@@ -2522,7 +2534,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2.2.6:
+classnames@^2.2.5, classnames@^2.2.6:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
   integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
@@ -4247,6 +4259,11 @@ forwarded@~0.1.2:
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
   integrity sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=
 
+fp-ts@^2.0.5:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.1.1.tgz#c910544499d7c959351bb4260ee7c44a544084c1"
+  integrity sha512-YcWhMdDCFCja0MmaDroTgNu+NWWrrnUEn92nvDgrtVy9Z71YFnhNVIghoHPt8gs82ijoMzFGeWKvArbyICiJgw==
+
 fragment-cache@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/fragment-cache/-/fragment-cache-0.2.1.tgz#4290fad27f13e89be7f33799c6bc5a0abfff0d19"
@@ -4961,6 +4978,11 @@ invert-kv@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-2.0.0.tgz#7393f5afa59ec9ff5f67a27620d11c226e3eec02"
   integrity sha512-wPVv/y/QQ/Uiirj/vh3oP+1Ww+AWehmi1g5fFWGPF6IpCBCDVrhgHRMvrLfdYcwDh3QJbGXDW4JAuzxElLSqKA==
+
+io-ts@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.0.1.tgz#1261c12f915c2f48d16393a36966636b48a45aa1"
+  integrity sha512-RezD+WcCfW4VkMkEcQWL/Nmy/nqsWTvTYg7oUmTGzglvSSV2P9h2z1PVeREPFf0GWNzruYleAt1XCMQZSg1xxQ==
 
 ip-regex@^2.1.0:
   version "2.1.0"
@@ -7927,7 +7949,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.3"
 
-prop-types@^15.5.4, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.4, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -8219,6 +8241,14 @@ react-scripts@3.2.0:
     workbox-webpack-plugin "4.3.1"
   optionalDependencies:
     fsevents "2.0.7"
+
+react-tooltip@^3.11.1:
+  version "3.11.1"
+  resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-3.11.1.tgz#7b4ce48ed26a46e996662b19a2afebbfd483513b"
+  integrity sha512-YCMVlEC2KuHIzOQhPplTK5jmBBwoL+PYJJdJKXj7M/h7oevupd/QSVq6z5U7/ehIGXyHsAqvwpdxexDfyQ0o3A==
+  dependencies:
+    classnames "^2.2.5"
+    prop-types "^15.6.0"
 
 react@^16.11.0:
   version "16.11.0"
