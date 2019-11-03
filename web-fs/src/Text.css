@@ -28,26 +28,26 @@
   line-height: 24px;
 }
 
-.FontMode-light.FontColorStyle-primary {
+.FontMode-lightBackground.FontColorStyle-primary {
   color: black;
 }
 
-.FontMode-dark.FontColorStyle-primary {
+.FontMode-darkBackground.FontColorStyle-primary {
   color: white;
 }
 
-.FontMode-light.FontColorStyle-secondary {
+.FontMode-lightBackground.FontColorStyle-secondary {
   color: #444;
 }
 
-.FontMode-dark.FontColorStyle-secondary {
+.FontMode-darkBackground.FontColorStyle-secondary {
   color: #aaa;
 }
 
-.FontMode-light.FontColorStyle-tertiary {
+.FontMode-lightBackground.FontColorStyle-tertiary {
   color: #aaa;
 }
 
-.FontMode-dark.FontColorStyle-tertiary {
+.FontMode-darkBackground.FontColorStyle-tertiary {
   color: #aaa;
 }

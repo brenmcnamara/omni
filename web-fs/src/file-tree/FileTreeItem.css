@@ -15,6 +15,7 @@
 
 .FileTreeItem-name {
   flex-grow: 1;
+  z-index: 1; /* not sure why this is needed. Should come back to this */
 }
 
 .FileTreeItem-more {
@@ -36,25 +37,38 @@
 }
 
 .FileTreeItem-background {
-  background-color: #292c2f;
   border-radius: 3px;
   bottom: 0;
   left: 0;
-  opacity: 0;
   position: absolute;
   right: 0;
   top: 0;
   transition: opacity 0.2s;
 }
 
+/* The selectors below show the cascading decisions for the coloring of the
+   tree item */
+
+.FileTreeItem-root .FileTreeItem-background {
+  background-color: #292c2f;
+}
+
 .FileTreeItem-root.Theme-Dark .FileTreeItem-background {
   background-color: #fff;
 }
 
-.FileTreeItem-root:hover:not(.FileTreeItem-selected) .FileTreeItem-background {
-  opacity: 0.05;
-}
-
 .FileTreeItem-selected .FileTreeItem-background {
   background-color: #3498db;
+}
+
+.FileTreeItem-selected.Theme-Dark .FileTreeItem-background {
+  background-color: #00c5fc;
+}
+
+.FileTreeItem-root:not(.FileTreeItem-selected) .FileTreeItem-background {
+  opacity: 0;
+}
+
+.FileTreeItem-root:hover:not(.FileTreeItem-selected) .FileTreeItem-background {
+  opacity: 0.05;
 }

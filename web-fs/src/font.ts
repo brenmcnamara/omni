@@ -9,4 +9,4 @@ export type FontStyle =
 
 export type FontColorStyle = 'primary' | 'secondary' | 'tertiary';
 
-export type FontMode = 'dark' | 'light';
+export type FontMode = 'darkBackground' | 'lightBackground';

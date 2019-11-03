@@ -2,9 +2,9 @@ import './FileTreeItem.css';
 
 import classnames from 'classnames';
 import getThemeClassName from '../themes/getThemeClassName';
-import Icon, { ThemedIcon } from '../Icon';
+import Icon from '../Icon';
 import React from 'react';
-import Text from '../Text';
+import Text, { ThemedText } from '../Text';
 import useTheme from '../themes/useTheme';
 
 import { more } from '../icons';
@@ -35,6 +35,7 @@ const FileTreeItem: React.FC<Props> = (props: Props) => {
         [themeClassName]: true,
       })}
     >
+      <div className="FileTreeItem-background" />
       <div className="FileTreeItem-container">
         <div
           className="FileTreeItem-spacer"
@@ -54,29 +55,33 @@ const FileTreeItem: React.FC<Props> = (props: Props) => {
           source={props.icon}
         />
         <div className={classnames('margin-left-12', 'FileTreeItem-name')}>
-          <Text
-            fontColorStyle="primary"
-            fontMode={props.isSelected ? 'dark' : 'light'}
-            fontStyle="primary"
-          >
-            {props.name}
-          </Text>
+          {props.isSelected && (
+            <Text
+              fontColorStyle="primary"
+              fontMode="darkBackground"
+              fontStyle="primary"
+            >
+              {props.name}
+            </Text>
+          )}
+          {!props.isSelected && (
+            <ThemedText fontColorStyle="primary" fontStyle="primary">
+              {props.name}
+            </ThemedText>
+          )}
         </div>
-        {props.isSelected && (
-          <Icon
-            classes={{
-              root: classnames({
-                'FileTreeItem-more': true,
-                'image-size-12': true,
-                'img-white': props.isSelected,
-                [themeClassName]: !props.isSelected,
-              }),
-            }}
-            source={more}
-          />
-        )}
+        <Icon
+          classes={{
+            root: classnames({
+              'FileTreeItem-more': true,
+              'img-size-12': true,
+              'img-white': props.isSelected,
+              [themeClassName]: !props.isSelected,
+            }),
+          }}
+          source={more}
+        />
       </div>
-      <div className="FileTreeItem-background" />
     </div>
   );
 };
