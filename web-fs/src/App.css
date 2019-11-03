@@ -6,6 +6,15 @@
   position: absolute;
   right: 0;
   top: 0;
+  transition: background-color 0.4s;
+}
+
+.App.Theme-Light {
+  background-color: #fff;
+}
+
+.App.Theme-Dark {
+  background-color: #292c2f;
 }
 
 .App-LeftPane {

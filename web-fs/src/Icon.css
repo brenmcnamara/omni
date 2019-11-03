@@ -1,0 +1,11 @@
+.Icon {
+  transition: filter 0.4s;
+}
+
+.Icon.Theme-Dark {
+  filter: brightness(0) invert(1);
+}
+
+.Icon.Theme-Light {
+  filter: brightness(0);
+}
