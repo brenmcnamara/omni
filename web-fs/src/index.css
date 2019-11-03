@@ -14,6 +14,8 @@ p {
   font-size: 14px;
 }
 
+/* MARGINS */
+
 .margin-horiz-8 {
   margin-left: 8px;
   margin-right: 8px;
@@ -42,6 +44,8 @@ p {
 .margin-right-8 {
   margin-right: 8px;
 }
+
+/* PADDINGS */
 
 .padding-all-4 {
   padding: 4px;
@@ -72,6 +76,40 @@ p {
 .padding-bottom-4 {
   padding-bottom: 4px;
 }
+
+.padding-bottom-8 {
+  padding-bottom: 8px;
+}
+
+.padding-bottom-12 {
+  padding-bottom: 12px;
+}
+
+/* BORDERS */
+
+.border-bottom {
+  border-bottom-color: #efefef;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  transition: border-bottom-color 0.4s;
+}
+
+.border-bottom.Theme-Dark {
+  border-bottom-color: #26292c;
+}
+
+.border-right {
+  border-right-color: #efefef;
+  border-right-style: solid;
+  border-right-width: 1px;
+  transition: border-right-color 0.4s;
+}
+
+.border-right.Theme-Dark {
+  border-right-color: #26292c;
+}
+
+/* IMAGES */
 
 .img-size-12 {
   width: 12px;

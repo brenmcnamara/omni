@@ -14,11 +14,10 @@
 }
 
 .App.Theme-Dark {
-  background-color: #292c2f;
+  background-color: #161719;
 }
 
 .App-LeftPane {
-  border-right: solid 1px #efefef;
   max-width: 300px;
   min-width: 300px;
   overflow: auto;

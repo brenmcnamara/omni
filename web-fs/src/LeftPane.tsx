@@ -1,7 +1,9 @@
 import './App.css';
 
 import classnames from 'classnames';
+import getThemeClassName from './themes/getThemeClassName';
 import React from 'react';
+import useTheme from './themes/useTheme';
 
 import { ClassValue } from 'classnames/types';
 
@@ -15,10 +17,13 @@ interface Props {
 }
 
 const LeftPane: React.FC<Props> = (props: Props) => {
+  const theme = useTheme()[0];
   return (
     <div
       className={classnames(
         'App-LeftPane',
+        'border-right',
+        getThemeClassName(theme),
         props.classes && props.classes.root,
       )}
     >

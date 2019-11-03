@@ -40,7 +40,15 @@
 
 .MarkdownContent-tags-tag {
   cursor: pointer;
-  background-color: #efefef;
   border-radius: 4px;
   padding: 4px 12px;
+  transition: background-color 0.4s;
+}
+
+.MarkdownContent-tags-tag {
+  background-color: #efefef;
+}
+
+.MarkdownContent-tags-tag.Theme-Dark {
+  background-color: #26292c;
 }

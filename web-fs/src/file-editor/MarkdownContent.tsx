@@ -1,10 +1,12 @@
 import './MarkdownContent.css';
 
 import classnames from 'classnames';
+import getThemeClassName from '../themes/getThemeClassName';
 import React from 'react';
-import Text from '../Text';
+import useTheme from '../themes/useTheme';
 
 import { ClassValue } from 'classnames/types';
+import { ThemedText } from '../Text';
 
 interface Classes {
   root?: ClassValue;
@@ -50,9 +52,9 @@ const SectionSelector: React.FC<SectionSelector$Props> = (
           'MarkdownContent-sectionSelector': true,
         })}
       >
-        <Text fontColorStyle="primary" fontStyle="doc-h3">
+        <ThemedText fontColorStyle="primary" fontStyle="doc-h3">
           {props.selectedType}
-        </Text>
+        </ThemedText>
       </div>
     </div>
   );
@@ -68,9 +70,9 @@ export const Tags: React.FC<Tags$Props> = (props: Tags$Props) => {
   return (
     <div className="MarkdownContent-section">
       <div className="MarkdownContent-sectionLabel">
-        <Text fontColorStyle="secondary" fontStyle="doc-h3">
+        <ThemedText fontColorStyle="secondary" fontStyle="doc-h3">
           {'#'}
-        </Text>
+        </ThemedText>
       </div>
       <div className="MarkdownContent-sectionContent">
         {props.tags.map(tag => (
@@ -88,12 +90,18 @@ interface Tag$Props {
 }
 
 const Tag: React.FC<Tag$Props> = (props: Tag$Props) => {
+  const theme = useTheme()[0];
   return (
     <div className={classnames('MarkdownContent-tags-tagContainer')}>
-      <span className={classnames('MarkdownContent-tags-tag')}>
-        <Text fontColorStyle="secondary" fontStyle="doc-p">
+      <span
+        className={classnames(
+          'MarkdownContent-tags-tag',
+          getThemeClassName(theme),
+        )}
+      >
+        <ThemedText fontColorStyle="secondary" fontStyle="doc-p">
           {props.tag}
-        </Text>
+        </ThemedText>
       </span>
     </div>
   );
@@ -110,9 +118,9 @@ export const P: React.FC<P$Props> = (props: P$Props) => {
     <div className="MarkdownContent-section">
       <SectionSelector selectedType="P" />
       <div className="MarkdownContent-sectionContent">
-        <Text fontColorStyle="secondary" fontStyle="doc-p">
+        <ThemedText fontColorStyle="secondary" fontStyle="doc-p">
           {props.children}
-        </Text>
+        </ThemedText>
       </div>
     </div>
   );
