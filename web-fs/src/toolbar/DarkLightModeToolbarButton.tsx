@@ -29,7 +29,11 @@ const DarkLightModeToolbarButton: React.FC<Props> = (props: Props) => {
       }}
       onClick={() => setIsDarkMode(!isDarkMode)}
     >
-      <ThemedIcon classes={{ root: 'img-size-20' }} source={contrast} />
+      <ThemedIcon
+        alt="Toggle Dark Mode"
+        classes={{ root: 'img-size-20' }}
+        source={contrast}
+      />
     </ToolbarButton>
   );
 };

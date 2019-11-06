@@ -1,7 +1,5 @@
 import classnames from 'classnames';
 
-import { ClassValue } from 'classnames/types';
-
 // TODO: MAKE THIS WORK WITH TYPESCRIPT.
 
 export default function mergeClasses<TC1, TC2>(

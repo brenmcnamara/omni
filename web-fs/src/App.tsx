@@ -13,8 +13,6 @@ import useTheme from './themes/useTheme';
 const App: React.FC = () => {
   const theme = useTheme()[0];
 
-  console.log('changing app', theme);
-
   return (
     <div className={classnames('App', getThemeClassName(theme))}>
       <LeftPane classes={{ root: 'padding-top-40' }}>

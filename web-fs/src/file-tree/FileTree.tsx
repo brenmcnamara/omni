@@ -1,14 +1,17 @@
 import './FileTree.css';
 
 import FileTreeItem from './FileTreeItem';
+// import useFileGroups from '../store/useFileGroups';
 import GroupTreeItem from './GroupTreeItem';
 import React from 'react';
 
-import { arrowRight, document, diamond } from '../icons';
+import { document, diamond } from '../icons';
 
 interface Props {}
 
 const FileTree: React.FC<Props> = (props: Props) => {
+  // const { groups } = useFileGroups()[0];
+
   return (
     <div className="FileTree-root">
       <GroupTreeItem indent={0} isOpen={false} name="9point" />

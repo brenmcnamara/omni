@@ -13,6 +13,7 @@ interface Classes {
 }
 
 interface Props {
+  alt: string;
   classes?: Classes;
   source: string;
 }
@@ -20,6 +21,7 @@ interface Props {
 const Icon: React.FC<Props> = (props: Props) => {
   return (
     <img
+      alt={props.alt}
       className={classnames('Icon', props.classes && props.classes.root)}
       src={props.source}
     />

@@ -44,6 +44,7 @@ const FileTreeItem: React.FC<Props> = (props: Props) => {
           }}
         />
         <Icon
+          alt="File Icon"
           classes={{
             root: classnames({
               'FileTreeItem-icon': true,
@@ -71,6 +72,7 @@ const FileTreeItem: React.FC<Props> = (props: Props) => {
           )}
         </div>
         <Icon
+          alt="Show File Context Menu"
           classes={{
             root: classnames({
               'FileTreeItem-more': true,

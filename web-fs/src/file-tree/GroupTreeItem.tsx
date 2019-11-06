@@ -4,11 +4,11 @@ import classnames from 'classnames';
 import getThemeClassName from '../themes/getThemeClassName';
 import Icon from '../Icon';
 import React from 'react';
-import Text, { ThemedText } from '../Text';
 import useTheme from '../themes/useTheme';
 
 import { arrowRight, more } from '../icons';
 import { ClassValue } from 'classnames/types';
+import { ThemedText } from '../Text';
 
 interface Classes {
   root?: ClassValue;
@@ -45,6 +45,7 @@ const GroupTreeItem: React.FC<Props> = (props: Props) => {
           style={{ width: props.indent * INDENT_SIZE_PX }}
         />
         <Icon
+          alt="Group Open / Close Indication"
           classes={{
             root: classnames({
               'img-size-6': true,
@@ -61,6 +62,7 @@ const GroupTreeItem: React.FC<Props> = (props: Props) => {
           </ThemedText>
         </div>
         <Icon
+          alt="Show Group Context Menu"
           classes={{
             root: classnames(
               'FileTreeItem-more',
