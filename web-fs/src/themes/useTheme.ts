@@ -22,7 +22,6 @@ let activeTheme: Theme = LocalStorageManager.getActiveState();
 const themeSetters: ThemeSetter[] = [];
 
 function setThemeMaster(theme: Theme) {
-  console.log('calling setter');
   activeTheme = theme;
   LocalStorageManager.setActiveState(theme);
   themeSetters.forEach(setThemeSlave => setThemeSlave(theme));
@@ -30,7 +29,6 @@ function setThemeMaster(theme: Theme) {
 
 export default function useTheme(): [Theme, (theme: Theme) => void] {
   const [theme, setThemeSlave] = useState(activeTheme);
-  console.log(theme);
 
   useEffect(() => {
     themeSetters.push(setThemeSlave);

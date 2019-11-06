@@ -10,7 +10,7 @@ interface Props {}
 
 const DarkLightModeToolbarButton: React.FC<Props> = (props: Props) => {
   const [theme, setTheme] = useTheme();
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const isDarkMode = theme === 'Dark';
 
   useEffect(() => {
     const newTheme = isDarkMode ? 'Dark' : 'Light';
@@ -24,10 +24,10 @@ const DarkLightModeToolbarButton: React.FC<Props> = (props: Props) => {
       classes={{
         root: classnames({
           'DarkLightModeToolbarButton-isDarkMode': isDarkMode,
-          'DarkLightModeToolbarButton-isLightMode': !isDarkMode,
+          'DarkLightModeToolbarButton-isLightMode': isDarkMode,
         }),
       }}
-      onClick={() => setIsDarkMode(!isDarkMode)}
+      onClick={() => setTheme(isDarkMode ? 'Light' : 'Dark')}
     >
       <ThemedIcon
         alt="Toggle Dark Mode"
