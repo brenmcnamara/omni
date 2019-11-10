@@ -8,7 +8,7 @@ import useTheme from '../themes/useTheme';
 
 import { arrowDown, arrowRight, ellipsisH } from '../icons';
 import { ClassValue } from 'classnames/types';
-import { ThemedText } from '../Text';
+import { ThemedText } from '../text';
 
 interface Classes {
   root?: ClassValue;
@@ -51,7 +51,7 @@ const GroupTreeItem: React.FC<Props> = (props: Props) => {
           />
         </div>
         <div className={classnames('margin-left-12', 'FileTreeItem-name')}>
-          <ThemedText fontColorStyle="primary" fontStyle="primary">
+          <ThemedText fontColor="primary" fontStyle="primary">
             {props.name}
           </ThemedText>
         </div>

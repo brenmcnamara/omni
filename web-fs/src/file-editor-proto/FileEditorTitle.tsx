@@ -5,7 +5,7 @@ import getThemeClassName from '../themes/getThemeClassName';
 import React from 'react';
 import useTheme from '../themes/useTheme';
 
-import { ThemedText } from '../Text';
+import { ThemedText } from '../text';
 
 interface Props {
   title: string;
@@ -16,13 +16,13 @@ const FileEditorTitle: React.FC<Props> = (props: Props) => {
   return (
     <div
       className={classnames(
-        'FileEditorTitle-root',
+        'FileEditorProtoTitle-root',
         'padding-bottom-12',
         'border-bottom',
         getThemeClassName(theme),
       )}
     >
-      <ThemedText fontColorStyle="primary" fontStyle="heavy">
+      <ThemedText fontColor="primary" fontStyle="heavy">
         {props.title}
       </ThemedText>
     </div>

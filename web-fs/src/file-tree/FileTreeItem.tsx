@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import getThemeClassName from '../themes/getThemeClassName';
 import Icon, { ThemedIcon } from '../Icon';
 import React from 'react';
-import Text, { ThemedText } from '../Text';
+import Text, { ThemedText } from '../text';
 import useTheme from '../themes/useTheme';
 
 import { ellipsisH } from '../icons';
@@ -49,7 +49,7 @@ const FileTreeItem: React.FC<Props> = (props: Props) => {
         <div className={classnames('margin-left-12', 'FileTreeItem-name')}>
           {props.isSelected && (
             <Text
-              fontColorStyle="primary"
+              fontColor="primary"
               fontMode="darkBackground"
               fontStyle="primary"
             >
@@ -57,7 +57,7 @@ const FileTreeItem: React.FC<Props> = (props: Props) => {
             </Text>
           )}
           {!props.isSelected && (
-            <ThemedText fontColorStyle="primary" fontStyle="primary">
+            <ThemedText fontColor="primary" fontStyle="primary">
               {props.name}
             </ThemedText>
           )}

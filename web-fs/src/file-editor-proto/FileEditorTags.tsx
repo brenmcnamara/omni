@@ -5,7 +5,7 @@ import getThemeClassName from '../themes/getThemeClassName';
 import React from 'react';
 import useTheme from '../themes/useTheme';
 
-import { ThemedText } from '../Text';
+import { ThemedText } from '../text';
 
 // TAGS
 
@@ -15,15 +15,15 @@ interface Tags$Props {
 
 const Tags: React.FC<Tags$Props> = (props: Tags$Props) => {
   return (
-    <div className="FileEditorSection-root">
-      <div className="FileEditorSection-label">
-        <ThemedText fontColorStyle="secondary" fontStyle="doc-h3">
+    <div className="FileEditorProtoSection-root">
+      <div className="FileEditorProtoSection-label">
+        <ThemedText fontColor="secondary" fontStyle="doc-h3">
           {'#'}
         </ThemedText>
       </div>
-      <div className="FileEditorSection-content">
+      <div className="FileEditorProtoSection-content">
         {props.tags.map(tag => (
-          <div className={classnames('FileEditorTags-root')} key={tag}>
+          <div className={classnames('FileEditorProtoTags-root')} key={tag}>
             <Tag tag={tag} />
           </div>
         ))}
@@ -41,11 +41,11 @@ interface Tag$Props {
 const Tag: React.FC<Tag$Props> = (props: Tag$Props) => {
   const theme = useTheme()[0];
   return (
-    <div className={classnames('FileEditorTags-container')}>
+    <div className={classnames('FileEditorProtoTags-container')}>
       <span
-        className={classnames('FileEditorTags-tag', getThemeClassName(theme))}
+        className={classnames('FileEditorProtoTags-tag', getThemeClassName(theme))}
       >
-        <ThemedText fontColorStyle="secondary" fontStyle="doc-p">
+        <ThemedText fontColor="secondary" fontStyle="doc-p">
           {props.tag}
         </ThemedText>
       </span>

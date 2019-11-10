@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import React from 'react';
 
 import { ClassValue } from 'classnames/types';
-import { ThemedText } from '../Text';
+import { ThemedText } from '../text';
 
 interface Classes {
   root?: ClassValue;
@@ -34,7 +34,7 @@ const SectionSelector: React.FC<SectionSelector$Props> = (
           'FileEditorSection-selector': true,
         })}
       >
-        <ThemedText fontColorStyle="primary" fontStyle="doc-h3">
+        <ThemedText fontColor="primary" fontStyle="doc-h3">
           {props.selectedType}
         </ThemedText>
       </div>
@@ -53,7 +53,7 @@ export const P: React.FC<P$Props> = (props: P$Props) => {
     <div className="FileEditorSection-root">
       <SectionSelector selectedType="P" />
       <div className="FileEditorSection-content">
-        <ThemedText fontColorStyle="secondary" fontStyle="doc-p">
+        <ThemedText fontColor="secondary" fontStyle="doc-p">
           {props.children}
         </ThemedText>
       </div>

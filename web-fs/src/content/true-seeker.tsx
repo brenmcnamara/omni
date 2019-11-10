@@ -1,9 +1,9 @@
-import FileEditor from '../file-editor/FileEditor';
-import FileEditorTags from '../file-editor/FileEditorTags';
-import FileEditorTitle from '../file-editor/FileEditorTitle';
+import FileEditor from '../file-editor-proto/FileEditor';
+import FileEditorTags from '../file-editor-proto/FileEditorTags';
+import FileEditorTitle from '../file-editor-proto/FileEditorTitle';
 import React from 'react';
 
-import { P } from '../file-editor/MarkdownContent';
+import { P } from '../file-editor-proto/MarkdownContent';
 
 const TrueSeeker: React.FC = () => {
   return (

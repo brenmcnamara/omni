@@ -18,7 +18,7 @@ const FileEditor: React.FC<Props> = (props: Props) => {
   return (
     <div
       className={classnames(
-        'FileEditor-root',
+        'FileEditorProto-root',
         props.classes && props.classes.root,
       )}
     >
