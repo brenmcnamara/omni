@@ -6,8 +6,8 @@ import Icon from '../Icon';
 import React from 'react';
 import useTheme from '../themes/useTheme';
 
-import { arrowRight, more } from '../icons';
 import { ClassValue } from 'classnames/types';
+import { plus } from '../icons';
 import { ThemedText } from '../Text';
 
 interface Classes {
@@ -16,14 +16,9 @@ interface Classes {
 
 interface Props {
   classes?: Classes;
-  indent: number;
-  isOpen: boolean;
-  name: string;
 }
 
-const INDENT_SIZE_PX = 24;
-
-const GroupTreeItem: React.FC<Props> = (props: Props) => {
+const CreateFileItem: React.FC<Props> = (props: Props) => {
   const theme = useTheme()[0];
   const themeClassName = getThemeClassName(theme);
 
@@ -34,49 +29,35 @@ const GroupTreeItem: React.FC<Props> = (props: Props) => {
         'margin-bottom-4',
         'margin-horiz-8',
         'padding-horiz-8',
-        props.classes && props.classes.root,
         themeClassName,
+        props.classes && props.classes.root,
       )}
     >
       <div className="FileTreeItem-background" />
       <div className="FileTreeItem-container">
-        <div
-          className="FileTreeItem-spacer"
-          style={{ width: props.indent * INDENT_SIZE_PX }}
-        />
+        <div className="FileTreeItem-spacer" />
         <div className="FileTreeItem-iconContainer">
           <Icon
-            alt="Group Open / Close Indication"
+            alt="File Icon"
             classes={{
-              root: classnames({
-                'FileTreeItem-icon': true,
-                'FileTreeItem-icon-group': true,
-                'FileTreeItem-icon-rotate': props.isOpen,
-                [themeClassName]: true,
-              }),
+              root: classnames(
+                'FileTreeItem-icon',
+                'img-size-12',
+                themeClassName,
+              ),
             }}
-            source={arrowRight}
+            source={plus}
           />
         </div>
+
         <div className={classnames('margin-left-12', 'FileTreeItem-name')}>
           <ThemedText fontColorStyle="primary" fontStyle="primary">
-            {props.name}
+            {'New File'}
           </ThemedText>
         </div>
-        <Icon
-          alt="Show Group Context Menu"
-          classes={{
-            root: classnames(
-              'FileTreeItem-more',
-              'img-size-12',
-              themeClassName,
-            ),
-          }}
-          source={more}
-        />
       </div>
     </div>
   );
 };
 
-export default GroupTreeItem;
+export default CreateFileItem;

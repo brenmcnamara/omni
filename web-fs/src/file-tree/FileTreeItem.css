@@ -13,9 +13,23 @@
   height: 100%;
 }
 
+.FileTreeItem-iconContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  width: 16px;
+}
+
 .FileTreeItem-icon {
   transition: transform 0.2s;
   transform: rotate(0deg);
+}
+
+.FileTreeItem-icon-group {
+  width: 6px;
+  height: 12px;
+  /* adjusting margins so rotated group icon stays in bounds of parent */
+  margin-left: 3px;
 }
 
 .FileTreeItem-icon-rotate {
@@ -52,7 +66,9 @@
   position: absolute;
   right: 0;
   top: 0;
-  transition: opacity 0.2s;
+  /* NOTE: This animation is causing some wierd jump in the arrow icon sizing.
+     Need to fix this before adding it back */
+  /* transition: opacity 0.2s; */
 }
 
 /* The selectors below show the cascading decisions for the coloring of the

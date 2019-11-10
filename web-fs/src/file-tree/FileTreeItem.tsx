@@ -43,18 +43,21 @@ const FileTreeItem: React.FC<Props> = (props: Props) => {
             width: props.indent * INDENT_SIZE_PX,
           }}
         />
-        <Icon
-          alt="File Icon"
-          classes={{
-            root: classnames({
-              'FileTreeItem-icon': true,
-              'img-size-16': true,
-              'img-white': props.isSelected,
-              [themeClassName]: !props.isSelected,
-            }),
-          }}
-          source={props.icon}
-        />
+        <div className="FileTreeItem-iconContainer">
+          <Icon
+            alt="File Icon"
+            classes={{
+              root: classnames({
+                'FileTreeItem-icon': true,
+                'img-size-16': true,
+                'img-white': props.isSelected,
+                [themeClassName]: !props.isSelected,
+              }),
+            }}
+            source={props.icon}
+          />
+        </div>
+
         <div className={classnames('margin-left-12', 'FileTreeItem-name')}>
           {props.isSelected && (
             <Text

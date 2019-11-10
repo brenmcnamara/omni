@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="44px" height="44px" viewBox="0 0 44 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>709-plus-toolbar@2x</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Assets" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-204.000000, -530.000000)" fill="#000000" fill-rule="nonzero">
+            <g id="Icons-44" transform="translate(22.000000, 22.000000)">
+                <g id="709-plus-toolbar@2x" transform="translate(182.000000, 508.000000)">
+                    <path d="M43,21 L23,21 L23,1 C23,0.448 22.553,0 22,0 C21.447,0 21,0.448 21,1 L21,21 L1,21 C0.447,21 0,21.448 0,22 C0,22.553 0.447,23 1,23 L21,23 L21,43 C21,43.553 21.447,44 22,44 C22.553,44 23,43.553 23,43 L23,23 L43,23 C43.553,23 44,22.553 44,22 C44,21.448 43.553,21 43,21 Z" id="Path"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

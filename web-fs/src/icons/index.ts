@@ -7,6 +7,7 @@ import document from './document.svg';
 import expand from './expand.svg';
 import folder from './folder.svg';
 import more from './more.svg';
+import plus from './plus.svg';
 
 export { arrowRight };
 export { collapse };
@@ -17,3 +18,4 @@ export { diamond };
 export { expand };
 export { folder };
 export { more };
+export { plus };
