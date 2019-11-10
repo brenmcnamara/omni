@@ -1,43 +1,41 @@
 import './Icon.css';
 
 import classnames from 'classnames';
-import getThemeClassName from './themes/getThemeClassName';
-import mergeClasses from './mergeClasses';
 import React from 'react';
 import useTheme from './themes/useTheme';
 
-import { ClassValue } from 'classnames/types';
+export type IconSize =
+  | 'icon-size-12'
+  | 'icon-size-16'
+  | 'icon-size-20'
+  | 'icon-size-40';
 
-interface Classes {
-  root?: ClassValue;
-}
+export type IconColor = 'icon-color-white' | 'icon-color-black';
 
 interface Props {
-  alt: string;
-  classes?: Classes;
-  source: string;
+  color: IconColor;
+  icon: string;
+  size: IconSize;
 }
 
 const Icon: React.FC<Props> = (props: Props) => {
   return (
-    <img
-      alt={props.alt}
-      className={classnames('Icon', props.classes && props.classes.root)}
-      src={props.source}
-    />
+    <i className={classnames('icon', props.icon, props.color, props.size)} />
   );
 };
 
 export default Icon;
 
-export const ThemedIcon: React.FC<Props> = (props: Props) => {
+type ThemedIcon$Props = Omit<Props, 'color'>;
+
+export const ThemedIcon: React.FC<ThemedIcon$Props> = (
+  props: ThemedIcon$Props,
+) => {
   const theme = useTheme()[0];
   return (
     <Icon
       {...props}
-      classes={mergeClasses(props.classes, {
-        root: classnames(getThemeClassName(theme)),
-      })}
+      color={theme === 'Dark' ? 'icon-color-white' : 'icon-color-black'}
     />
   );
 };

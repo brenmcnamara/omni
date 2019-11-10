@@ -31,9 +31,7 @@ const Text = (props: Props) => {
 
 export default Text;
 
-type ThemedText$Props = {
-  [TK in keyof Props]: TK extends 'fontMode' ? never : Props[TK];
-};
+type ThemedText$Props = Omit<Props, 'fontMode'>;
 
 export const ThemedText: React.FC<ThemedText$Props> = (
   props: ThemedText$Props,

@@ -2,12 +2,12 @@ import './FileTreeItem.css';
 
 import classnames from 'classnames';
 import getThemeClassName from '../themes/getThemeClassName';
-import Icon from '../Icon';
+import Icon, { ThemedIcon } from '../Icon';
 import React from 'react';
 import Text, { ThemedText } from '../Text';
 import useTheme from '../themes/useTheme';
 
-import { more } from '../icons';
+import { ellipsisH } from '../icons';
 
 interface Props {
   className?: string;
@@ -44,20 +44,8 @@ const FileTreeItem: React.FC<Props> = (props: Props) => {
           }}
         />
         <div className="FileTreeItem-iconContainer">
-          <Icon
-            alt="File Icon"
-            classes={{
-              root: classnames({
-                'FileTreeItem-icon': true,
-                'img-size-16': true,
-                'img-white': props.isSelected,
-                [themeClassName]: !props.isSelected,
-              }),
-            }}
-            source={props.icon}
-          />
+          <ThemedIcon size="icon-size-16" icon={props.icon} />
         </div>
-
         <div className={classnames('margin-left-12', 'FileTreeItem-name')}>
           {props.isSelected && (
             <Text
@@ -74,18 +62,7 @@ const FileTreeItem: React.FC<Props> = (props: Props) => {
             </ThemedText>
           )}
         </div>
-        <Icon
-          alt="Show File Context Menu"
-          classes={{
-            root: classnames({
-              'FileTreeItem-more': true,
-              'img-size-12': true,
-              'img-white': props.isSelected,
-              [themeClassName]: !props.isSelected,
-            }),
-          }}
-          source={more}
-        />
+        <Icon color="icon-color-white" icon={ellipsisH} size="icon-size-12" />
       </div>
     </div>
   );

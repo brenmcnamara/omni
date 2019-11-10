@@ -1,9 +1,9 @@
 import classnames from 'classnames';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import ToolbarButton from './ToolbarButton';
 import useTheme from '../themes/useTheme';
 
-import { contrast } from '../icons';
+import { adjust } from '../icons';
 import { ThemedIcon } from '../Icon';
 
 interface Props {}
@@ -29,11 +29,7 @@ const DarkLightModeToolbarButton: React.FC<Props> = (props: Props) => {
       }}
       onClick={() => setTheme(isDarkMode ? 'Light' : 'Dark')}
     >
-      <ThemedIcon
-        alt="Toggle Dark Mode"
-        classes={{ root: 'img-size-20' }}
-        source={contrast}
-      />
+      <ThemedIcon size="icon-size-20" icon={adjust} />
     </ToolbarButton>
   );
 };
