@@ -1,9 +1,9 @@
-import './App.css';
+import './PageLayout.css';
 
 import classnames from 'classnames';
-import getThemeClassName from './themes/getThemeClassName';
+import getThemeClassName from '../themes/getThemeClassName';
 import React from 'react';
-import useTheme from './themes/useTheme';
+import useTheme from '../themes/useTheme';
 
 import { ClassValue } from 'classnames/types';
 
@@ -21,13 +21,13 @@ const LeftPane: React.FC<Props> = (props: Props) => {
   return (
     <div
       className={classnames(
-        'App-LeftPane',
+        'PageLayout-LeftPane',
         'border-right',
         getThemeClassName(theme),
         props.classes && props.classes.root,
       )}
     >
-      <div className="App-LeftPaneContent">{props.children}</div>
+      <div className="PageLayout-LeftPaneContent">{props.children}</div>
     </div>
   );
 };

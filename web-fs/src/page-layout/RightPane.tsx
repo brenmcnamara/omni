@@ -1,4 +1,4 @@
-import './App.css';
+import './PageLayout.css';
 
 import React from 'react';
 
@@ -8,8 +8,8 @@ interface Props {
 
 const RightPane: React.FC<Props> = (props: Props) => {
   return (
-    <div className="App-RightPane">
-      <div className="App-RightPaneContent">{props.children}</div>
+    <div className="PageLayout-RightPane">
+      <div className="PageLayout-RightPaneContent">{props.children}</div>
     </div>
   );
 };

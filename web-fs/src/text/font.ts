@@ -1,3 +1,7 @@
+import classnames from 'classnames';
+
+import { ClassValue } from 'classnames/types';
+
 export type FontStyle =
   | 'primary'
   | 'primaryBold'
@@ -7,18 +11,20 @@ export type FontStyle =
   | 'doc-h3'
   | 'doc-p';
 
-export function getFontStyleClassName(fontStyle: FontStyle): string {
-  return `FontStyle-${fontStyle}`;
-}
-
 export type FontColor = 'primary' | 'secondary' | 'tertiary';
-
-export function getFontColorClassName(fontColor: FontColor): string {
-  return `FontColor-${fontColor}`;
-}
 
 export type FontMode = 'darkBackground' | 'lightBackground';
 
-export function getFontModeClassName(fontMode: FontMode): string {
-  return `FontMode-${fontMode}`;
+export interface TextProps {
+  fontColor: FontColor;
+  fontMode: FontMode;
+  fontStyle: FontStyle;
+}
+
+export function getTextClassNames(props: TextProps): ClassValue {
+  return classnames(
+    `FontStyle-${props.fontStyle}`,
+    `FontColor-${props.fontColor}`,
+    `FontMode-${props.fontMode}`,
+  );
 }

@@ -29,6 +29,10 @@ p {
   margin-bottom: 4px;
 }
 
+.margin-bottom-20 {
+  margin-bottom: 20px;
+}
+
 .margin-top-8 {
   margin-top: 8px;
 }
@@ -87,6 +91,10 @@ p {
 
 .padding-bottom-12 {
   padding-bottom: 12px;
+}
+
+.padding-bottom-20 {
+  padding-bottom: 20px;
 }
 
 /* BORDERS */

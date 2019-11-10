@@ -4,14 +4,7 @@ import classnames from 'classnames';
 import React from 'react';
 import useTheme from '../themes/useTheme';
 
-import {
-  FontColor,
-  FontMode,
-  FontStyle,
-  getFontColorClassName,
-  getFontModeClassName,
-  getFontStyleClassName,
-} from './font';
+import { FontColor, FontMode, FontStyle, getTextClassNames } from './font';
 
 interface Props {
   children?: React.ReactNode;
@@ -26,9 +19,11 @@ const Text = (props: Props) => {
   return (
     <span
       className={classnames(
-        getFontStyleClassName(props.fontStyle),
-        getFontColorClassName(props.fontColor),
-        getFontModeClassName(fontMode),
+        getTextClassNames({
+          fontColor: props.fontColor,
+          fontMode,
+          fontStyle: props.fontStyle,
+        }),
       )}
     >
       {props.children}
@@ -52,8 +47,4 @@ export const ThemedText: React.FC<ThemedText$Props> = (
   );
 };
 
-export { getFontColorClassName };
-
-export { getFontModeClassName };
-
-export { getFontStyleClassName };
+export { getTextClassNames };

@@ -1,4 +1,4 @@
-.App {
+.PageLayout {
   bottom: 0;
   display: flex;
   flex-direction: row;
@@ -9,22 +9,22 @@
   transition: background-color 0.4s;
 }
 
-.App.Theme-Light {
+.PageLayout.Theme-Light {
   background-color: #fff;
 }
 
-.App.Theme-Dark {
+.PageLayout.Theme-Dark {
   background-color: #161719;
 }
 
-.App-LeftPane {
+.PageLayout-LeftPane {
   max-width: 300px;
   min-width: 300px;
   overflow: auto;
   width: 300px;
 }
 
-.App-RightPane {
+.PageLayout-RightPane {
   flex-grow: 1;
   overflow: auto;
   padding-right: 56px; /* Avoid the toolbar */
