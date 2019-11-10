@@ -1,9 +1,8 @@
+import './FileEditor.css';
 import './MarkdownContent.css';
 
 import classnames from 'classnames';
-import getThemeClassName from '../themes/getThemeClassName';
 import React from 'react';
-import useTheme from '../themes/useTheme';
 
 import { ClassValue } from 'classnames/types';
 import { ThemedText } from '../Text';
@@ -17,26 +16,9 @@ interface Props {
   classes?: Classes;
 }
 
-const MarkdownContent: React.FC<Props> = (props: Props) => {
-  return (
-    <div
-      className={classnames(
-        'MarkdownContent-root',
-        props.classes && props.classes.root,
-      )}
-    >
-      {props.children}
-    </div>
-  );
-};
-
-export default MarkdownContent;
-
 // SECTION SELECTOR
 
 type MarkdownSectionType = 'P' | 'H1' | 'H2' | 'H3';
-
-type MarkdownInlineType = 'BOLD' | 'ITALICS' | 'UNDERLINE';
 
 interface SectionSelector$Props {
   selectedType: MarkdownSectionType;
@@ -46,63 +28,16 @@ const SectionSelector: React.FC<SectionSelector$Props> = (
   props: SectionSelector$Props,
 ) => {
   return (
-    <div className="MarkdownContent-sectionLabel">
+    <div className="FileEditorSection-label">
       <div
         className={classnames({
-          'MarkdownContent-sectionSelector': true,
+          'FileEditorSection-selector': true,
         })}
       >
         <ThemedText fontColorStyle="primary" fontStyle="doc-h3">
           {props.selectedType}
         </ThemedText>
       </div>
-    </div>
-  );
-};
-
-// TAGS
-
-interface Tags$Props {
-  tags: string[];
-}
-
-export const Tags: React.FC<Tags$Props> = (props: Tags$Props) => {
-  return (
-    <div className="MarkdownContent-section">
-      <div className="MarkdownContent-sectionLabel">
-        <ThemedText fontColorStyle="secondary" fontStyle="doc-h3">
-          {'#'}
-        </ThemedText>
-      </div>
-      <div className="MarkdownContent-sectionContent">
-        {props.tags.map(tag => (
-          <div className={classnames('MarkdownContent-tags')} key={tag}>
-            <Tag tag={tag} />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-interface Tag$Props {
-  tag: string;
-}
-
-const Tag: React.FC<Tag$Props> = (props: Tag$Props) => {
-  const theme = useTheme()[0];
-  return (
-    <div className={classnames('MarkdownContent-tags-tagContainer')}>
-      <span
-        className={classnames(
-          'MarkdownContent-tags-tag',
-          getThemeClassName(theme),
-        )}
-      >
-        <ThemedText fontColorStyle="secondary" fontStyle="doc-p">
-          {props.tag}
-        </ThemedText>
-      </span>
     </div>
   );
 };
@@ -115,9 +50,9 @@ interface P$Props {
 
 export const P: React.FC<P$Props> = (props: P$Props) => {
   return (
-    <div className="MarkdownContent-section">
+    <div className="FileEditorSection-root">
       <SectionSelector selectedType="P" />
-      <div className="MarkdownContent-sectionContent">
+      <div className="FileEditorSection-content">
         <ThemedText fontColorStyle="secondary" fontStyle="doc-p">
           {props.children}
         </ThemedText>
