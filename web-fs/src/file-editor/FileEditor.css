@@ -10,3 +10,36 @@
 
 .FileEditor-titleEditor:focus {
 }
+
+/**
+ * We have custom text styling behavior in this component to compensate
+ * for the fact that in the text editor, we don't have full control over
+ * re-rendering text blocks (for perf reasons).
+ */
+.FileEditor-contentContainer {
+  transition: color 0.4s;
+}
+
+.FileEditor-contentContainer.FontMode-lightBackground .FontColor-primary {
+  color: black;
+}
+
+.FileEditor-contentContainer.FontMode-darkBackground .FontColor-primary {
+  color: white;
+}
+
+.FileEditor-contentContainer.FontMode-lightBackground .FontColor-secondary {
+  color: #444;
+}
+
+.FileEditor-contentContainer.FontMode-darkBackground .FontColor-secondary {
+  color: #aaa;
+}
+
+.FileEditor-contentContainer.FontMode-lightBackground .FontColor-tertiary {
+  color: #aaa;
+}
+
+.FileEditor-contentContainer.FontMode-darkBackground .FontColor-tertiary {
+  color: #aaa;
+}

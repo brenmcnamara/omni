@@ -1,8 +1,10 @@
 import './Text.css';
 
 import classnames from 'classnames';
+import getFontModeClassNames from './getFontModeClassNames';
 import React from 'react';
 import useTheme from '../themes/useTheme';
+import useThemedFontMode from './useThemedFontMode';
 
 import { FontColor, FontMode, FontStyle, getTextClassNames } from './font';
 
@@ -47,4 +49,6 @@ export const ThemedText: React.FC<ThemedText$Props> = (
   );
 };
 
+export { getFontModeClassNames };
 export { getTextClassNames };
+export { useThemedFontMode };

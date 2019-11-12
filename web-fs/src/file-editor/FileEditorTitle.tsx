@@ -5,8 +5,8 @@ import getThemeClassName from '../themes/getThemeClassName';
 import React, { useEffect, useRef } from 'react';
 import useTheme from '../themes/useTheme';
 
-import { getTextClassNames } from '../text';
 import { KeyMap } from './Keys';
+import { getTextClassNames } from '../text';
 
 interface Props {
   onChange: (title: string) => void;
@@ -34,6 +34,23 @@ const FileEditorTitle: React.FC<Props> = (props: Props) => {
       return;
     }
     props.onChange(element.innerText);
+  }
+
+  function onFocus(event: React.FormEvent<HTMLDivElement>) {
+    const element = titleEditorRef.current;
+    if (!element) {
+      return;
+    }
+
+    const selection = window.getSelection();
+    if (!selection) {
+      return;
+    }
+
+    const range = document.createRange();
+    range.selectNodeContents(element);
+    selection.removeAllRanges();
+    selection.addRange(range);
   }
 
   useEffect(
@@ -66,6 +83,7 @@ const FileEditorTitle: React.FC<Props> = (props: Props) => {
           }),
         )}
         contentEditable
+        onFocus={onFocus}
         onInput={onInput}
         onKeyDown={onKeyDown}
         ref={titleEditorRef}

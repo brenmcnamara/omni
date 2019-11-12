@@ -77,6 +77,11 @@ p {
   padding-right: 12px;
 }
 
+.padding-vert-20 {
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
 .padding-top-40 {
   padding-top: 40px;
 }

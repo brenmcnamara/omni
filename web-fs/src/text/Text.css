@@ -28,6 +28,10 @@
   line-height: 24px;
 }
 
+.FontMode-animatedTransition {
+  transition: color 0.4s;
+}
+
 .FontMode-lightBackground.FontColor-primary {
   color: black;
 }

@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import getFontModeClassNames from './getFontModeClassNames';
 
 import { ClassValue } from 'classnames/types';
 
@@ -23,8 +24,8 @@ export interface TextProps {
 
 export function getTextClassNames(props: TextProps): ClassValue {
   return classnames(
-    `FontStyle-${props.fontStyle}`,
+    getFontModeClassNames(props.fontMode),
     `FontColor-${props.fontColor}`,
-    `FontMode-${props.fontMode}`,
+    `FontStyle-${props.fontStyle}`,
   );
 }
