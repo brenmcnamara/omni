@@ -21,7 +21,7 @@ const App: React.FC<Props> = (props: Props) => {
         themeInfo.theme.backgroundColorPrimary,
       )}
     >
-      <LeftPane classes={{ root: 'padding-top-40' }}>{props.Left}</LeftPane>
+      <LeftPane>{props.Left}</LeftPane>
       <RightPane>{props.Right}</RightPane>
       {props.Toolbar}
     </div>

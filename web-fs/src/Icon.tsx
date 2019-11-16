@@ -2,6 +2,8 @@ import classnames from 'classnames';
 import React from 'react';
 
 import { ClassValue } from 'classnames/types';
+import { Theme } from './theme/Theme';
+import { useTheme } from './theme';
 
 const IconSizeClassNameMap = {
   4: 'icon-size-4',
@@ -13,6 +15,8 @@ const IconSizeClassNameMap = {
   40: 'icon-size-40',
 };
 
+type IconColor = 'primary' | 'white' | 'black';
+
 type IconSize = keyof typeof IconSizeClassNameMap;
 
 interface Classes {
@@ -22,15 +26,19 @@ interface Classes {
 interface Props {
   classes?: Classes;
   icon: string;
+  iconColor: IconColor;
   size: IconSize;
 }
 
 const Icon: React.FC<Props> = (props: Props) => {
+  const { theme } = useTheme()[0];
+
   return (
     <i
       className={classnames(
         IconSizeClassNameMap[props.size],
         props.icon,
+        getClassNamesForTheme(theme, props),
         props.classes && props.classes.root,
         'icon',
       )}
@@ -39,3 +47,14 @@ const Icon: React.FC<Props> = (props: Props) => {
 };
 
 export default Icon;
+
+function getClassNamesForTheme(theme: Theme, props: Props) {
+  switch (props.iconColor) {
+    case 'primary':
+      return theme.iconColor;
+    case 'black':
+      return 'icon-color-black';
+    case 'white':
+      return 'icon-color-white';
+  }
+}

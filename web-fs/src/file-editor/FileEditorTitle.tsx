@@ -64,7 +64,7 @@ const FileEditorTitle: React.FC<Props> = (props: Props) => {
   return (
     <div
       className={classnames(
-        theme.fontColorPrimary,
+        theme.borderColor,
         'FileEditor-titleEditorContainer',
         'border-bottom',
       )}

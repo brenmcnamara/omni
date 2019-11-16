@@ -15,14 +15,16 @@ interface Props {
 }
 
 const LeftPane: React.FC<Props> = (props: Props) => {
-  const theme = useTheme()[0];
+  const { theme } = useTheme()[0];
 
   return (
     <div
       className={classnames(
+        theme.borderColor,
         pageLayoutStyles.leftPane,
         props.classes && props.classes.root,
         'border-right',
+        'padding-top-40',
       )}
     >
       <div className="PageLayout-LeftPaneContent">{props.children}</div>

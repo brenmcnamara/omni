@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import Icon from '../Icon';
 import React from 'react';
 import Text from '../text';
-// import useTheme from '../theme/useTheme';
+import useTheme from '../theme/useTheme';
 
 import { arrowDown, arrowRight, ellipsisH } from '../icons';
 import { ClassValue } from 'classnames/types';
@@ -23,35 +23,42 @@ interface Props {
 const INDENT_SIZE_PX = 24;
 
 const GroupTreeItem: React.FC<Props> = (props: Props) => {
-  // const theme = useTheme()[0];
+  const { theme } = useTheme()[0];
 
   return (
     <div
       className={classnames(
+        props.classes && props.classes.root,
         'FileTreeItem-root',
         'margin-bottom-4',
         'margin-horiz-8',
         'padding-horiz-8',
-        props.classes && props.classes.root,
       )}
     >
-      <div className="FileTreeItem-background" />
+      <div
+        className={classnames(
+          'FileTreeItem-background',
+          theme.backgroundColorSelection,
+        )}
+      />
       <div className="FileTreeItem-container">
         <div
           className="FileTreeItem-spacer"
           style={{ width: props.indent * INDENT_SIZE_PX }}
         />
         <div className="FileTreeItem-iconContainer">
-          <Icon icon={props.isOpen ? arrowDown : arrowRight} size={16} />
+          <Icon
+            icon={props.isOpen ? arrowDown : arrowRight}
+            iconColor="primary"
+            size={16}
+          />
         </div>
         <div className={classnames('margin-left-12', 'FileTreeItem-name')}>
-          <Text font="primary">{props.name}</Text>
+          <Text font="primary" fontColor="primary">
+            {props.name}
+          </Text>
         </div>
-        <Icon
-          classes={{ root: 'icon-color-white' }}
-          icon={ellipsisH}
-          size={12}
-        />
+        <Icon icon={ellipsisH} iconColor="white" size={12} />
       </div>
     </div>
   );

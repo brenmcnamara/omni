@@ -2,6 +2,14 @@
   background-color: white;
 }
 
+.backgroundColorInverted {
+  background-color: #292c2f;
+}
+
+.backgroundColorSelection {
+  background-color: #3498db;
+}
+
 .borderColor {
   border-color: #efefef;
 }

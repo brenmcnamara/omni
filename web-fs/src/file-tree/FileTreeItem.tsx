@@ -4,10 +4,10 @@ import classnames from 'classnames';
 import Icon from '../Icon';
 import React from 'react';
 import Text from '../text';
-import useTheme from '../theme/useTheme';
 
 import { ClassValue } from 'classnames/types';
 import { ellipsisH } from '../icons';
+import { useTheme } from '../theme';
 
 interface Classes {
   root?: ClassValue;
@@ -24,7 +24,7 @@ interface Props {
 const INDENT_SIZE_PX = 24;
 
 const FileTreeItem: React.FC<Props> = (props: Props) => {
-  const theme = useTheme()[0];
+  const { theme } = useTheme()[0];
 
   return (
     <div
@@ -36,7 +36,12 @@ const FileTreeItem: React.FC<Props> = (props: Props) => {
         'padding-horiz-8': true,
       })}
     >
-      <div className="FileTreeItem-background" />
+      <div
+        className={classnames(
+          'FileTreeItem-background',
+          theme.backgroundColorSelection,
+        )}
+      />
       <div className="FileTreeItem-container">
         <div
           className="FileTreeItem-spacer"
@@ -45,17 +50,21 @@ const FileTreeItem: React.FC<Props> = (props: Props) => {
           }}
         />
         <div className="FileTreeItem-iconContainer">
-          <Icon icon={props.icon} size={16} />
+          <Icon
+            icon={props.icon}
+            iconColor={props.isSelected ? 'white' : 'primary'}
+            size={16}
+          />
         </div>
         <div className={classnames('margin-left-12', 'FileTreeItem-name')}>
-          {props.isSelected && <Text font="primary">{props.name}</Text>}
-          {!props.isSelected && <Text font="primary">{props.name}</Text>}
+          <Text
+            font="primary"
+            fontColor={props.isSelected ? 'white' : 'primary'}
+          >
+            {props.name}
+          </Text>
         </div>
-        <Icon
-          classes={{ root: classnames('icon-color-white') }}
-          icon={ellipsisH}
-          size={12}
-        />
+        <Icon icon={ellipsisH} iconColor="white" size={12} />
       </div>
     </div>
   );

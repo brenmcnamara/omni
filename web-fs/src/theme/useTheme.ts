@@ -12,6 +12,7 @@ type ThemeInfoMapType = {
 
 export interface ThemeInfo {
   theme: Theme;
+  themeIdentifier: string;
   themeWithoutTransitions: Theme;
   themeType: ThemeType;
 }
@@ -73,6 +74,7 @@ function useThemeInfoMap(): ThemeInfoMapType {
 
       const themeInfo: ThemeInfo = {
         theme: addTransitions(theme),
+        themeIdentifier: `Theme-${themeType}`,
         themeWithoutTransitions: theme,
         themeType,
       };
@@ -90,7 +92,7 @@ function addTransitions(theme: Theme): Theme {
 
   for (const key in theme) {
     // @ts-ignore
-    themeWithTransitions[key] = classnames(theme[key], 'transitions-all-20ms');
+    themeWithTransitions[key] = classnames(theme[key], 'transitions-all-200ms');
   }
 
   return themeWithTransitions;

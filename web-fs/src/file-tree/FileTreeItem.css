@@ -20,11 +20,6 @@
   width: 16px;
 }
 
-.FileTreeItem-icon {
-  transition: transform 0.2s;
-  transform: rotate(0deg);
-}
-
 .FileTreeItem-icon-group {
   width: 6px;
   height: 12px;
@@ -69,25 +64,6 @@
   /* NOTE: This animation is causing some wierd jump in the arrow icon sizing.
      Need to fix this before adding it back */
   /* transition: opacity 0.2s; */
-}
-
-/* The selectors below show the cascading decisions for the coloring of the
-   tree item */
-
-.FileTreeItem-root .FileTreeItem-background {
-  background-color: #292c2f;
-}
-
-.FileTreeItem-root.Theme-Dark .FileTreeItem-background {
-  background-color: #fff;
-}
-
-.FileTreeItem-selected .FileTreeItem-background {
-  background-color: #3498db;
-}
-
-.FileTreeItem-selected.Theme-Dark .FileTreeItem-background {
-  background-color: #00c5fc;
 }
 
 .FileTreeItem-root:not(.FileTreeItem-selected) .FileTreeItem-background {

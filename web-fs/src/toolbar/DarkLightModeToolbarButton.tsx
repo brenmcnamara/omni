@@ -30,7 +30,7 @@ const DarkLightModeToolbarButton: React.FC<Props> = (props: Props) => {
       }}
       onClick={() => setThemeType(isDarkMode ? 'Light' : 'Dark')}
     >
-      <Icon icon={adjust} size={20} />
+      <Icon icon={adjust} iconColor="primary" size={20} />
     </ToolbarButton>
   );
 };
