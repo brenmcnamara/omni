@@ -1,0 +1,23 @@
+.backgroundColorPrimary {
+  background-color: black;
+}
+
+.borderColor {
+  border-color: #26292c;
+}
+
+.fontColorPrimary {
+  color: white;
+}
+
+.fontColorSecondary {
+  color: #aaa;
+}
+
+.fontColorTertiary {
+  color: #666;
+}
+
+.iconColor {
+  filter: brightness(0) invert(1);
+}

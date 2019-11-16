@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import { ContentBlock, Editor, EditorState } from 'draft-js';
 import { DocumentContent } from '../document';
-import { useThemedFontMode, getTextClassNames } from '../text';
+import { useTheme } from '../theme';
 
 interface Props {
   editorRef?: React.RefObject<Editor>;
@@ -22,16 +22,16 @@ const FileEditorContent: React.FC<Props> = (props: Props) => {
   }
 
   function blockStyleFn(block: ContentBlock): string {
-    return classnames('FontColor-primary', 'FontStyle-doc-p');
+    return '';
   }
 
-  const fontMode = useThemedFontMode();
+  const { theme } = useTheme()[0];
 
   return (
     <div
       className={classnames(
         'FileEditor-contentContainer',
-        `FontMode-${fontMode}`,
+        theme.fontColorPrimary,
         'padding-vert-20',
       )}
     >

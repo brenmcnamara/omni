@@ -1,14 +1,13 @@
 import './FileTreeItem.css';
 
 import classnames from 'classnames';
-import getThemeClassName from '../themes/getThemeClassName';
-import Icon, { ThemedIcon } from '../Icon';
+import Icon from '../Icon';
 import React from 'react';
-import useTheme from '../themes/useTheme';
+import Text from '../text';
+// import useTheme from '../theme/useTheme';
 
 import { arrowDown, arrowRight, ellipsisH } from '../icons';
 import { ClassValue } from 'classnames/types';
-import { ThemedText } from '../text';
 
 interface Classes {
   root?: ClassValue;
@@ -24,8 +23,7 @@ interface Props {
 const INDENT_SIZE_PX = 24;
 
 const GroupTreeItem: React.FC<Props> = (props: Props) => {
-  const theme = useTheme()[0];
-  const themeClassName = getThemeClassName(theme);
+  // const theme = useTheme()[0];
 
   return (
     <div
@@ -35,7 +33,6 @@ const GroupTreeItem: React.FC<Props> = (props: Props) => {
         'margin-horiz-8',
         'padding-horiz-8',
         props.classes && props.classes.root,
-        themeClassName,
       )}
     >
       <div className="FileTreeItem-background" />
@@ -45,17 +42,16 @@ const GroupTreeItem: React.FC<Props> = (props: Props) => {
           style={{ width: props.indent * INDENT_SIZE_PX }}
         />
         <div className="FileTreeItem-iconContainer">
-          <ThemedIcon
-            icon={props.isOpen ? arrowDown : arrowRight}
-            size="icon-size-16"
-          />
+          <Icon icon={props.isOpen ? arrowDown : arrowRight} size={16} />
         </div>
         <div className={classnames('margin-left-12', 'FileTreeItem-name')}>
-          <ThemedText fontColor="primary" fontStyle="primary">
-            {props.name}
-          </ThemedText>
+          <Text font="primary">{props.name}</Text>
         </div>
-        <Icon color="icon-color-white" icon={ellipsisH} size="icon-size-12" />
+        <Icon
+          classes={{ root: 'icon-color-white' }}
+          icon={ellipsisH}
+          size={12}
+        />
       </div>
     </div>
   );

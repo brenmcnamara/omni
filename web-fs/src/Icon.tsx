@@ -1,41 +1,41 @@
-import './Icon.css';
-
 import classnames from 'classnames';
 import React from 'react';
-import useTheme from './themes/useTheme';
 
-export type IconSize =
-  | 'icon-size-12'
-  | 'icon-size-16'
-  | 'icon-size-20'
-  | 'icon-size-40';
+import { ClassValue } from 'classnames/types';
 
-export type IconColor = 'icon-color-white' | 'icon-color-black';
+const IconSizeClassNameMap = {
+  4: 'icon-size-4',
+  6: 'icon-size-6',
+  8: 'icon-size-8',
+  12: 'icon-size-12',
+  16: 'icon-size-16',
+  20: 'icon-size-20',
+  40: 'icon-size-40',
+};
+
+type IconSize = keyof typeof IconSizeClassNameMap;
+
+interface Classes {
+  root?: ClassValue;
+}
 
 interface Props {
-  color: IconColor;
+  classes?: Classes;
   icon: string;
   size: IconSize;
 }
 
 const Icon: React.FC<Props> = (props: Props) => {
   return (
-    <i className={classnames('icon', props.icon, props.color, props.size)} />
+    <i
+      className={classnames(
+        IconSizeClassNameMap[props.size],
+        props.icon,
+        props.classes && props.classes.root,
+        'icon',
+      )}
+    />
   );
 };
 
 export default Icon;
-
-type ThemedIcon$Props = Omit<Props, 'color'>;
-
-export const ThemedIcon: React.FC<ThemedIcon$Props> = (
-  props: ThemedIcon$Props,
-) => {
-  const theme = useTheme()[0];
-  return (
-    <Icon
-      {...props}
-      color={theme === 'Dark' ? 'icon-color-white' : 'icon-color-black'}
-    />
-  );
-};

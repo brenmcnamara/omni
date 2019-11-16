@@ -1,4 +1,4 @@
-.PageLayout {
+.root {
   bottom: 0;
   display: flex;
   flex-direction: row;
@@ -6,25 +6,16 @@
   position: absolute;
   right: 0;
   top: 0;
-  transition: background-color 0.4s;
 }
 
-.PageLayout.Theme-Light {
-  background-color: #fff;
-}
-
-.PageLayout.Theme-Dark {
-  background-color: #161719;
-}
-
-.PageLayout-LeftPane {
+.leftPane {
   max-width: 300px;
   min-width: 300px;
   overflow: auto;
   width: 300px;
 }
 
-.PageLayout-RightPane {
+.rightPane {
   flex-grow: 1;
   overflow: auto;
   padding-right: 56px; /* Avoid the toolbar */

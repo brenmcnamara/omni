@@ -3,9 +3,8 @@ import './FileEditor.css';
 import classnames from 'classnames';
 import FileEditorContent from './FileEditorContent';
 import FileEditorTitle from './FileEditorTitle';
-import getThemeClassName from '../themes/getThemeClassName';
 import React from 'react';
-import useTheme from '../themes/useTheme';
+import useTheme from '../theme/useTheme';
 
 interface Props {
   onChangeTitle: (title: string) => void;
@@ -14,7 +13,6 @@ interface Props {
 
 const FileEditor: React.FC<Props> = (props: Props) => {
   const theme = useTheme()[0];
-  const themeClassName = getThemeClassName(theme);
 
   function onChangeTitle(title: string) {}
 
@@ -23,9 +21,7 @@ const FileEditor: React.FC<Props> = (props: Props) => {
   function onChangeContent() {}
 
   return (
-    <div
-      className={classnames('FileEditor-root', 'margin-all-20', themeClassName)}
-    >
+    <div className={classnames('FileEditor-root', 'margin-all-20')}>
       <FileEditorTitle
         onChange={onChangeTitle}
         onEnter={onEnterTitle}

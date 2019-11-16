@@ -1,14 +1,13 @@
 import './FileTreeItem.css';
 
 import classnames from 'classnames';
-import getThemeClassName from '../themes/getThemeClassName';
+import Icon from '../Icon';
 import React from 'react';
-import useTheme from '../themes/useTheme';
+import Text from '../text';
+import useTheme from '../theme/useTheme';
 
 import { ClassValue } from 'classnames/types';
 import { plus } from '../icons';
-import { ThemedIcon } from '../Icon';
-import { ThemedText } from '../text';
 
 interface Classes {
   root?: ClassValue;
@@ -19,8 +18,7 @@ interface Props {
 }
 
 const CreateFileItem: React.FC<Props> = (props: Props) => {
-  const theme = useTheme()[0];
-  const themeClassName = getThemeClassName(theme);
+  const { theme } = useTheme()[0];
 
   return (
     <div
@@ -29,7 +27,7 @@ const CreateFileItem: React.FC<Props> = (props: Props) => {
         'margin-bottom-4',
         'margin-horiz-8',
         'padding-horiz-8',
-        themeClassName,
+        theme.fontColorPrimary,
         props.classes && props.classes.root,
       )}
     >
@@ -37,13 +35,18 @@ const CreateFileItem: React.FC<Props> = (props: Props) => {
       <div className="FileTreeItem-container">
         <div className="FileTreeItem-spacer" />
         <div className="FileTreeItem-iconContainer">
-          <ThemedIcon icon={plus} size="icon-size-12" />
+          <Icon icon={plus} size={12} />
         </div>
 
         <div className={classnames('margin-left-12', 'FileTreeItem-name')}>
-          <ThemedText fontColor="primary" fontStyle="primary">
+          <Text
+            classes={{
+              root: classnames(theme.fontColorPrimary),
+            }}
+            font="primary"
+          >
             {'New File'}
-          </ThemedText>
+          </Text>
         </div>
       </div>
     </div>

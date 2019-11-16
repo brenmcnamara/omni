@@ -1,5 +1,4 @@
-import './PageLayout.css';
-
+import pageLayoutStyles from './PageLayout.module.css';
 import React from 'react';
 
 interface Props {
@@ -8,7 +7,7 @@ interface Props {
 
 const RightPane: React.FC<Props> = (props: Props) => {
   return (
-    <div className="PageLayout-RightPane">
+    <div className={pageLayoutStyles.rightPane}>
       <div className="PageLayout-RightPaneContent">{props.children}</div>
     </div>
   );

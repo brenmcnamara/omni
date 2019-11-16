@@ -1,12 +1,10 @@
 import './FileEditor.css';
 
 import classnames from 'classnames';
-import getThemeClassName from '../themes/getThemeClassName';
 import React, { useEffect, useRef } from 'react';
-import useTheme from '../themes/useTheme';
+import useTheme from '../theme/useTheme';
 
 import { KeyMap } from './Keys';
-import { getTextClassNames } from '../text';
 
 interface Props {
   onChange: (title: string) => void;
@@ -15,8 +13,7 @@ interface Props {
 }
 
 const FileEditorTitle: React.FC<Props> = (props: Props) => {
-  const theme = useTheme()[0];
-  const themeClassName = getThemeClassName(theme);
+  const { theme } = useTheme()[0];
 
   const titleEditorRef = useRef<HTMLDivElement | null>(null);
 
@@ -67,7 +64,7 @@ const FileEditorTitle: React.FC<Props> = (props: Props) => {
   return (
     <div
       className={classnames(
-        themeClassName,
+        theme.fontColorPrimary,
         'FileEditor-titleEditorContainer',
         'border-bottom',
       )}
@@ -76,11 +73,7 @@ const FileEditorTitle: React.FC<Props> = (props: Props) => {
         className={classnames(
           'FileEditor-titleEditor',
           'padding-bottom-20',
-          getTextClassNames({
-            fontColor: 'primary',
-            fontMode: theme === 'Dark' ? 'darkBackground' : 'lightBackground',
-            fontStyle: 'doc-h3',
-          }),
+          theme.fontColorPrimary,
         )}
         contentEditable
         onFocus={onFocus}

@@ -1,11 +1,9 @@
-import './PageLayout.css';
-
 import classnames from 'classnames';
-import getThemeClassName from '../themes/getThemeClassName';
+import pageLayoutStyles from './PageLayout.module.css';
 import React from 'react';
-import useTheme from '../themes/useTheme';
 
 import { ClassValue } from 'classnames/types';
+import { useTheme } from '../theme';
 
 interface Classes {
   root?: ClassValue;
@@ -18,13 +16,13 @@ interface Props {
 
 const LeftPane: React.FC<Props> = (props: Props) => {
   const theme = useTheme()[0];
+
   return (
     <div
       className={classnames(
-        'PageLayout-LeftPane',
-        'border-right',
-        getThemeClassName(theme),
+        pageLayoutStyles.leftPane,
         props.classes && props.classes.root,
+        'border-right',
       )}
     >
       <div className="PageLayout-LeftPaneContent">{props.children}</div>

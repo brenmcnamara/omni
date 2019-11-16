@@ -1,16 +1,20 @@
 import './FileTreeItem.css';
 
 import classnames from 'classnames';
-import getThemeClassName from '../themes/getThemeClassName';
-import Icon, { ThemedIcon } from '../Icon';
+import Icon from '../Icon';
 import React from 'react';
-import Text, { ThemedText } from '../text';
-import useTheme from '../themes/useTheme';
+import Text from '../text';
+import useTheme from '../theme/useTheme';
 
+import { ClassValue } from 'classnames/types';
 import { ellipsisH } from '../icons';
 
+interface Classes {
+  root?: ClassValue;
+}
+
 interface Props {
-  className?: string;
+  classes?: Classes;
   icon: string;
   indent: number;
   isSelected: boolean;
@@ -21,18 +25,15 @@ const INDENT_SIZE_PX = 24;
 
 const FileTreeItem: React.FC<Props> = (props: Props) => {
   const theme = useTheme()[0];
-  const themeClassName = getThemeClassName(theme);
 
   return (
     <div
-      className={classnames({
-        [props.className || '']: Boolean(props.className),
+      className={classnames(props.classes && props.classes.root, {
         'FileTreeItem-root': true,
         'FileTreeItem-selected': props.isSelected,
         'margin-bottom-4': true,
         'margin-horiz-8': true,
         'padding-horiz-8': true,
-        [themeClassName]: true,
       })}
     >
       <div className="FileTreeItem-background" />
@@ -44,25 +45,17 @@ const FileTreeItem: React.FC<Props> = (props: Props) => {
           }}
         />
         <div className="FileTreeItem-iconContainer">
-          <ThemedIcon size="icon-size-16" icon={props.icon} />
+          <Icon icon={props.icon} size={16} />
         </div>
         <div className={classnames('margin-left-12', 'FileTreeItem-name')}>
-          {props.isSelected && (
-            <Text
-              fontColor="primary"
-              fontMode="darkBackground"
-              fontStyle="primary"
-            >
-              {props.name}
-            </Text>
-          )}
-          {!props.isSelected && (
-            <ThemedText fontColor="primary" fontStyle="primary">
-              {props.name}
-            </ThemedText>
-          )}
+          {props.isSelected && <Text font="primary">{props.name}</Text>}
+          {!props.isSelected && <Text font="primary">{props.name}</Text>}
         </div>
-        <Icon color="icon-color-white" icon={ellipsisH} size="icon-size-12" />
+        <Icon
+          classes={{ root: classnames('icon-color-white') }}
+          icon={ellipsisH}
+          size={12}
+        />
       </div>
     </div>
   );
