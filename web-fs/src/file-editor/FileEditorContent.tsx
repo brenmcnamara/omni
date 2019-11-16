@@ -1,6 +1,7 @@
 import './FileEditor.css';
 
 import classnames from 'classnames';
+import fontStyles from '../text/Font.module.css';
 import React, { useState } from 'react';
 
 import { ContentBlock, Editor, EditorState } from 'draft-js';
@@ -22,7 +23,7 @@ const FileEditorContent: React.FC<Props> = (props: Props) => {
   }
 
   function blockStyleFn(block: ContentBlock): string {
-    return '';
+    return fontStyles.docP;
   }
 
   const { theme } = useTheme()[0];

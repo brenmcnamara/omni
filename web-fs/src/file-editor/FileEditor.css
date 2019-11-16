@@ -17,29 +17,4 @@
  * re-rendering text blocks (for perf reasons).
  */
 .FileEditor-contentContainer {
-  transition: color 0.4s;
-}
-
-.FileEditor-contentContainer.FontMode-lightBackground .FontColor-primary {
-  color: black;
-}
-
-.FileEditor-contentContainer.FontMode-darkBackground .FontColor-primary {
-  color: white;
-}
-
-.FileEditor-contentContainer.FontMode-lightBackground .FontColor-secondary {
-  color: #444;
-}
-
-.FileEditor-contentContainer.FontMode-darkBackground .FontColor-secondary {
-  color: #aaa;
-}
-
-.FileEditor-contentContainer.FontMode-lightBackground .FontColor-tertiary {
-  color: #aaa;
-}
-
-.FileEditor-contentContainer.FontMode-darkBackground .FontColor-tertiary {
-  color: #aaa;
 }

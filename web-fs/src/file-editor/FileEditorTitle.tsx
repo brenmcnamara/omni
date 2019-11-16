@@ -1,6 +1,7 @@
 import './FileEditor.css';
 
 import classnames from 'classnames';
+import fontStyles from '../text/Font.module.css';
 import React, { useEffect, useRef } from 'react';
 import useTheme from '../theme/useTheme';
 
@@ -71,9 +72,10 @@ const FileEditorTitle: React.FC<Props> = (props: Props) => {
     >
       <div
         className={classnames(
+          fontStyles.docH3,
+          theme.fontColorPrimary,
           'FileEditor-titleEditor',
           'padding-bottom-20',
-          theme.fontColorPrimary,
         )}
         contentEditable
         onFocus={onFocus}
