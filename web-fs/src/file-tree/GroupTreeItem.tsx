@@ -38,7 +38,7 @@ const GroupTreeItem: React.FC<Props> = (props: Props) => {
       <div
         className={classnames(
           'FileTreeItem-background',
-          theme.backgroundColorSelection,
+          theme.colorSelectionPrimary,
         )}
       />
       <div className="FileTreeItem-container">

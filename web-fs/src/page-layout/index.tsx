@@ -3,6 +3,7 @@ import LeftPane from './LeftPane';
 import pageLayoutStyles from './PageLayout.module.css';
 import React from 'react';
 import RightPane from './RightPane';
+import Toolbar from './Toolbar';
 import useTheme from '../theme/useTheme';
 
 interface Props {
@@ -21,9 +22,11 @@ const App: React.FC<Props> = (props: Props) => {
         themeInfo.theme.backgroundColorPrimary,
       )}
     >
-      <LeftPane>{props.Left}</LeftPane>
-      <RightPane>{props.Right}</RightPane>
-      {props.Toolbar}
+      <Toolbar>{props.Toolbar}</Toolbar>
+      <div className={pageLayoutStyles.paneContainer}>
+        <LeftPane>{props.Left}</LeftPane>
+        <RightPane>{props.Right}</RightPane>
+      </div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-.ToolbarButton-root {
+.root {
   align-items: center;
   cursor: pointer;
   display: flex;
@@ -8,12 +8,14 @@
   width: 24px;
 }
 
-.DarkLightModeToolbarButton-isDarkMode img {
-  transform: rotate(-180deg);
+.darkLightModeToolbarButton {
   transition: transform 0.4s;
 }
 
-.DarkLightModeToolbarButton-isLightMode img {
+.darkLightModeToolbarButton_isDarkMode .icon {
+  transform: rotate(-180deg);
+}
+
+.darkLightModeToolbarButton_isLightMode .icon {
   transform: rotate(0deg);
-  transition: transform 0.4s;
 }

@@ -1,6 +1,7 @@
 export const adjust = 'fas fa-adjust';
 export const arrowDown = 'fas fa-chevron-down';
 export const arrowRight = 'fas fa-chevron-right';
+export const bars = 'fas fa-bars';
 export const ellipsisH = 'ellipsis-h';
 export const fileWord = 'far fa-file-word';
 export const folder = 'far fa-folder';

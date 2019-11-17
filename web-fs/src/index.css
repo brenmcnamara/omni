@@ -47,6 +47,10 @@ p {
   margin-bottom: 4px;
 }
 
+.margin-bottom-8 {
+  margin-bottom: 8px;
+}
+
 .margin-bottom-20 {
   margin-bottom: 20px;
 }
@@ -69,6 +73,120 @@ p {
 
 .margin-right-8 {
   margin-right: 8px;
+}
+
+.margin-right-12 {
+  margin-right: 12px;
+}
+
+@media (min-width: 600px) {
+  .margin-all-20-md {
+    margin: 20px;
+  }
+
+  .margin-horiz-8-md {
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+
+  .margin-bottom-0-md {
+    margin-bottom: 0px;
+  }
+
+  .margin-bottom-4-md {
+    margin-bottom: 4px;
+  }
+
+  .margin-bottom-8-md {
+    margin-bottom: 8px;
+  }
+
+  .margin-bottom-20-md {
+    margin-bottom: 20px;
+  }
+
+  .margin-top-8-md {
+    margin-top: 8px;
+  }
+
+  .margin-top-40-md {
+    margin-top: 40px;
+  }
+
+  .margin-left-8-md {
+    margin-left: 8px;
+  }
+
+  .margin-left-12-md {
+    margin-left: 12px;
+  }
+
+  .margin-right-0-md {
+    margin-right: 0px;
+  }
+
+  .margin-right-8-md {
+    margin-right: 8px;
+  }
+
+  .margin-right-12-md {
+    margin-right: 12px;
+  }
+}
+
+@media (min-width: 920px) {
+  .margin-all-20-lg {
+    margin: 20px;
+  }
+
+  .margin-horiz-8-lg {
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+
+  .margin-bottom-8-lg {
+    margin-bottom: 0px;
+  }
+
+  .margin-bottom-4-lg {
+    margin-bottom: 4px;
+  }
+
+  .margin-bottom-8-lg {
+    margin-bottom: 8px;
+  }
+
+  .margin-bottom-20-lg {
+    margin-bottom: 20px;
+  }
+
+  .margin-top-8-lg {
+    margin-top: 8px;
+  }
+
+  .margin-top-40-lg {
+    margin-top: 40px;
+  }
+
+  .margin-left-8-lg {
+    margin-left: 8px;
+  }
+
+  .margin-left-12-lg {
+    margin-left: 12px;
+  }
+
+  .margin-right-0-lg {
+    margin-right: 0px;
+  }
+
+  .margin-right-8-lg {
+    margin-right: 8px;
+  }
+
+  .margin-right-12-lg {
+    margin-right: 12px;
+  }
 }
 
 /* PADDINGS */
@@ -100,6 +218,14 @@ p {
   padding-top: 20px;
 }
 
+.padding-top-12 {
+  padding-top: 12px;
+}
+
+.padding-top-20 {
+  padding-top: 20px;
+}
+
 .padding-top-40 {
   padding-top: 40px;
 }
@@ -120,6 +246,120 @@ p {
   padding-bottom: 20px;
 }
 
+@media (min-width: 600px) {
+  .padding-all-4-md {
+    padding: 4px;
+  }
+
+  .padding-all-8-md {
+    padding: 8px;
+  }
+
+  .padding-all-12-md {
+    padding: 12px;
+  }
+
+  .padding-horiz-8-md {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .padding-horiz-12-md {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .padding-vert-20-md {
+    padding-bottom: 20px;
+    padding-top: 20px;
+  }
+
+  .padding-top-12-md {
+    padding-top: 12px;
+  }
+
+  .padding-top-20-md {
+    padding-top: 20px;
+  }
+
+  .padding-top-40-md {
+    padding-top: 40px;
+  }
+
+  .padding-bottom-4-md {
+    padding-bottom: 4px;
+  }
+
+  .padding-bottom-8-md {
+    padding-bottom: 8px;
+  }
+
+  .padding-bottom-12-md {
+    padding-bottom: 12px;
+  }
+
+  .padding-bottom-20-md {
+    padding-bottom: 20px;
+  }
+}
+
+@media (min-width: 920px) {
+  .padding-all-4-lg {
+    padding: 4px;
+  }
+
+  .padding-all-8-lg {
+    padding: 8px;
+  }
+
+  .padding-all-12-lg {
+    padding: 12px;
+  }
+
+  .padding-horiz-8-lg {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .padding-horiz-12-lg {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .padding-vert-20-lg {
+    padding-bottom: 20px;
+    padding-top: 20px;
+  }
+
+  .padding-top-12-lg {
+    padding-top: 12px;
+  }
+
+  .padding-top-20-lg {
+    padding-top: 20px;
+  }
+
+  .padding-top-40-lg {
+    padding-top: 40px;
+  }
+
+  .padding-bottom-4-lg {
+    padding-bottom: 4px;
+  }
+
+  .padding-bottom-8-lg {
+    padding-bottom: 8px;
+  }
+
+  .padding-bottom-12-lg {
+    padding-bottom: 12px;
+  }
+
+  .padding-bottom-20-lg {
+    padding-bottom: 20px;
+  }
+}
+
 /* BORDERS */
 
 .border-bottom {
@@ -127,9 +367,37 @@ p {
   border-bottom-width: 1px;
 }
 
+@media (min-width: 600px) {
+  .border-bottom-md {
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+  }
+}
+
+@media (min-width: 920px) {
+  .border-bottom-lg {
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+  }
+}
+
 .border-right {
   border-right-style: solid;
   border-right-width: 1px;
+}
+
+@media (min-width: 600px) {
+  .border-right-md {
+    border-right-style: solid;
+    border-right-width: 1px;
+  }
+}
+
+@media (min-width: 920px) {
+  .border-right-lg {
+    border-right-style: solid;
+    border-right-width: 1px;
+  }
 }
 
 /* FONT COLOR */
@@ -173,9 +441,9 @@ p {
 }
 
 .icon-color-white {
-  filter: brightness(0) invert(1);
+  color: white;
 }
 
 .icon-color-black {
-  filter: brightness(0);
+  color: black;
 }

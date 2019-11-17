@@ -6,12 +6,12 @@
   background-color: white;
 }
 
-.backgroundColorSelection {
-  background-color: #00c5fc;
-}
-
 .borderColor {
   border-color: #26292c;
+}
+
+.colorSelectionPrimary {
+  background-color: #00c5fc;
 }
 
 .fontColorPrimary {
@@ -27,5 +27,5 @@
 }
 
 .iconColor {
-  filter: brightness(0) invert(1);
+  color: white;
 }

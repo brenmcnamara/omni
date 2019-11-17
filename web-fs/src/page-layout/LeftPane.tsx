@@ -23,8 +23,7 @@ const LeftPane: React.FC<Props> = (props: Props) => {
         theme.borderColor,
         pageLayoutStyles.leftPane,
         props.classes && props.classes.root,
-        'border-right',
-        'padding-top-40',
+        'border-right-lg',
       )}
     >
       <div className="PageLayout-LeftPaneContent">{props.children}</div>

@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import Icon from '../Icon';
 import React, { useEffect } from 'react';
 import ToolbarButton from './ToolbarButton';
+import toolbarButtonStyles from './ToolbarButton.module.css';
 import useTheme from '../theme/useTheme';
 
 import { adjust } from '../icons';
@@ -24,13 +25,14 @@ const DarkLightModeToolbarButton: React.FC<Props> = (props: Props) => {
     <ToolbarButton
       classes={{
         root: classnames({
-          'DarkLightModeToolbarButton-isDarkMode': isDarkMode,
-          'DarkLightModeToolbarButton-isLightMode': !isDarkMode,
+          [toolbarButtonStyles.darkLightModeToolbarButton]: true,
+          [toolbarButtonStyles.darkLightModeToolbarButton_isDarkMode]: isDarkMode,
+          [toolbarButtonStyles.darkLightModeToolbarButton_isLightMode]: !isDarkMode,
         }),
       }}
       onClick={() => setThemeType(isDarkMode ? 'Light' : 'Dark')}
     >
-      <Icon icon={adjust} iconColor="primary" size={20} />
+      <Icon icon={adjust} iconColor="primary" size={16} />
     </ToolbarButton>
   );
 };

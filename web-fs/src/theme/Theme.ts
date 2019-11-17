@@ -1,8 +1,8 @@
 export interface Theme {
   backgroundColorPrimary: string;
   backgroundColorSecondary: string;
-  backgroundColorSelection: string;
   borderColor: string;
+  colorSelectionPrimary: string;
   fontColorPrimary: string;
   fontColorSecondary: string;
   fontColorTertiary: string;
