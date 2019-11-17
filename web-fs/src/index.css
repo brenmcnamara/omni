@@ -14,6 +14,12 @@ p {
   font-size: 14px;
 }
 
+/* DISPLAY */
+
+.display-none {
+  display: none !important;
+}
+
 /* TRANSITIONS */
 
 .transitions-all-200ms {

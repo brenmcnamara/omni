@@ -41,6 +41,11 @@ const Icon: React.FC<Props> = (props: Props) => {
         getClassNamesForTheme(theme, props),
         'icon',
       )}
+      style={{
+        width: `${props.size}px`,
+        height: `${props.size}px`,
+        backgroundColor: '#aaa',
+      }}
     >
       <i
         className={classnames(

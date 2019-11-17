@@ -1,32 +1,47 @@
 import classnames from 'classnames';
+import Icon from '../Icon';
 import pageLayoutStyles from './PageLayout.module.css';
 import React from 'react';
+import ToolbarButton from './ToolbarButton';
 
-import { ClassValue } from 'classnames/types';
+import { bars } from '../icons';
 import { useTheme } from '../theme';
-
-interface Classes {
-  root?: ClassValue;
-}
 
 interface Props {
   children?: React.ReactNode;
-  classes?: Classes;
+  isHidden: boolean;
+  onChangeHidden: (isHidden: boolean) => void;
 }
 
 const LeftPane: React.FC<Props> = (props: Props) => {
   const { theme } = useTheme()[0];
+
+  console.log(props.isHidden);
 
   return (
     <div
       className={classnames(
         theme.borderColor,
         pageLayoutStyles.leftPane,
-        props.classes && props.classes.root,
+        props.isHidden && 'display-none',
         'border-right-lg',
       )}
     >
-      <div className="PageLayout-LeftPaneContent">{props.children}</div>
+      <div
+        className={classnames(
+          pageLayoutStyles.leftPaneBackground,
+          theme.backgroundColorSecondary,
+        )}
+      />
+      <div className={pageLayoutStyles.leftPaneToolbar}>
+        <ToolbarButton
+          forceVerticalStackStyling={true}
+          onClick={() => props.onChangeHidden(true)}
+        >
+          <Icon icon={bars} iconColor="primary" size={16} />
+        </ToolbarButton>
+      </div>
+      <div className={pageLayoutStyles.leftPaneContent}>{props.children}</div>
     </div>
   );
 };

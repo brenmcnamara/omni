@@ -1,0 +1,9 @@
+.root {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  height: 24px;
+  justify-content: center;
+  width: 24px;
+}

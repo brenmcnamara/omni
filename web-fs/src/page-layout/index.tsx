@@ -1,19 +1,24 @@
 import classnames from 'classnames';
+import Icon from '../Icon';
 import LeftPane from './LeftPane';
 import pageLayoutStyles from './PageLayout.module.css';
-import React from 'react';
+import React, { useState } from 'react';
 import RightPane from './RightPane';
 import Toolbar from './Toolbar';
+import ToolbarButton from './ToolbarButton';
 import useTheme from '../theme/useTheme';
+
+import { bars } from '../icons';
 
 interface Props {
   Left: JSX.Element;
   Right: JSX.Element;
-  Toolbar: JSX.Element;
+  ToolbarButtons: JSX.Element;
 }
 
 const App: React.FC<Props> = (props: Props) => {
   const themeInfo = useTheme()[0];
+  const [isLeftPaneHidden, setIsLeftPaneHidden] = useState(false);
 
   return (
     <div
@@ -22,9 +27,19 @@ const App: React.FC<Props> = (props: Props) => {
         themeInfo.theme.backgroundColorPrimary,
       )}
     >
-      <Toolbar>{props.Toolbar}</Toolbar>
+      <Toolbar>
+        <ToolbarButton onClick={() => setIsLeftPaneHidden(!isLeftPaneHidden)}>
+          <Icon icon={bars} iconColor="primary" size={16} />
+        </ToolbarButton>
+        {props.ToolbarButtons}
+      </Toolbar>
       <div className={pageLayoutStyles.paneContainer}>
-        <LeftPane>{props.Left}</LeftPane>
+        <LeftPane
+          isHidden={isLeftPaneHidden}
+          onChangeHidden={isHidden => setIsLeftPaneHidden(isHidden)}
+        >
+          {props.Left}
+        </LeftPane>
         <RightPane>{props.Right}</RightPane>
       </div>
     </div>

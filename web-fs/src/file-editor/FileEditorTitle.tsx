@@ -75,7 +75,7 @@ const FileEditorTitle: React.FC<Props> = (props: Props) => {
           fontStyles.docH3,
           theme.fontColorPrimary,
           'FileEditor-titleEditor',
-          'padding-bottom-20',
+          'padding-bottom-12',
         )}
         contentEditable
         onFocus={onFocus}

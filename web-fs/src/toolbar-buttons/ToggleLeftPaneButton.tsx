@@ -1,6 +1,6 @@
 import Icon from '../Icon';
 import React from 'react';
-import ToolbarButton from './ToolbarButton';
+import ToolbarButton from '../page-layout/ToolbarButton';
 
 import { bars } from '../icons';
 

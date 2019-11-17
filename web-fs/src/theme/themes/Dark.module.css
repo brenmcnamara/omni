@@ -2,6 +2,10 @@
   background-color: black;
 }
 
+.backgroundColorSecondary {
+  background-color: #222222;
+}
+
 .backgroundColorInverted {
   background-color: white;
 }
