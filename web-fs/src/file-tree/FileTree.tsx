@@ -1,4 +1,3 @@
-import CreateFileItem from './CreateFileItem';
 import FileTreeItem from './FileTreeItem';
 import fileTreeStyles from './FileTree.module.css';
 // import useFileGroups from '../store/useFileGroups';
@@ -14,7 +13,6 @@ const FileTree: React.FC<Props> = (props: Props) => {
 
   return (
     <div className={fileTreeStyles.root}>
-      <CreateFileItem />
       <GroupTreeItem indent={0} isOpen={false} name="9point" />
       <GroupTreeItem indent={0} isOpen={true} name="Bahá'i" />
       <FileTreeItem
