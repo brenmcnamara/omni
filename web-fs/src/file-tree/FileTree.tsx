@@ -1,15 +1,15 @@
 import FileTreeItem from './FileTreeItem';
 import fileTreeStyles from './FileTree.module.css';
-// import useFileGroups from '../store/useFileGroups';
 import GroupTreeItem from './GroupTreeItem';
 import React from 'react';
 
 import { fileWord, sketch } from '../icons';
+import { useSelector } from '../store';
 
 interface Props {}
 
 const FileTree: React.FC<Props> = (props: Props) => {
-  // const { groups } = useFileGroups()[0];
+  const docTree = useSelector(state => state.docTree);
 
   return (
     <div className={fileTreeStyles.root}>

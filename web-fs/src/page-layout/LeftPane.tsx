@@ -16,8 +16,6 @@ interface Props {
 const LeftPane: React.FC<Props> = (props: Props) => {
   const { theme } = useTheme()[0];
 
-  console.log(props.isHidden);
-
   return (
     <div
       className={classnames(
