@@ -4,7 +4,8 @@ import classnames from 'classnames';
 import FileEditorContent from './FileEditorContent';
 import FileEditorTitle from './FileEditorTitle';
 import React from 'react';
-import useTheme from '../theme/useTheme';
+
+import { useDispatch, useSelector } from '../store';
 
 interface Props {
   onChangeTitle: (title: string) => void;
@@ -12,13 +13,16 @@ interface Props {
 }
 
 const FileEditor: React.FC<Props> = (props: Props) => {
-  const theme = useTheme()[0];
+  const editMode = useSelector(state => state.editMode);
+  const dispatch = useDispatch();
+
+  console.log(editMode);
 
   function onChangeTitle(title: string) {}
 
   function onEnterTitle() {}
 
-  function onChangeContent() {}
+  function onChangeEditorState() {}
 
   return (
     <div className={classnames('FileEditor-root')}>
@@ -27,7 +31,7 @@ const FileEditor: React.FC<Props> = (props: Props) => {
         onEnter={onEnterTitle}
         title="Untitled Document"
       />
-      <FileEditorContent onChange={onChangeContent} />
+      <FileEditorContent onChange={onChangeEditorState} />
     </div>
   );
 };

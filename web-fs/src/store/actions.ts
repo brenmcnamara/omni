@@ -1,8 +1,10 @@
+import { DocumentContentLocalJSON } from './DocumentContent.model';
 import { DocumentLocalJSON } from './Document.model';
 
-export type Action = Action$DocumentCreate;
+export type Action = Action$CreateDocument;
 
-export interface Action$DocumentCreate {
+export interface Action$CreateDocument {
+  documentContentLocal: DocumentContentLocalJSON;
   documentLocal: DocumentLocalJSON;
-  type: 'DOCUMENT_CREATE';
+  type: 'CREATE_DOCUMENT';
 }

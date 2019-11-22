@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
 
 export interface State {
   docTree: State$DocTree;
-  editState: State$EditMode;
+  editMode: State$EditMode;
 }
 
 export default createStore(rootReducer);

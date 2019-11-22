@@ -5,12 +5,11 @@ import fontStyles from '../text/Font.module.css';
 import React, { useState } from 'react';
 
 import { ContentBlock, Editor, EditorState } from 'draft-js';
-import { DocumentContent } from '../document';
 import { useTheme } from '../theme';
 
 interface Props {
   editorRef?: React.RefObject<Editor>;
-  onChange: (content: DocumentContent) => void;
+  onChange: (state: EditorState) => void;
 }
 
 const FileEditorContent: React.FC<Props> = (props: Props) => {
@@ -20,6 +19,7 @@ const FileEditorContent: React.FC<Props> = (props: Props) => {
 
   function onChangeEditorState(editorState: EditorState) {
     setEditorState(editorState);
+    props.onChange(editorState);
   }
 
   function blockStyleFn(block: ContentBlock): string {

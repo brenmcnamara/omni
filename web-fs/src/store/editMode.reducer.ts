@@ -1,8 +1,16 @@
 import { Action } from './actions';
 
-export interface State {}
+export type State = EditMode$EditDocument | EditMode$NewDocument;
 
-const DEFAULT_STATE: State = {};
+interface EditMode$NewDocument {
+  type: 'NEW_DOCUMENT';
+}
+
+interface EditMode$EditDocument {
+  type: 'EDIT_DOCUMENT';
+}
+
+const DEFAULT_STATE: State = { type: 'NEW_DOCUMENT' };
 
 export default function editMode(
   state: State = DEFAULT_STATE,
