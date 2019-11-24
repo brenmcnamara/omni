@@ -1,5 +1,5 @@
-import { Action } from './actions';
 import { Model as Document, Ref as DocumentRef } from './Document.model';
+import { PureAction } from './actions';
 
 export type DocTree = DocTree$Atomic | DocTree$Composite;
 
@@ -25,7 +25,7 @@ const DEFAULT_STATE: State = {
 
 export default function docTree(
   state: State = DEFAULT_STATE,
-  action: Action,
+  action: PureAction,
 ): State {
   switch (action.type) {
     case 'ADD_DOCUMENT': {

@@ -1,5 +1,5 @@
-import { Action } from './actions';
 import { Model as Document, Ref as DocumentRef } from './Document.model';
+import { PureAction } from './actions';
 
 export type State = EditMode$EditDocument | EditMode$NewDocument;
 
@@ -16,7 +16,7 @@ const DEFAULT_STATE: State = { type: 'NEW_DOCUMENT' };
 
 export default function editMode(
   state: State = DEFAULT_STATE,
-  action: Action,
+  action: PureAction,
 ): State {
   switch (action.type) {
     case 'ADD_DOCUMENT': {

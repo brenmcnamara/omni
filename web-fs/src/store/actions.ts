@@ -1,6 +1,10 @@
-import { DocumentContent, Model as Document } from './Document.model';
+import {
+  DocumentContent,
+  Model as Document,
+  Ref as DocumentRef,
+} from './Document.model';
 
-export type Action = Action$AddDocument;
+export type PureAction = Action$AddDocument | Action$SetDocumentContent;
 
 export interface Action$AddDocument {
   document: Document;
@@ -16,5 +20,22 @@ export function addDocument(
     document,
     documentContent,
     type: 'ADD_DOCUMENT',
+  };
+}
+
+export interface Action$SetDocumentContent {
+  documentRef: DocumentRef;
+  documentContent: DocumentContent;
+  type: 'SET_DOCUMENT_CONTENT';
+}
+
+export function setDocumentContent(
+  documentRef: DocumentRef,
+  documentContent: DocumentContent,
+): Action$SetDocumentContent {
+  return {
+    documentRef,
+    documentContent,
+    type: 'SET_DOCUMENT_CONTENT',
   };
 }

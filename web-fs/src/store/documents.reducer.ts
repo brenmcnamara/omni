@@ -1,5 +1,5 @@
-import { Action } from './actions';
 import { DocumentContent, Model as Document } from './Document.model';
+import { PureAction } from './actions';
 
 export interface State {
   documents: { [id: string]: Document };
@@ -13,7 +13,7 @@ const DEFAULT_STATE: State = {
 
 export default function documents(
   state: State = DEFAULT_STATE,
-  action: Action,
+  action: PureAction,
 ): State {
   switch (action.type) {
     case 'ADD_DOCUMENT': {
