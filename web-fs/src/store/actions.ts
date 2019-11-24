@@ -1,10 +1,10 @@
-import { DocumentContentLocalJSON } from './DocumentContent.model';
-import { DocumentLocalJSON } from './Document.model';
+import { LocalRaw as DocumentContentLocalRaw } from './DocumentContent.model';
+import { LocalRaw as DocumentLocalRaw } from './Document.model';
 
 export type Action = Action$CreateDocument;
 
 export interface Action$CreateDocument {
-  documentContentLocal: DocumentContentLocalJSON;
-  documentLocal: DocumentLocalJSON;
+  documentContentLocal: DocumentContentLocalRaw;
+  documentLocal: DocumentLocalRaw;
   type: 'CREATE_DOCUMENT';
 }

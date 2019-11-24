@@ -1,4 +1,4 @@
-export interface Ref<TType extends string> {
+export interface ModelRef<TType extends string> {
   refID: string;
   refType: TType;
   type: 'REF';

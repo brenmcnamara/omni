@@ -1,10 +1,48 @@
-import { ModelLocalRaw, ModelRaw, Ref } from './core';
+import uuid from 'uuid/v4';
+
+import { ModelLocalRaw, ModelRaw, ModelRef } from './core';
+import { Ref as DocumentRef } from './Document.model';
 
 export const MODEL_TYPE = 'DocumentContent';
 
-export type DocumentContentRef = Ref<typeof MODEL_TYPE>;
+// -----------------------------------------------------------------------------
+// Ref
+// -----------------------------------------------------------------------------
 
-export interface DocumentContentLocalJSON
-  extends ModelLocalRaw<typeof MODEL_TYPE> {}
+export type Ref = ModelRef<typeof MODEL_TYPE>;
 
-export interface DocumentContentJSON extends ModelRaw<typeof MODEL_TYPE> {}
+export function createRef(refID: string): Ref {
+  return {
+    refID,
+    refType: MODEL_TYPE,
+    type: 'REF',
+  };
+}
+
+// -----------------------------------------------------------------------------
+// Local
+// -----------------------------------------------------------------------------
+
+export interface LocalRawStub {
+  data: string;
+  documentRef: DocumentRef;
+}
+
+export type LocalRaw = ModelLocalRaw<typeof MODEL_TYPE> & LocalRawStub;
+
+export function createLocal(stub: LocalRawStub): LocalRaw {
+  return {
+    localID: uuid(),
+    modelType: MODEL_TYPE,
+    type: 'LOCAL_MODEL',
+    ...stub,
+  };
+}
+
+// -----------------------------------------------------------------------------
+// Raw
+// -----------------------------------------------------------------------------
+
+export interface Raw extends ModelRaw<typeof MODEL_TYPE> {
+  data: string;
+}
