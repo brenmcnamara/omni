@@ -1,4 +1,5 @@
 import { Action } from './actions';
+import { Model as Document, Ref as DocumentRef } from './Document.model';
 
 export type State = EditMode$EditDocument | EditMode$NewDocument;
 
@@ -7,6 +8,7 @@ interface EditMode$NewDocument {
 }
 
 interface EditMode$EditDocument {
+  documentRef: DocumentRef;
   type: 'EDIT_DOCUMENT';
 }
 
@@ -16,7 +18,11 @@ export default function editMode(
   state: State = DEFAULT_STATE,
   action: Action,
 ): State {
-  switch (action) {
+  switch (action.type) {
+    case 'CREATE_DOCUMENT': {
+      return state;
+    }
+
     default:
       return state;
   }

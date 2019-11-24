@@ -5,7 +5,10 @@ import FileEditorContent from './FileEditorContent';
 import FileEditorTitle from './FileEditorTitle';
 import React from 'react';
 
+import { DocumentContent } from '../store/Document.model';
 import { useDispatch, useSelector } from '../store';
+import { State as State$EditMode } from '../store/editMode.reducer';
+import { StoreState } from '../store/Store';
 
 interface Props {
   onChangeTitle: (title: string) => void;
@@ -15,8 +18,6 @@ interface Props {
 const FileEditor: React.FC<Props> = (props: Props) => {
   const editMode = useSelector(state => state.editMode);
   const dispatch = useDispatch();
-
-  console.log(editMode);
 
   function onChangeTitle(title: string) {}
 
@@ -37,3 +38,14 @@ const FileEditor: React.FC<Props> = (props: Props) => {
 };
 
 export default FileEditor;
+
+// -----------------------------------------------------------------------------
+// State Selection
+// -----------------------------------------------------------------------------
+
+interface StateSelection {
+  editMode: State$EditMode;
+  documentContent: DocumentContent;
+}
+
+function useSelection(state: StoreState) {}

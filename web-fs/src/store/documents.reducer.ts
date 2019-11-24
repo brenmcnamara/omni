@@ -1,10 +1,9 @@
 import { Action } from './actions';
-import { LocalRaw as DocumentContentLocalRaw } from './DocumentContent.model';
-import { LocalRaw as DocumentLocalRaw } from './Document.model';
+import { DocumentContent, Model as Document } from './Document.model';
 
 export interface State {
-  documents: { [id: string]: DocumentLocalRaw };
-  documentContents: { [id: string]: DocumentContentLocalRaw };
+  documents: { [id: string]: Document };
+  documentContents: { [id: string]: DocumentContent };
 }
 
 const DEFAULT_STATE: State = {
@@ -18,8 +17,8 @@ export default function documents(
 ): State {
   switch (action.type) {
     case 'CREATE_DOCUMENT': {
-      const { documentContentLocal, documentLocal } = action;
-      return addDocument(state, documentLocal, documentContentLocal);
+      const { documentContent, document } = action;
+      return addDocument(state, document, documentContent);
     }
 
     default:
@@ -33,18 +32,18 @@ export default function documents(
 
 function addDocument(
   state: State,
-  document: DocumentLocalRaw,
-  documentContent: DocumentContentLocalRaw,
+  document: Document,
+  documentContent: DocumentContent,
 ): State {
   return {
     ...state,
     documents: {
       ...state.documents,
-      [document.localID]: document,
+      [document.id]: document,
     },
     documentContents: {
       ...state.documentContents,
-      [documentContent.localID]: documentContent,
+      [document.id]: documentContent,
     },
   };
 }

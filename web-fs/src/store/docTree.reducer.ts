@@ -1,9 +1,5 @@
 import { Action } from './actions';
-import {
-  createRef as createDocumentRef,
-  LocalRaw as DocumentLocalRaw,
-  Ref as DocumentRef,
-} from './Document.model';
+import { Model as Document, Ref as DocumentRef } from './Document.model';
 
 export type DocTree = DocTree$Atomic | DocTree$Composite;
 
@@ -33,7 +29,7 @@ export default function docTree(
 ): State {
   switch (action.type) {
     case 'CREATE_DOCUMENT': {
-      return addDocument(state, action.documentLocal);
+      return addDocument(state, action.document);
     }
 
     default:
@@ -45,24 +41,21 @@ export default function docTree(
 // Utils
 // -----------------------------------------------------------------------------
 
-function addDocument(state: State, document: DocumentLocalRaw): State {
+function addDocument(state: State, document: Document): State {
   if (document.groups.length === 0) {
     // Put document at the root of the tree.
     const tree = state.tree.slice();
     tree.unshift({
-      documentRef: createDocumentRef(document.localID),
+      documentRef: document.createRef(),
       name: document.name,
       type: 'ATOMIC',
     });
     return { ...state, tree };
   }
 
-  const tree = state.tree.slice();
-
-  // First, let's make a copy of the tree.
+  const tree = state.tree.map(node => copyTree(node));
 
   for (const group of document.groups) {
-    let parent: DocTree$Composite | null = null;
     let nodes: DocTree[] = tree;
 
     for (const token of group.split('/')) {
@@ -73,8 +66,7 @@ function addDocument(state: State, document: DocumentLocalRaw): State {
       if (childNode) {
         nodes = childNode.childNodes;
       } else {
-        // Group not found. Need to create a new group and scan through the
-        // subgroups.
+        // Group not found. Need to create new group and scan through subgroups.
         const newNode: DocTree$Composite = {
           childNodes: [],
           name: token,
@@ -88,7 +80,7 @@ function addDocument(state: State, document: DocumentLocalRaw): State {
 
     // After drilling down to the nodes, add the file to the list.
     nodes.unshift({
-      documentRef: createDocumentRef(document.localID),
+      documentRef: document.createRef(),
       name: document.name,
       type: 'ATOMIC',
     });
@@ -98,20 +90,37 @@ function addDocument(state: State, document: DocumentLocalRaw): State {
 }
 
 function copyTree(tree: DocTree): DocTree {
-  const copy: DocTree = { ...tree };
-  const stack = [tree];
+  let rootCopy: DocTree;
 
-  let next: DocTree | undefined;
+  const stack: Array<[DocTree, (node: DocTree) => void]> = [
+    [tree, (node: DocTree) => (rootCopy = node)],
+  ];
+
+  let next: [DocTree, (node: DocTree) => void] | undefined;
 
   while ((next = stack.pop())) {
-    switch (next.type) {
+    const [node, connectToParent] = next;
+
+    switch (node.type) {
       case 'ATOMIC': {
+        connectToParent({ ...node });
+        break;
       }
 
       case 'COMPOSITE': {
+        const childNodes = node.childNodes.slice();
+        connectToParent({ ...node, childNodes });
+        for (let i = 0; i < childNodes.length; ++i) {
+          stack.push([
+            childNodes[i],
+            (node: DocTree) => (childNodes[i] = node),
+          ]);
+        }
+        break;
       }
     }
   }
 
-  return copy;
+  // @ts-ignore
+  return rootCopy;
 }
