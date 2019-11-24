@@ -66,9 +66,21 @@ export class Model extends ModelBase<typeof MODEL_TYPE, Local, Persisted> {
     return this.persisted ? this.persisted.name : nullthrows(this.local).name;
   }
 
+  public setName(name: string): Model {
+    const local = this.local && { ...this.local, name };
+    const persisted = this.persisted && { ...this.persisted, name };
+    return new Model(local, persisted);
+  }
+
   public get groups(): string[] {
     return this.persisted
       ? this.persisted.groups
       : nullthrows(this.local).groups;
+  }
+
+  public setGroups(groups: string[]): Model {
+    const local = this.local && { ...this.local, groups };
+    const persisted = this.persisted && { ...this.persisted, groups };
+    return new Model(local, persisted);
   }
 }

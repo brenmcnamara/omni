@@ -4,7 +4,10 @@ import {
   Ref as DocumentRef,
 } from './Document.model';
 
-export type PureAction = Action$AddDocument | Action$SetDocumentContent;
+export type PureAction =
+  | Action$AddDocument
+  | Action$SetDocument
+  | Action$SetDocumentContent;
 
 export interface Action$AddDocument {
   document: Document;
@@ -20,6 +23,18 @@ export function addDocument(
     document,
     documentContent,
     type: 'ADD_DOCUMENT',
+  };
+}
+
+export interface Action$SetDocument {
+  document: Document;
+  type: 'SET_DOCUMENT';
+}
+
+export function setDocument(document: Document): Action$SetDocument {
+  return {
+    document,
+    type: 'SET_DOCUMENT',
   };
 }
 
