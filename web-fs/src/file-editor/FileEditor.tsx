@@ -4,11 +4,11 @@ import classnames from 'classnames';
 import FileEditorContent from './FileEditorContent';
 import FileEditorTitle from './FileEditorTitle';
 import React from 'react';
+import throttle from '../throttle';
 
 import { DocumentContent } from '../store/Document.model';
 import { useDispatch, useSelector } from '../store';
 import { State as State$EditMode } from '../store/editMode.reducer';
-import { StoreState } from '../store/Store';
 
 interface Props {
   onChangeTitle: (title: string) => void;
@@ -16,10 +16,12 @@ interface Props {
 }
 
 const FileEditor: React.FC<Props> = (props: Props) => {
-  const editMode = useSelector(state => state.editMode);
+  const reduxState = useSelection();
   const dispatch = useDispatch();
 
-  function onChangeTitle(title: string) {}
+  const onChangeTitle = throttle(400, (title: string) => {
+    console.log(title);
+  });
 
   function onEnterTitle() {}
 
@@ -44,8 +46,19 @@ export default FileEditor;
 // -----------------------------------------------------------------------------
 
 interface StateSelection {
-  editMode: State$EditMode;
   documentContent: DocumentContent;
+  editMode: State$EditMode;
 }
 
-function useSelection(state: StoreState) {}
+function useSelection(): StateSelection {
+  return useSelector(state => {
+    const { editMode } = state;
+
+    const documentContent =
+      editMode.type === 'EDIT_DOCUMENT'
+        ? state.documents.documentContents[editMode.documentRef.refID] || ''
+        : '';
+
+    return { documentContent, editMode };
+  });
+}
