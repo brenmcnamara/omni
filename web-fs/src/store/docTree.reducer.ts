@@ -28,7 +28,7 @@ export default function docTree(
   action: Action,
 ): State {
   switch (action.type) {
-    case 'CREATE_DOCUMENT': {
+    case 'ADD_DOCUMENT': {
       return addDocument(state, action.document);
     }
 

@@ -2,6 +2,7 @@ import docTree, { State as State$DocTree } from './docTree.reducer';
 import documents, { State as State$Documents } from './documents.reducer';
 import editMode, { State as State$EditMode } from './editMode.reducer';
 
+import { Action } from './actions';
 import { combineReducers, createStore } from 'redux';
 
 const rootReducer = combineReducers({
@@ -9,6 +10,8 @@ const rootReducer = combineReducers({
   docTree,
   editMode,
 });
+
+export type Dispatch = (action: Action) => void;
 
 export interface StoreState {
   docTree: State$DocTree;

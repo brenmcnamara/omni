@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 export type Procedure = (...args: any[]) => void;
 
 export default function debounce<F extends Procedure>(

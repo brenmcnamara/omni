@@ -4,11 +4,13 @@ import classnames from 'classnames';
 import FileEditorContent from './FileEditorContent';
 import FileEditorTitle from './FileEditorTitle';
 import React from 'react';
-import throttle from '../throttle';
 
-import { DocumentContent } from '../store/Document.model';
+import { addDocument } from '../store/actions';
+import { DocumentContent, Model as Document } from '../store/Document.model';
+import { EditorState } from 'draft-js';
 import { useDispatch, useSelector } from '../store';
 import { State as State$EditMode } from '../store/editMode.reducer';
+import { useThrottle } from '../throttle';
 
 interface Props {
   onChangeTitle: (title: string) => void;
@@ -19,13 +21,26 @@ const FileEditor: React.FC<Props> = (props: Props) => {
   const reduxState = useSelection();
   const dispatch = useDispatch();
 
-  const onChangeTitle = throttle(400, (title: string) => {
-    console.log(title);
+  const onChangeTitle = useThrottle(1000, (title: string) => {
+    console.log(reduxState.editMode.type);
+    switch (reduxState.editMode.type) {
+      case 'NEW_DOCUMENT': {
+        const document = Document.createLocal({
+          groups: [],
+          name: title,
+        });
+        dispatch(addDocument(document, ''));
+        break;
+      }
+    }
   });
 
   function onEnterTitle() {}
 
-  function onChangeEditorState() {}
+  const onChangeEditorState = useThrottle(
+    1000,
+    (editorState: EditorState) => {},
+  );
 
   return (
     <div className={classnames('FileEditor-root')}>

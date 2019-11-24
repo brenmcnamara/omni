@@ -16,7 +16,7 @@ export default function documents(
   action: Action,
 ): State {
   switch (action.type) {
-    case 'CREATE_DOCUMENT': {
+    case 'ADD_DOCUMENT': {
       const { documentContent, document } = action;
       return addDocument(state, document, documentContent);
     }

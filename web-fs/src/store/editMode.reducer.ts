@@ -19,8 +19,10 @@ export default function editMode(
   action: Action,
 ): State {
   switch (action.type) {
-    case 'CREATE_DOCUMENT': {
-      return state;
+    case 'ADD_DOCUMENT': {
+      return state.type === 'NEW_DOCUMENT'
+        ? { documentRef: action.document.createRef(), type: 'EDIT_DOCUMENT' }
+        : state;
     }
 
     default:
