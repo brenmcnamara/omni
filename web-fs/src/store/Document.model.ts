@@ -1,7 +1,15 @@
+import * as t from 'io-ts';
 import nullthrows from 'nullthrows';
 import uuid from 'uuid/v4';
 
-import { ModelBase, ModelLocal, ModelPersisted, ModelRef } from './core';
+import {
+  ModelBase,
+  ModelLocal,
+  ModelPersisted,
+  ModelRef,
+  tModelLocalSerial,
+  tModelPersistedSerial,
+} from './core';
 
 export type DocumentContent = string;
 
@@ -24,6 +32,14 @@ export interface LocalStub {
 
 export type Local = ModelLocal<typeof MODEL_TYPE> & LocalStub;
 
+export const tLocal = t.intersection([
+  tModelLocalSerial(MODEL_TYPE),
+  t.type({
+    name: t.string,
+    groups: t.array(t.string),
+  }),
+]);
+
 // -----------------------------------------------------------------------------
 // Persisted
 // -----------------------------------------------------------------------------
@@ -34,6 +50,14 @@ export interface PersistedStub {
 }
 
 export type Persisted = ModelPersisted<typeof MODEL_TYPE> & PersistedStub;
+
+export const tPersisted = t.intersection([
+  tModelLocalSerial(MODEL_TYPE),
+  t.type({
+    name: t.string,
+    groups: t.array(t.string),
+  }),
+]);
 
 // -----------------------------------------------------------------------------
 // Model

@@ -1,4 +1,7 @@
+import * as t from 'io-ts';
 import nullthrows from 'nullthrows';
+
+import { either } from 'fp-ts/lib/Either';
 
 export interface ModelRef<TType extends string> {
   refID: string;
@@ -48,4 +51,34 @@ export class ModelBase<
   public get id(): string {
     return this.persisted ? this.persisted.id : nullthrows(this.local).localID;
   }
+}
+
+export const tDateFromString = new t.Type<Date, string, unknown>(
+  'Date',
+  (u): u is Date => u instanceof Date,
+  (u, c) =>
+    either.chain(t.string.validate(u, c), s => {
+      const d = new Date(s);
+      return isNaN(d.getTime()) ? t.failure(u, c) : t.success(d);
+    }),
+  a => a.toISOString(),
+);
+
+export function tModelLocalSerial<TType extends string>(modelType: TType) {
+  return t.type({
+    localID: t.string,
+    modelType: t.literal(modelType),
+    type: t.literal('MODEL_LOCAL'),
+  });
+}
+
+export function tModelPersistedSerial<TType extends string>(modelType: TType) {
+  return t.type({
+    createdAt: tDateFromString,
+    id: t.string,
+    isDeleted: t.boolean,
+    modelType: t.literal(modelType),
+    type: t.literal('MODEL'),
+    updatedAt: tDateFromString,
+  });
 }
