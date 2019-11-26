@@ -1,19 +1,26 @@
 import * as t from 'io-ts';
 
-export default class LocalCache<T> {
-  private tSerial: t.Type<T, string, string>;
+export default class LocalCache<TProps extends t.Props> {
+  private tSerial: t.TypeC<TProps>;
 
-  constructor(tSerial: t.Type<T, string, string>) {
+  constructor(tSerial: t.TypeC<TProps>) {
     this.tSerial = tSerial;
   }
 
-  public get(key: string): T | undefined {
+  public get(key: string): t.TypeOf<t.TypeC<TProps>> | undefined {
     const value = localStorage.getItem(key);
     if (value === null) {
       return undefined;
     }
 
-    const decoded = this.tSerial.decode(value);
+    let parsed: string;
+    try {
+      parsed = JSON.parse(value);
+    } catch (error) {
+      return undefined;
+    }
+
+    const decoded = this.tSerial.decode(parsed);
     switch (decoded._tag) {
       case 'Left':
         return undefined;
@@ -22,8 +29,8 @@ export default class LocalCache<T> {
     }
   }
 
-  public set(key: string, value: T): void {
-    const encoded = this.tSerial.encode(value);
+  public set(key: string, value: t.TypeOf<t.TypeC<TProps>>): void {
+    const encoded = JSON.stringify(this.tSerial.encode(value));
     localStorage.setItem(key, encoded);
   }
 }
