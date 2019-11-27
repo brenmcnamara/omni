@@ -3,6 +3,7 @@ import LocalCache from './LocalCache';
 import uuid from 'uuid/v4';
 
 import {
+  DocumentContent,
   Local as DocumentLocal,
   Persisted as DocumentPersisted,
   tPersisted as tDocumentPersisted,
@@ -28,6 +29,7 @@ class DB {
 
   public static collectionVersion = {
     Document: 'v1',
+    DocumentContent: 'v1',
   };
 
   // ---------------------------------------------------------------------------
@@ -60,6 +62,7 @@ class DB {
         updatedAt: now,
       };
 
+      this.documentContentCache.set(id, '');
       this.documentCache.set(id, persisted);
 
       this.documentIndex.push(id);
@@ -88,7 +91,31 @@ class DB {
 
       this.indexCache.set('Document', this.documentIndex);
       this.documentCache.remove(id);
+      this.documentContentCache.remove(id);
       resolve();
+    });
+  }
+
+  // ---------------------------------------------------------------------------
+  // DOCUMENT CONTENT
+  // ---------------------------------------------------------------------------
+
+  private documentContentCache = new LocalCache<string>(
+    this.createCollectionNamespace('DocumentContent'),
+    t.string,
+  );
+
+  public genFetchDocumentContent(id: string): Promise<string | undefined> {
+    return Promise.resolve(this.documentContentCache.get(id));
+  }
+
+  public genSetDocumentContent(
+    id: string,
+    content: DocumentContent,
+  ): Promise<string> {
+    return new Promise(resolve => {
+      this.documentContentCache.set(id, content);
+      resolve(content);
     });
   }
 
