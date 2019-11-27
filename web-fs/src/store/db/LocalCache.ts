@@ -1,14 +1,16 @@
 import * as t from 'io-ts';
 
-export default class LocalCache<TProps extends t.Props> {
-  private tSerial: t.TypeC<TProps>;
+export default class LocalCache<T> {
+  private namespace: string;
+  private tSerial: t.Type<T>;
 
-  constructor(tSerial: t.TypeC<TProps>) {
+  constructor(namespace: string, tSerial: t.Type<T>) {
+    this.namespace = namespace;
     this.tSerial = tSerial;
   }
 
-  public get(key: string): t.TypeOf<t.TypeC<TProps>> | undefined {
-    const value = localStorage.getItem(key);
+  public get(key: string): T | undefined {
+    const value = localStorage.getItem(`${this.namespace}.${key}`);
     if (value === null) {
       return undefined;
     }
@@ -29,8 +31,12 @@ export default class LocalCache<TProps extends t.Props> {
     }
   }
 
-  public set(key: string, value: t.TypeOf<t.TypeC<TProps>>): void {
+  public set(key: string, value: T): void {
     const encoded = JSON.stringify(this.tSerial.encode(value));
-    localStorage.setItem(key, encoded);
+    localStorage.setItem(`${this.namespace}.${key}`, encoded);
+  }
+
+  public remove(key: string): void {
+    localStorage.removeItem(`${this.namespace}.${key}`);
   }
 }

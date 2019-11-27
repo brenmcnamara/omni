@@ -53,18 +53,25 @@ export class ModelBase<
   }
 }
 
-export const tDateFromString = new t.Type<Date, string, unknown>(
+// export const tDateFromString = new t.Type<Date, string, unknown>(
+//   'Date',
+//   (u): u is Date => u instanceof Date,
+//   (u, c) =>
+//     either.chain(t.string.validate(u, c), s => {
+//       const d = new Date(s);
+//       return isNaN(d.getTime()) ? t.failure(u, c) : t.success(d);
+//     }),
+//   a => a.toISOString(),
+// );
+
+export const tDate = new t.Type<Date>(
   'Date',
   (u): u is Date => u instanceof Date,
-  (u, c) =>
-    either.chain(t.string.validate(u, c), s => {
-      const d = new Date(s);
-      return isNaN(d.getTime()) ? t.failure(u, c) : t.success(d);
-    }),
-  a => a.toISOString(),
+  (u, c) => (u instanceof Date ? t.success(u) : t.failure(u, c)),
+  t.identity,
 );
 
-export function tModelLocalSerial<TType extends string>(modelType: TType) {
+export function tModelLocal<TType extends string>(modelType: TType) {
   return t.type({
     localID: t.string,
     modelType: t.literal(modelType),
@@ -72,13 +79,13 @@ export function tModelLocalSerial<TType extends string>(modelType: TType) {
   });
 }
 
-export function tModelPersistedSerial<TType extends string>(modelType: TType) {
+export function tModelPersisted<TType extends string>(modelType: TType) {
   return t.type({
-    createdAt: tDateFromString,
+    createdAt: tDate,
     id: t.string,
     isDeleted: t.boolean,
     modelType: t.literal(modelType),
     type: t.literal('MODEL'),
-    updatedAt: tDateFromString,
+    updatedAt: tDate,
   });
 }

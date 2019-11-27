@@ -7,8 +7,8 @@ import {
   ModelLocal,
   ModelPersisted,
   ModelRef,
-  tModelLocalSerial,
-  tModelPersistedSerial,
+  tModelLocal,
+  tModelPersisted,
 } from './core';
 
 export type DocumentContent = string;
@@ -26,17 +26,17 @@ export type Ref = ModelRef<typeof MODEL_TYPE>;
 // -----------------------------------------------------------------------------
 
 export interface LocalStub {
-  name: string;
   groups: string[];
+  name: string;
 }
 
 export type Local = ModelLocal<typeof MODEL_TYPE> & LocalStub;
 
 export const tLocal = t.intersection([
-  tModelLocalSerial(MODEL_TYPE),
+  tModelLocal(MODEL_TYPE),
   t.type({
-    name: t.string,
     groups: t.array(t.string),
+    name: t.string,
   }),
 ]);
 
@@ -51,11 +51,11 @@ export interface PersistedStub {
 
 export type Persisted = ModelPersisted<typeof MODEL_TYPE> & PersistedStub;
 
-export const tPersisted = t.intersection([
-  tModelLocalSerial(MODEL_TYPE),
+export const tPersisted: t.Type<Persisted> = t.intersection([
+  tModelPersisted(MODEL_TYPE),
   t.type({
-    name: t.string,
     groups: t.array(t.string),
+    name: t.string,
   }),
 ]);
 
