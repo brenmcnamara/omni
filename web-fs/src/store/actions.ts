@@ -7,6 +7,7 @@ import {
   Model as Document,
   Ref as DocumentRef,
 } from './Document.model';
+import { getDocument } from './selectors';
 
 export type PureAction =
   | Action$AddDocument
@@ -51,10 +52,14 @@ export interface Action$SetDocument {
   type: 'SET_DOCUMENT';
 }
 
-export function setDocument(document: Document): Action$SetDocument {
-  return {
-    document,
-    type: 'SET_DOCUMENT',
+export function setDocument(document: Document): Action {
+  return async dispatch => {
+    dispatch({
+      document,
+      type: 'SET_DOCUMENT',
+    });
+
+    await DB.genSetDocument(nullthrows(document.persisted));
   };
 }
 
@@ -67,10 +72,15 @@ export interface Action$SetDocumentContent {
 export function setDocumentContent(
   documentRef: DocumentRef,
   documentContent: DocumentContent,
-): Action$SetDocumentContent {
-  return {
-    documentRef,
-    documentContent,
-    type: 'SET_DOCUMENT_CONTENT',
+): Action {
+  return async (dispatch, getState) => {
+    dispatch({
+      documentRef,
+      documentContent,
+      type: 'SET_DOCUMENT_CONTENT',
+    });
+
+    const documentID = nullthrows(getDocument(getState(), documentRef)).id;
+    await DB.genSetDocumentContent(documentID, documentContent);
   };
 }
