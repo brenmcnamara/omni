@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { addDocument, setDocument, setDocumentContent } from './store/actions';
 import { DocumentContent, Model as Document } from './store/Document.model';
 import { EditorState } from 'draft-js';
+import { getDocument, getDocumentContent } from './store/selectors';
 import { State as State$EditMode } from './store/editMode.reducer';
 import { useDispatch, useSelector } from './store';
 import { useThrottle } from './throttle';
@@ -89,12 +90,12 @@ function useSelection(): StateSelection {
 
     const document =
       editMode.type === 'EDIT_DOCUMENT'
-        ? state.documents.documents[editMode.documentRef.refID]
+        ? getDocument(state, editMode.documentRef)
         : undefined;
 
     const documentContent =
       editMode.type === 'EDIT_DOCUMENT'
-        ? state.documents.documentContents[editMode.documentRef.refID] || ''
+        ? getDocumentContent(state, editMode.documentRef) || ''
         : '';
 
     return { document, documentContent, editMode };

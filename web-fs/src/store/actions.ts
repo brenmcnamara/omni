@@ -1,3 +1,7 @@
+import DB from './db';
+import nullthrows from 'nullthrows';
+
+import { Action } from './Store';
 import {
   DocumentContent,
   Model as Document,
@@ -6,6 +10,7 @@ import {
 
 export type PureAction =
   | Action$AddDocument
+  | Action$PersistDocument
   | Action$SetDocument
   | Action$SetDocumentContent;
 
@@ -15,14 +20,29 @@ export interface Action$AddDocument {
   type: 'ADD_DOCUMENT';
 }
 
+export interface Action$PersistDocument {
+  document: Document;
+  type: 'PERSIST_DOCUMENT';
+}
+
 export function addDocument(
   document: Document,
   documentContent: DocumentContent,
-): Action$AddDocument {
-  return {
-    document,
-    documentContent,
-    type: 'ADD_DOCUMENT',
+): Action {
+  return async dispatch => {
+    dispatch({
+      document,
+      documentContent,
+      type: 'ADD_DOCUMENT',
+    });
+
+    const persisted = await DB.genCreateDocument(nullthrows(document.local));
+    const newDocument = new Document(document.local, persisted);
+
+    dispatch({
+      document: newDocument,
+      type: 'PERSIST_DOCUMENT',
+    });
   };
 }
 

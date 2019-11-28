@@ -29,13 +29,21 @@ export class ModelBase<
   TLocal extends ModelLocal<TType>,
   TPersisted extends ModelPersisted<TType>
 > {
-  protected local: TLocal | null = null;
+  private _local: TLocal | null = null;
 
-  protected persisted: TPersisted | null = null;
+  private _persisted: TPersisted | null = null;
 
   constructor(local: TLocal | null, persisted: TPersisted | null) {
-    this.local = local;
-    this.persisted = persisted;
+    this._local = local;
+    this._persisted = persisted;
+  }
+
+  public get local(): TLocal | null {
+    return this._local;
+  }
+
+  public get persisted(): TPersisted | null {
+    return this._persisted;
   }
 
   public matchesRef(ref: ModelRef<TType>): boolean {

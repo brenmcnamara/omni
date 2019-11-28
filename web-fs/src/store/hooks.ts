@@ -1,11 +1,11 @@
 import { PureAction } from './actions';
-import { StoreState } from './Store';
+import { Dispatch, StoreState } from './Store';
 import {
   useDispatch as useDispatchUNTYPED,
   useSelector as useSelectorUNTYPED,
 } from 'react-redux';
 
-export function useDispatch(): (action: PureAction) => void {
+export function useDispatch(): Dispatch {
   return useDispatchUNTYPED();
 }
 

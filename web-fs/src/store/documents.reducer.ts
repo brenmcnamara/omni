@@ -1,3 +1,5 @@
+import nullthrows from 'nullthrows';
+
 import {
   DocumentContent,
   Model as Document,
@@ -8,11 +10,13 @@ import { PureAction } from './actions';
 export interface State {
   documents: { [id: string]: Document };
   documentContents: { [id: string]: DocumentContent };
+  localToPersistedID: { [id: string]: string };
 }
 
 const DEFAULT_STATE: State = {
   documents: {},
   documentContents: {},
+  localToPersistedID: {},
 };
 
 export default function documents(
@@ -23,6 +27,11 @@ export default function documents(
     case 'ADD_DOCUMENT': {
       const { documentContent, document } = action;
       return addDocument(state, document, documentContent);
+    }
+
+    case 'PERSIST_DOCUMENT': {
+      const { document } = action;
+      return persistDocument(state, document);
     }
 
     case 'SET_DOCUMENT': {
@@ -60,6 +69,25 @@ function addDocument(
       [document.id]: documentContent,
     },
   };
+}
+
+function persistDocument(state: State, document: Document): State {
+  const local = document.local;
+  if (!local || !state.documents[local.localID]) {
+    return addDocument(state, document, '');
+  }
+
+  const persisted = nullthrows(document.persisted);
+
+  // Need to switch out the local key for the persisted key.
+  const documents = { ...state.documents };
+  delete documents[local.localID];
+  documents[document.id] = document;
+
+  const localToPersistedID = { ...state.localToPersistedID };
+  localToPersistedID[local.localID] = persisted.id;
+
+  return { ...state, documents, localToPersistedID };
 }
 
 function setDocumentContent(
