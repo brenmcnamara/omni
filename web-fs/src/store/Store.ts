@@ -1,8 +1,9 @@
 import docTree, { State as State$DocTree } from './docTree.reducer';
 import documents, { State as State$Documents } from './documents.reducer';
 import editMode, { State as State$EditMode } from './editMode.reducer';
+import thunk from 'redux-thunk';
 
-import { combineReducers, createStore } from 'redux';
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { PureAction } from './actions';
 
 const rootReducer = combineReducers({
@@ -19,8 +20,10 @@ export interface StoreState {
   editMode: State$EditMode;
 }
 
+// @ts-ignore
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 export default createStore(
   rootReducer,
-  // @ts-ignore
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  composeEnhancers(applyMiddleware(thunk)),
 );

@@ -38,6 +38,13 @@ export class ModelBase<
     this.persisted = persisted;
   }
 
+  public matchesRef(ref: ModelRef<TType>): boolean {
+    return Boolean(
+      (this.persisted && this.persisted.id === ref.refID) ||
+        (this.local && this.local.localID === ref.refID),
+    );
+  }
+
   public get type(): 'MODEL' {
     return 'MODEL';
   }

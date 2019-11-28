@@ -17,7 +17,7 @@ const ContentViewer: React.FC = () => {
   const reduxState = useSelection();
   const dispatch = useDispatch();
 
-  const onChangeTitle = useThrottle(1000, (title: string) => {
+  const onChangeTitle = (title: string) => {
     const { editMode } = reduxState;
     switch (editMode.type) {
       case 'NEW_DOCUMENT': {
@@ -34,7 +34,7 @@ const ContentViewer: React.FC = () => {
         dispatch(setDocument(document.setName(title)));
       }
     }
-  });
+  };
 
   const onChangeEditorState = useThrottle(1000, (editorState: EditorState) => {
     const { editMode } = reduxState;

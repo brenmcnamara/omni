@@ -32,6 +32,10 @@ export default function docTree(
       return addDocument(state, action.document);
     }
 
+    case 'SET_DOCUMENT': {
+      return setDocument(state, action.document);
+    }
+
     default:
       return state;
   }
@@ -52,6 +56,9 @@ function addDocument(state: State, document: Document): State {
     });
     return { ...state, tree };
   }
+
+  // TODO: Perf is bad here. Don't need to make a full copy of the
+  // doc tree everytime.
 
   const tree = state.tree.map(node => copyTree(node));
 
@@ -87,6 +94,28 @@ function addDocument(state: State, document: Document): State {
   }
 
   return { ...state, tree };
+}
+
+function setDocument(state: State, document: Document): State {
+  // TODO: This method supports name changes of documents. It does not support
+  // changing the group that the document belongs to.
+
+  // TODO: Perf is bad here. Don't need to make a full copy of the
+  // tree everytime.
+  const tree = state.tree.map(node => copyTree(node));
+
+  // Find the document in the tree and make any needed modifications.
+  const stack: DocTree[] = tree.slice();
+  let next: DocTree | undefined;
+
+  while ((next = stack.pop())) {
+    if (next.type === 'ATOMIC' && document.matchesRef(next.documentRef)) {
+      next.name = document.name;
+      break;
+    }
+  }
+
+  return { tree };
 }
 
 function copyTree(tree: DocTree): DocTree {
