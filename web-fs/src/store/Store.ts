@@ -14,7 +14,14 @@ import editMode, {
 } from './editMode.reducer';
 import thunk, { ThunkAction as _ThunkAction } from 'redux-thunk';
 
-import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import {
+  applyMiddleware,
+  combineReducers,
+  compose,
+  createStore,
+  Middleware as _Middleware,
+} from 'redux';
+import { createMiddleware as createLocalStorageMiddleware } from './localStorage.middleware';
 import { PureAction } from './actions';
 
 const rootReducer = combineReducers({
@@ -34,9 +41,9 @@ export type ThunkAction<A extends PureAction> = _ThunkAction<
 
 export type Action = PureAction | ThunkAction<PureAction>;
 
-export type PureDispatch = (action: PureAction) => void;
+export type PureDispatch = (action: PureAction) => PureAction;
 
-export type Dispatch = (action: Action) => void;
+export type Dispatch = (action: Action) => Action;
 
 export interface StoreState {
   docTree: State$DocTree;
@@ -50,10 +57,12 @@ export const tStoreStateSerialize = t.type({
   editMode: tStateSerialize$EditMode,
 });
 
+export type Middleware = _Middleware<{}, StoreState>;
+
 // @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default createStore(
   rootReducer,
-  composeEnhancers(applyMiddleware(thunk)),
+  composeEnhancers(applyMiddleware(thunk, createLocalStorageMiddleware())),
 );

@@ -1,3 +1,4 @@
+import { Action as _Action } from 'redux';
 import { DocumentContent } from './DocumentContent';
 import {
   Local as DocumentLocal,
@@ -12,10 +13,9 @@ export type PureAction =
   | Action$SetDocumentContent
   | Action$SetEditMode;
 
-export interface Action$AddDocument {
+export interface Action$AddDocument extends _Action<'ADD_DOCUMENT'> {
   documentLocal: DocumentLocal;
   documentContent: DocumentContent;
-  type: 'ADD_DOCUMENT';
 }
 
 export function addDocument(
@@ -29,9 +29,8 @@ export function addDocument(
   };
 }
 
-export interface Action$SetDocument {
+export interface Action$SetDocument extends _Action<'SET_DOCUMENT'> {
   document: Document;
-  type: 'SET_DOCUMENT';
 }
 
 export function setDocument(document: Document): Action$SetDocument {
@@ -58,9 +57,8 @@ export function setDocumentContent(
   };
 }
 
-interface Action$SetEditMode {
+interface Action$SetEditMode extends _Action<'SET_EDIT_MODE'> {
   editMode: EditMode;
-  type: 'SET_EDIT_MODE';
 }
 
 export function setEditMode(editMode: EditMode): Action$SetEditMode {
