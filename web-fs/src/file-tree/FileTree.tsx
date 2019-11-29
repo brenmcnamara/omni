@@ -2,11 +2,12 @@ import classnames from 'classnames';
 import FileTreeItem from './FileTreeItem';
 import fileTreeStyles from './FileTree.module.css';
 import GroupTreeItem from './GroupTreeItem';
+import nullthrows from 'nullthrows';
 import React from 'react';
 import Text from '../text';
 
 import { DocTree } from '../store/docTree.reducer';
-import { fileWord, sketch } from '../icons';
+import { fileWord } from '../icons';
 import { useSelector } from '../store';
 
 interface Props {}
@@ -14,7 +15,7 @@ interface Props {}
 const FileTree: React.FC<Props> = (props: Props) => {
   const docTree = useSelector(state => state.docTree);
 
-  if (docTree.tree.length === 0) {
+  if (Object.keys(docTree.tree).length === 0) {
     return (
       <div className={fileTreeStyles.root}>
         <div className={classnames('padding-top-12', fileTreeStyles.empty)}>
@@ -26,17 +27,14 @@ const FileTree: React.FC<Props> = (props: Props) => {
     );
   }
 
-  // TODO: Should we be enforcing that files have unique names among their
-  // siblings. This is the assumption here with the key being used as the name.
-  // May consider using the file id here.
   return (
     <div className={fileTreeStyles.root}>
-      {docTree.tree.map(node => (
+      {docTree.orderedRootIDs.map(id => (
         <FileTreeRecurse
-          docTree={node}
           indent={0}
-          key={node.name}
-          path={node.name}
+          key={id}
+          nodeID={id}
+          nodeMap={docTree.tree}
         />
       ))}
     </div>
@@ -46,22 +44,24 @@ const FileTree: React.FC<Props> = (props: Props) => {
 export default FileTree;
 
 interface RecurseProps {
-  docTree: DocTree;
   indent: number;
-  path: string;
+  nodeID: string;
+  nodeMap: { [id: string]: DocTree };
 }
 
 function FileTreeRecurse(props: RecurseProps) {
-  const { docTree, indent, path } = props;
+  const { nodeID, nodeMap, indent } = props;
 
-  switch (docTree.type) {
+  const node = nullthrows(nodeMap[nodeID]);
+
+  switch (node.type) {
     case 'ATOMIC': {
       return (
         <FileTreeItem
           icon={fileWord}
           indent={indent}
           isSelected={false}
-          name={docTree.name}
+          name={node.name}
         />
       );
     }
@@ -69,13 +69,13 @@ function FileTreeRecurse(props: RecurseProps) {
     case 'COMPOSITE': {
       return (
         <>
-          <GroupTreeItem indent={indent} isOpen={true} name={docTree.name} />
-          {docTree.childNodes.map(node => (
+          <GroupTreeItem indent={indent} isOpen={true} name={node.name} />
+          {node.orderedChildNodeIDs.map(id => (
             <FileTreeRecurse
-              docTree={node}
               indent={indent + 1}
-              key={`${path}/${node.name}`}
-              path={`${path}/${node.name}`}
+              key={id}
+              nodeID={id}
+              nodeMap={nodeMap}
             />
           ))}
         </>

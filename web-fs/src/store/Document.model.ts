@@ -12,6 +12,7 @@ import {
   tPersisted as _tPersisted,
   tPersistedSerialize as _tPersistedSerialize,
   tRef as _tRef,
+  tRefSerialize as _tRefSerialize,
 } from './core';
 
 export type DocumentContent = string;
@@ -24,7 +25,9 @@ export const MODEL_TYPE = 'Document';
 
 export type Ref = _Ref<typeof MODEL_TYPE>;
 
-export const tRef = _tRef('Document');
+export const tRef = _tRef(MODEL_TYPE);
+
+export const tRefSerialize = _tRefSerialize(MODEL_TYPE);
 
 export function createRef(val: string | Model): Ref {
   if (typeof val === 'string') {

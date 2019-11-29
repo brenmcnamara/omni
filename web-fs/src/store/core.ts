@@ -25,6 +25,14 @@ export function tRef<TType extends string>(refType: TType) {
   });
 }
 
+export function tRefSerialize<TType extends string>(refType: TType) {
+  return t.type({
+    refID: tStringSerialize,
+    refType: t.literal(refType),
+    type: t.literal('REF'),
+  });
+}
+
 export interface Local<TType extends string> {
   localID: string;
   modelType: TType;

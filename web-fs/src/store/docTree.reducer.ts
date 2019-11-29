@@ -1,7 +1,12 @@
+import * as t from 'io-ts';
+import nullthrows from 'nullthrows';
+import tStringSerialize from './tSerialize/tStringSerialize';
+
 import {
   createRef as createDocumentRef,
   Model as Document,
   Ref as DocumentRef,
+  tRefSerialize as tDocumentRefSerialize,
 } from './Document.model';
 import { matchesRef } from './core';
 import { PureAction } from './actions';
@@ -10,26 +15,34 @@ export type DocTree = DocTree$Atomic | DocTree$Composite;
 
 interface DocTree$Atomic {
   documentRef: DocumentRef;
+  id: string;
   name: string;
+  path: string;
+  parentID: string | undefined;
   type: 'ATOMIC';
 }
 
 interface DocTree$Composite {
-  childNodes: DocTree[];
+  id: string;
   name: string;
+  orderedChildNodeIDs: string[];
+  parentID: string | undefined;
+  path: string;
   type: 'COMPOSITE';
 }
 
 export interface State {
-  tree: DocTree[];
+  orderedRootIDs: string[];
+  tree: { [path: string]: DocTree };
 }
 
-const DEFAULT_STATE: State = {
-  tree: [],
+export const DefaultState: State = {
+  orderedRootIDs: [],
+  tree: {},
 };
 
 export default function docTree(
-  state: State = DEFAULT_STATE,
+  state: State = DefaultState,
   action: PureAction,
 ): State {
   switch (action.type) {
@@ -51,110 +64,120 @@ export default function docTree(
 // -----------------------------------------------------------------------------
 
 function addDocument(state: State, document: Document): State {
+  let tree = { ...state.tree };
+
   if (document.groups.length === 0) {
-    // Put document at the root of the tree.
-    const tree = state.tree.slice();
-    tree.unshift({
+    const treeID = createAtomicTreeID();
+    tree[treeID] = {
       documentRef: createDocumentRef(document),
       name: document.name,
+      parentID: undefined,
+      path: document.name,
+      id: treeID,
       type: 'ATOMIC',
-    });
-    return { ...state, tree };
+    };
+    return {
+      ...state,
+      orderedRootIDs: [treeID].concat(state.orderedRootIDs),
+      tree,
+    };
   }
 
-  // TODO: Perf is bad here. Don't need to make a full copy of the
-  // doc tree everytime.
-
-  const tree = state.tree.map(node => copyTree(node));
+  const orderedRootIDs = state.orderedRootIDs.slice();
 
   for (const group of document.groups) {
-    let nodes: DocTree[] = tree;
+    const tokens = group.split('/');
+    const parentPaths = tokens.map((token, i) => [
+      token,
+      tokens.slice(0, i + 1).join('/'),
+    ]);
 
-    for (const token of group.split('/')) {
-      const childNode = nodes.find(
-        n => n.name === token && n.type === 'COMPOSITE',
-      ) as DocTree$Composite | undefined;
+    let parent: DocTree$Composite | undefined;
+    for (const [token, path] of parentPaths) {
+      const compositeID = createComposteTreeID(path);
 
-      if (childNode) {
-        nodes = childNode.childNodes;
-      } else {
-        // Group not found. Need to create new group and scan through subgroups.
-        const newNode: DocTree$Composite = {
-          childNodes: [],
-          name: token,
-          type: 'COMPOSITE',
-        };
-
-        nodes.unshift(newNode);
-        nodes = newNode.childNodes;
+      // Check if the composite id already exists.
+      if (tree[compositeID]) {
+        parent = tree[compositeID] as DocTree$Composite;
+        break;
       }
+
+      const node: DocTree$Composite = {
+        id: compositeID,
+        name: token,
+        orderedChildNodeIDs: [],
+        parentID: parent && parent.id,
+        path,
+        type: 'COMPOSITE',
+      };
+
+      tree[compositeID] = node;
+
+      // If there is a parent node, need to potentially add this node as
+      if (parent) {
+        const orderedChildNodeIDs = [compositeID].concat(
+          parent.orderedChildNodeIDs,
+        );
+
+        const newParent = { ...parent, orderedChildNodeIDs };
+        tree[newParent.id] = newParent;
+      } else {
+        // There is no parent, so this is a root node, should add it
+        // to the list of root node ids.
+        orderedRootIDs.unshift(node.id);
+      }
+
+      parent = node;
     }
 
-    // After drilling down to the nodes, add the file to the list.
-    nodes.unshift({
+    const lastParent = nullthrows(parent);
+
+    const newAtomicNode: DocTree$Atomic = {
       documentRef: createDocumentRef(document),
+      id: createAtomicTreeID(),
       name: document.name,
+      path: `${lastParent.path}/${document.name}`,
+      parentID: lastParent.id,
       type: 'ATOMIC',
-    });
+    };
+
+    const lastParentUpdated: DocTree$Composite = {
+      ...lastParent,
+      orderedChildNodeIDs: [newAtomicNode.id].concat(
+        lastParent.orderedChildNodeIDs,
+      ),
+    };
+
+    tree[newAtomicNode.id] = newAtomicNode;
+    tree[lastParentUpdated.id] = lastParentUpdated;
   }
 
-  return { ...state, tree };
+  return { ...state, orderedRootIDs, tree };
 }
 
 function setDocument(state: State, document: Document): State {
   // TODO: This method supports name changes of documents. It does not support
   // changing the group that the document belongs to.
 
-  // TODO: Perf is bad here. Don't need to make a full copy of the
-  // tree everytime.
-  const tree = state.tree.map(node => copyTree(node));
+  const tree = { ...state.tree };
 
-  // Find the document in the tree and make any needed modifications.
-  const stack: DocTree[] = tree.slice();
-  let next: DocTree | undefined;
-
-  while ((next = stack.pop())) {
-    if (next.type === 'ATOMIC' && matchesRef(document, next.documentRef)) {
-      next.name = document.name;
-      break;
+  // PERF: May want to rethink defining the tree id such that it is constant
+  // time lookup for document nodes.
+  for (const node of Object.values(tree)) {
+    if (node.type === 'ATOMIC' && matchesRef(document, node.documentRef)) {
+      tree[node.id] = { ...node, name: document.name };
     }
   }
 
-  return { tree };
+  return { ...state, tree };
 }
 
-function copyTree(tree: DocTree): DocTree {
-  let rootCopy: DocTree;
+let idIndex: number = 1;
 
-  const stack: Array<[DocTree, (node: DocTree) => void]> = [
-    [tree, (node: DocTree) => (rootCopy = node)],
-  ];
+function createAtomicTreeID(): string {
+  return `ATOMIC_${idIndex}`;
+}
 
-  let next: [DocTree, (node: DocTree) => void] | undefined;
-
-  while ((next = stack.pop())) {
-    const [node, connectToParent] = next;
-
-    switch (node.type) {
-      case 'ATOMIC': {
-        connectToParent({ ...node });
-        break;
-      }
-
-      case 'COMPOSITE': {
-        const childNodes = node.childNodes.slice();
-        connectToParent({ ...node, childNodes });
-        for (let i = 0; i < childNodes.length; ++i) {
-          stack.push([
-            childNodes[i],
-            (node: DocTree) => (childNodes[i] = node),
-          ]);
-        }
-        break;
-      }
-    }
-  }
-
-  // @ts-ignore
-  return rootCopy;
+function createComposteTreeID(path: string): string {
+  return `COMPOSITE_${path}`;
 }
