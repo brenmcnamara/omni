@@ -47,6 +47,24 @@ class DB {
     return Promise.resolve(this.documentCache.get(id));
   }
 
+  public genFetchDocuments(): Promise<{
+    [id: string]: DocumentPersisted;
+  }> {
+    return new Promise(resolve => {
+      const ids = this.indexCache.get('Document') || [];
+      const collection: { [id: string]: DocumentPersisted } = {};
+
+      for (const id of ids) {
+        const document = this.documentCache.get(id);
+        if (document !== undefined) {
+          collection[id] = document;
+        }
+      }
+
+      resolve(collection);
+    });
+  }
+
   public genCreateDocument(local: DocumentLocal): Promise<DocumentPersisted> {
     return new Promise(resolve => {
       const id = uuid();
@@ -107,6 +125,24 @@ class DB {
 
   public genFetchDocumentContent(id: string): Promise<string | undefined> {
     return Promise.resolve(this.documentContentCache.get(id));
+  }
+
+  public genFetchDocumentContents(): Promise<{
+    [id: string]: DocumentContent;
+  }> {
+    return new Promise(resolve => {
+      const ids = this.indexCache.get('Document') || [];
+      const collection: { [id: string]: DocumentContent } = {};
+
+      for (const id of ids) {
+        const documentContent = this.documentContentCache.get(id);
+        if (documentContent !== undefined) {
+          collection[id] = documentContent;
+        }
+      }
+
+      resolve(collection);
+    });
   }
 
   public genSetDocumentContent(

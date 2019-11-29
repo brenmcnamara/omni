@@ -5,12 +5,16 @@ import { Action } from './Store';
 import {
   DocumentContent,
   Model as Document,
+  Persisted as DocumentPersisted,
   Ref as DocumentRef,
 } from './Document.model';
 import { getDocument } from './selectors';
 
 export type PureAction =
   | Action$AddDocument
+  | Action$FetchFullState$Failure
+  | Action$FetchFullState$Request
+  | Action$FetchFullState$Response
   | Action$PersistDocument
   | Action$SetDocument
   | Action$SetDocumentContent;
@@ -39,6 +43,8 @@ export function addDocument(
 
     const persisted = await DB.genCreateDocument(nullthrows(document.local));
     const newDocument = new Document(document.local, persisted);
+
+    await DB.genSetDocumentContent(persisted.id, documentContent);
 
     dispatch({
       document: newDocument,
@@ -82,5 +88,49 @@ export function setDocumentContent(
 
     const documentID = nullthrows(getDocument(getState(), documentRef)).id;
     await DB.genSetDocumentContent(documentID, documentContent);
+  };
+}
+
+export interface Action$FetchFullState$Request {
+  type: 'FETCH_FULL_STATE_REQUEST';
+}
+
+export interface Action$FetchFullState$Response {
+  documentContents: { [id: string]: DocumentContent };
+  documents: { [id: string]: DocumentPersisted };
+  type: 'FETCH_FULL_STATE_RESPONSE';
+}
+
+export interface Action$FetchFullState$Failure {
+  error: Error;
+  type: 'FETCH_FULL_STATE_FAILURE';
+}
+
+export function fetchFullState(): Action {
+  return async dispatch => {
+    dispatch({
+      type: 'FETCH_FULL_STATE_REQUEST',
+    });
+
+    const state = await Promise.all([
+      DB.genFetchDocuments(),
+      DB.genFetchDocumentContents(),
+    ]).catch(error => {
+      dispatch({ error, type: 'FETCH_FULL_STATE_FAILURE' });
+    });
+
+    console.log(state);
+
+    if (!state) {
+      return;
+    }
+
+    const [documents, documentContents] = state;
+
+    dispatch({
+      documentContents,
+      documents,
+      type: 'FETCH_FULL_STATE_RESPONSE',
+    });
   };
 }

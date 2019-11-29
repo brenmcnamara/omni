@@ -68,16 +68,16 @@ export class ModelBase<
   }
 }
 
-// export const tDateFromString = new t.Type<Date, string, unknown>(
-//   'Date',
-//   (u): u is Date => u instanceof Date,
-//   (u, c) =>
-//     either.chain(t.string.validate(u, c), s => {
-//       const d = new Date(s);
-//       return isNaN(d.getTime()) ? t.failure(u, c) : t.success(d);
-//     }),
-//   a => a.toISOString(),
-// );
+export const tDateSerialize = new t.Type<Date, string, string>(
+  'DateSerialize',
+  (u): u is Date => u instanceof Date,
+  (u, c) =>
+    either.chain(t.string.validate(u, c), s => {
+      const d = new Date(s);
+      return isNaN(d.getTime()) ? t.failure(u, c) : t.success(d);
+    }),
+  a => a.toISOString(),
+);
 
 export const tDate = new t.Type<Date>(
   'Date',
