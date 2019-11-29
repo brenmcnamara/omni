@@ -6,9 +6,9 @@ import React, { useState } from 'react';
 import { addDocument, setDocument, setDocumentContent } from './store/actions';
 import {
   createLocal as createDocumentLocal,
-  DocumentContent,
   Model as Document,
 } from './store/Document.model';
+import { DocumentContent } from './store/DocumentContent';
 import { EditorState } from 'draft-js';
 import { getDocument, getDocumentContent } from './store/selectors';
 import { State as State$EditMode } from './store/editMode.reducer';

@@ -11,7 +11,9 @@ import {
 import { matchesRef } from './core';
 import { PureAction } from './actions';
 
-export type DocTree = DocTree$Atomic | DocTree$Composite;
+// -----------------------------------------------------------------------------
+// DocTree$Atomic
+// -----------------------------------------------------------------------------
 
 interface DocTree$Atomic {
   documentRef: DocumentRef;
@@ -22,6 +24,19 @@ interface DocTree$Atomic {
   type: 'ATOMIC';
 }
 
+const tDocTreeSerialize$Atomic = t.type({
+  documentRef: tDocumentRefSerialize,
+  id: tStringSerialize,
+  name: tStringSerialize,
+  path: tStringSerialize,
+  parentID: t.union([tStringSerialize, t.undefined]),
+  type: t.literal('ATOMIC'),
+});
+
+// -----------------------------------------------------------------------------
+// DocTree$Composite
+// -----------------------------------------------------------------------------
+
 interface DocTree$Composite {
   id: string;
   name: string;
@@ -31,15 +46,48 @@ interface DocTree$Composite {
   type: 'COMPOSITE';
 }
 
+const tDocTreeSerialize$Composite = t.type({
+  id: tStringSerialize,
+  name: tStringSerialize,
+  orderedChildNodeIDs: t.array(tStringSerialize),
+  parentID: t.union([tStringSerialize, t.undefined]),
+  path: tStringSerialize,
+  type: t.literal('COMPOSITE'),
+});
+
+// -----------------------------------------------------------------------------
+// DocTree
+// -----------------------------------------------------------------------------
+
+export type DocTree = DocTree$Atomic | DocTree$Composite;
+
+export const tDocTreeSerialize = t.union([
+  tDocTreeSerialize$Atomic,
+  tDocTreeSerialize$Composite,
+]);
+
+// -----------------------------------------------------------------------------
+// State
+// -----------------------------------------------------------------------------
+
 export interface State {
   orderedRootIDs: string[];
   tree: { [path: string]: DocTree };
 }
 
+export const tStateSerialize = t.type({
+  orderedRootIDs: t.array(tStringSerialize),
+  tree: t.dictionary(tStringSerialize, tDocTreeSerialize),
+});
+
 export const DefaultState: State = {
   orderedRootIDs: [],
   tree: {},
 };
+
+// -----------------------------------------------------------------------------
+// Reducer
+// -----------------------------------------------------------------------------
 
 export default function docTree(
   state: State = DefaultState,
@@ -171,6 +219,10 @@ function setDocument(state: State, document: Document): State {
 
   return { ...state, tree };
 }
+
+// -----------------------------------------------------------------------------
+// Create ID
+// -----------------------------------------------------------------------------
 
 let idIndex: number = 1;
 

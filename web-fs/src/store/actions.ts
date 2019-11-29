@@ -1,5 +1,5 @@
+import { DocumentContent } from './DocumentContent';
 import {
-  DocumentContent,
   Local as DocumentLocal,
   Model as Document,
   Ref as DocumentRef,

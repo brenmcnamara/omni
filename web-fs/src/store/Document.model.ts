@@ -15,8 +15,6 @@ import {
   tRefSerialize as _tRefSerialize,
 } from './core';
 
-export type DocumentContent = string;
-
 export const MODEL_TYPE = 'Document';
 
 // -----------------------------------------------------------------------------

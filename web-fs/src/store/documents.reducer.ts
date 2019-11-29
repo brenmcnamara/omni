@@ -1,13 +1,23 @@
+import * as t from 'io-ts';
 import nullthrows from 'nullthrows';
+import tStringSerialize from './tSerialize/tStringSerialize';
 
 import {
   DocumentContent,
+  tSerialize as tDocumentContentSerialize,
+} from './DocumentContent';
+import {
   Local as DocumentLocal,
   Model as Document,
   Ref as DocumentRef,
+  tModelSerialize as tDocumentSerialize,
 } from './Document.model';
 import { getID } from './core';
 import { PureAction } from './actions';
+
+// -----------------------------------------------------------------------------
+// State
+// -----------------------------------------------------------------------------
 
 export interface State {
   documents: { [id: string]: Document };
@@ -15,11 +25,21 @@ export interface State {
   localToPersistedID: { [id: string]: string };
 }
 
+export const tStateSerialize = t.type({
+  documents: t.dictionary(tStringSerialize, tDocumentSerialize),
+  documentContents: t.dictionary(tStringSerialize, tDocumentContentSerialize),
+  localToPersistedID: t.dictionary(tStringSerialize, tStringSerialize),
+});
+
 const DEFAULT_STATE: State = {
   documents: {},
   documentContents: {},
   localToPersistedID: {},
 };
+
+// -----------------------------------------------------------------------------
+// Reducer
+// -----------------------------------------------------------------------------
 
 export default function documents(
   state: State = DEFAULT_STATE,

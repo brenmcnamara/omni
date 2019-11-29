@@ -1,8 +1,5 @@
-import {
-  DocumentContent,
-  Model as Document,
-  Ref as DocumentRef,
-} from './Document.model';
+import { DocumentContent } from './DocumentContent';
+import { Model as Document, Ref as DocumentRef } from './Document.model';
 import { StoreState } from './Store';
 
 export function getDocument(
