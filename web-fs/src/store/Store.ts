@@ -1,6 +1,17 @@
-import docTree, { State as State$DocTree } from './docTree.reducer';
-import documents, { State as State$Documents } from './documents.reducer';
-import editMode, { State as State$EditMode } from './editMode.reducer';
+import * as t from 'io-ts';
+
+import docTree, {
+  State as State$DocTree,
+  tStateSerialize as tStateSerialize$DocTree,
+} from './docTree.reducer';
+import documents, {
+  State as State$Documents,
+  tStateSerialize as tStateSerialize$Documents,
+} from './documents.reducer';
+import editMode, {
+  State as State$EditMode,
+  tStateSerialize as tStateSerialize$EditMode,
+} from './editMode.reducer';
 import thunk, { ThunkAction as _ThunkAction } from 'redux-thunk';
 
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
@@ -32,6 +43,12 @@ export interface StoreState {
   documents: State$Documents;
   editMode: State$EditMode;
 }
+
+export const tStoreStateSerialize = t.type({
+  docTree: tStateSerialize$DocTree,
+  documents: tStateSerialize$Documents,
+  editMode: tStateSerialize$EditMode,
+});
 
 // @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
