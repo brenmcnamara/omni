@@ -2,9 +2,11 @@ import nullthrows from 'nullthrows';
 
 import {
   DocumentContent,
+  Local as DocumentLocal,
   Model as Document,
   Ref as DocumentRef,
 } from './Document.model';
+import { getID } from './core';
 import { PureAction } from './actions';
 
 export interface State {
@@ -25,13 +27,8 @@ export default function documents(
 ): State {
   switch (action.type) {
     case 'ADD_DOCUMENT': {
-      const { documentContent, document } = action;
-      return addDocument(state, document, documentContent);
-    }
-
-    case 'PERSIST_DOCUMENT': {
-      const { document } = action;
-      return persistDocument(state, document);
+      const { documentContent, documentLocal } = action;
+      return addDocument(state, documentLocal, documentContent);
     }
 
     case 'SET_DOCUMENT': {
@@ -55,39 +52,20 @@ export default function documents(
 
 function addDocument(
   state: State,
-  document: Document,
+  documentLocal: DocumentLocal,
   documentContent: DocumentContent,
 ): State {
   return {
     ...state,
     documents: {
       ...state.documents,
-      [document.id]: document,
+      [documentLocal.localID]: documentLocal,
     },
     documentContents: {
       ...state.documentContents,
-      [document.id]: documentContent,
+      [documentLocal.localID]: documentContent,
     },
   };
-}
-
-function persistDocument(state: State, document: Document): State {
-  const local = document.local;
-  if (!local || !state.documents[local.localID]) {
-    return addDocument(state, document, '');
-  }
-
-  const persisted = nullthrows(document.persisted);
-
-  // Need to switch out the local key for the persisted key.
-  const documents = { ...state.documents };
-  delete documents[local.localID];
-  documents[document.id] = document;
-
-  const localToPersistedID = { ...state.localToPersistedID };
-  localToPersistedID[local.localID] = persisted.id;
-
-  return { ...state, documents, localToPersistedID };
 }
 
 function setDocumentContent(
@@ -109,15 +87,16 @@ function setDocumentContent(
 }
 
 function setDocument(state: State, document: Document): State {
-  if (state.documents[document.id] == undefined) {
-    throw Error(`Could not find document for id ${document.id}`);
+  const id = getID(document);
+  if (state.documents[id] == undefined) {
+    throw Error(`Could not find document for id ${id}`);
   }
 
   return {
     ...state,
     documents: {
       ...state.documents,
-      [document.id]: document,
+      [id]: document,
     },
   };
 }

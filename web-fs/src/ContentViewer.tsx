@@ -1,11 +1,14 @@
 import './ContentViewer.css';
 
 import FileEditor from './file-editor';
-import nullthrows from 'nullthrows';
 import React, { useState } from 'react';
 
 import { addDocument, setDocument, setDocumentContent } from './store/actions';
-import { DocumentContent, Model as Document } from './store/Document.model';
+import {
+  createLocal as createDocumentLocal,
+  DocumentContent,
+  Model as Document,
+} from './store/Document.model';
 import { EditorState } from 'draft-js';
 import { getDocument, getDocumentContent } from './store/selectors';
 import { State as State$EditMode } from './store/editMode.reducer';
@@ -22,17 +25,19 @@ const ContentViewer: React.FC = () => {
     const { editMode } = reduxState;
     switch (editMode.type) {
       case 'NEW_DOCUMENT': {
-        const document = Document.createLocal({
+        const documentLocal = createDocumentLocal({
           groups: [],
           name: title,
         });
-        dispatch(addDocument(document, ''));
+        dispatch(addDocument(documentLocal, ''));
         break;
       }
 
       case 'EDIT_DOCUMENT': {
-        const document = nullthrows(reduxState.document);
-        dispatch(setDocument(document.setName(title)));
+        if (reduxState.document) {
+          const { document } = reduxState;
+          dispatch(setDocument({ ...document, name: title }));
+        }
       }
     }
   };
@@ -43,7 +48,7 @@ const ContentViewer: React.FC = () => {
 
     switch (editMode.type) {
       case 'NEW_DOCUMENT': {
-        const document = Document.createLocal({
+        const document = createDocumentLocal({
           groups: [],
           name: title,
         });

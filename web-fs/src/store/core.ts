@@ -1,83 +1,5 @@
 import * as t from 'io-ts';
-import nullthrows from 'nullthrows';
-
-import { either } from 'fp-ts/lib/Either';
-
-export interface ModelRef<TType extends string> {
-  refID: string;
-  refType: TType;
-  type: 'REF';
-}
-
-export interface ModelLocal<TType extends string> {
-  localID: string;
-  modelType: TType;
-  type: 'MODEL_LOCAL';
-}
-
-export interface ModelPersisted<TType extends string> {
-  createdAt: Date;
-  id: string;
-  isDeleted: boolean;
-  modelType: TType;
-  type: 'MODEL';
-  updatedAt: Date;
-}
-
-export class ModelBase<
-  TType extends string,
-  TLocal extends ModelLocal<TType>,
-  TPersisted extends ModelPersisted<TType>
-> {
-  private _local: TLocal | null = null;
-
-  private _persisted: TPersisted | null = null;
-
-  constructor(local: TLocal | null, persisted: TPersisted | null) {
-    this._local = local;
-    this._persisted = persisted;
-  }
-
-  public get local(): TLocal | null {
-    return this._local;
-  }
-
-  public get persisted(): TPersisted | null {
-    return this._persisted;
-  }
-
-  public matchesRef(ref: ModelRef<TType>): boolean {
-    return Boolean(
-      (this.persisted && this.persisted.id === ref.refID) ||
-        (this.local && this.local.localID === ref.refID),
-    );
-  }
-
-  public get type(): 'MODEL' {
-    return 'MODEL';
-  }
-
-  public get modelType(): TType {
-    return this.persisted
-      ? this.persisted.modelType
-      : nullthrows(this.local).modelType;
-  }
-
-  public get id(): string {
-    return this.persisted ? this.persisted.id : nullthrows(this.local).localID;
-  }
-}
-
-export const tDateSerialize = new t.Type<Date, string, string>(
-  'DateSerialize',
-  (u): u is Date => u instanceof Date,
-  (u, c) =>
-    either.chain(t.string.validate(u, c), s => {
-      const d = new Date(s);
-      return isNaN(d.getTime()) ? t.failure(u, c) : t.success(d);
-    }),
-  a => a.toISOString(),
-);
+import uuid from 'uuid/v4';
 
 export const tDate = new t.Type<Date>(
   'Date',
@@ -86,15 +8,54 @@ export const tDate = new t.Type<Date>(
   t.identity,
 );
 
-export function tModelLocal<TType extends string>(modelType: TType) {
+export interface Ref<TType extends string> {
+  refID: string;
+  refType: TType;
+  type: 'REF';
+}
+
+export function tRef<TType extends string>(refType: TType) {
   return t.type({
-    localID: t.string,
+    refID: t.string,
+    refType: t.literal(refType),
+    type: t.literal('REF'),
+  });
+}
+
+export interface Local<TType extends string> {
+  localID: string;
+  modelType: TType;
+  type: 'MODEL_LOCAL';
+}
+
+export function createLocal<TType extends string>(
+  modelType: TType,
+): Local<TType> {
+  return {
+    localID: uuid(),
+    modelType,
+    type: 'MODEL_LOCAL',
+  };
+}
+export function tLocal<TType extends string>(modelType: TType) {
+  return t.type({
+    id: t.string,
     modelType: t.literal(modelType),
     type: t.literal('MODEL_LOCAL'),
   });
 }
 
-export function tModelPersisted<TType extends string>(modelType: TType) {
+export interface Persisted<TType extends string> {
+  createdAt: Date;
+  id: string;
+  isDeleted: boolean;
+  localID?: string;
+  modelType: TType;
+  type: 'MODEL';
+  updatedAt: Date;
+}
+
+export function tPersisted<TType extends string>(modelType: TType) {
   return t.type({
     createdAt: tDate,
     id: t.string,
@@ -103,4 +64,27 @@ export function tModelPersisted<TType extends string>(modelType: TType) {
     type: t.literal('MODEL'),
     updatedAt: tDate,
   });
+}
+
+export type Model<TType extends string> = Local<TType> | Persisted<TType>;
+
+export function getID(model: Model<any>): string {
+  return model.type === 'MODEL' ? model.id : model.localID;
+}
+
+export function getLocalID(model: Model<any>): string | undefined {
+  return model.type === 'MODEL' ? model.localID : model.localID;
+}
+
+export function matchesRef<TType extends string>(
+  model: Model<TType>,
+  ref: Ref<TType>,
+): boolean {
+  switch (model.type) {
+    case 'MODEL':
+      return ref.refID === model.id || ref.refID === model.localID;
+
+    case 'MODEL_LOCAL':
+      return ref.refID === model.localID;
+  }
 }

@@ -1,55 +1,32 @@
-import DB from './db';
-import nullthrows from 'nullthrows';
-
 import { Action } from './Store';
 import {
   DocumentContent,
+  Local as DocumentLocal,
   Model as Document,
-  Persisted as DocumentPersisted,
   Ref as DocumentRef,
 } from './Document.model';
-import { getDocument } from './selectors';
+import { State as EditMode } from './editMode.reducer';
 
 export type PureAction =
   | Action$AddDocument
-  | Action$FetchFullState$Failure
-  | Action$FetchFullState$Request
-  | Action$FetchFullState$Response
-  | Action$PersistDocument
   | Action$SetDocument
-  | Action$SetDocumentContent;
+  | Action$SetDocumentContent
+  | Action$SetEditMode;
 
 export interface Action$AddDocument {
-  document: Document;
+  documentLocal: DocumentLocal;
   documentContent: DocumentContent;
   type: 'ADD_DOCUMENT';
 }
 
-export interface Action$PersistDocument {
-  document: Document;
-  type: 'PERSIST_DOCUMENT';
-}
-
 export function addDocument(
-  document: Document,
+  documentLocal: DocumentLocal,
   documentContent: DocumentContent,
-): Action {
-  return async dispatch => {
-    dispatch({
-      document,
-      documentContent,
-      type: 'ADD_DOCUMENT',
-    });
-
-    const persisted = await DB.genCreateDocument(nullthrows(document.local));
-    const newDocument = new Document(document.local, persisted);
-
-    await DB.genSetDocumentContent(persisted.id, documentContent);
-
-    dispatch({
-      document: newDocument,
-      type: 'PERSIST_DOCUMENT',
-    });
+): Action$AddDocument {
+  return {
+    documentContent,
+    documentLocal,
+    type: 'ADD_DOCUMENT',
   };
 }
 
@@ -58,14 +35,10 @@ export interface Action$SetDocument {
   type: 'SET_DOCUMENT';
 }
 
-export function setDocument(document: Document): Action {
-  return async dispatch => {
-    dispatch({
-      document,
-      type: 'SET_DOCUMENT',
-    });
-
-    await DB.genSetDocument(nullthrows(document.persisted));
+export function setDocument(document: Document): Action$SetDocument {
+  return {
+    document,
+    type: 'SET_DOCUMENT',
   };
 }
 
@@ -78,59 +51,22 @@ export interface Action$SetDocumentContent {
 export function setDocumentContent(
   documentRef: DocumentRef,
   documentContent: DocumentContent,
-): Action {
-  return async (dispatch, getState) => {
-    dispatch({
-      documentRef,
-      documentContent,
-      type: 'SET_DOCUMENT_CONTENT',
-    });
-
-    const documentID = nullthrows(getDocument(getState(), documentRef)).id;
-    await DB.genSetDocumentContent(documentID, documentContent);
+): Action$SetDocumentContent {
+  return {
+    documentRef,
+    documentContent,
+    type: 'SET_DOCUMENT_CONTENT',
   };
 }
 
-export interface Action$FetchFullState$Request {
-  type: 'FETCH_FULL_STATE_REQUEST';
+interface Action$SetEditMode {
+  editMode: EditMode;
+  type: 'SET_EDIT_MODE';
 }
 
-export interface Action$FetchFullState$Response {
-  documentContents: { [id: string]: DocumentContent };
-  documents: { [id: string]: DocumentPersisted };
-  type: 'FETCH_FULL_STATE_RESPONSE';
-}
-
-export interface Action$FetchFullState$Failure {
-  error: Error;
-  type: 'FETCH_FULL_STATE_FAILURE';
-}
-
-export function fetchFullState(): Action {
-  return async dispatch => {
-    dispatch({
-      type: 'FETCH_FULL_STATE_REQUEST',
-    });
-
-    const state = await Promise.all([
-      DB.genFetchDocuments(),
-      DB.genFetchDocumentContents(),
-    ]).catch(error => {
-      dispatch({ error, type: 'FETCH_FULL_STATE_FAILURE' });
-    });
-
-    console.log(state);
-
-    if (!state) {
-      return;
-    }
-
-    const [documents, documentContents] = state;
-
-    dispatch({
-      documentContents,
-      documents,
-      type: 'FETCH_FULL_STATE_RESPONSE',
-    });
+export function setEditMode(editMode: EditMode): Action$SetEditMode {
+  return {
+    editMode,
+    type: 'SET_EDIT_MODE',
   };
 }

@@ -1,7 +1,22 @@
-import { Model as Document, Ref as DocumentRef } from './Document.model';
+import * as t from 'io-ts';
+import {
+  createRef as createDocumentRef,
+  Ref as DocumentRef,
+  tRef as tDocumentRef,
+} from './Document.model';
 import { PureAction } from './actions';
 
 export type State = EditMode$EditDocument | EditMode$NewDocument;
+
+export const tState = t.union([
+  t.type({
+    type: t.literal('NEW_DOCUMENT'),
+  }),
+  t.type({
+    documentRef: tDocumentRef,
+    type: t.literal('EDIT_DOCUMENT'),
+  }),
+]);
 
 interface EditMode$NewDocument {
   type: 'NEW_DOCUMENT';
@@ -12,17 +27,24 @@ interface EditMode$EditDocument {
   type: 'EDIT_DOCUMENT';
 }
 
-const DEFAULT_STATE: State = { type: 'NEW_DOCUMENT' };
+export const DefaultState: State = { type: 'NEW_DOCUMENT' };
 
 export default function editMode(
-  state: State = DEFAULT_STATE,
+  state: State = DefaultState,
   action: PureAction,
 ): State {
   switch (action.type) {
     case 'ADD_DOCUMENT': {
       return state.type === 'NEW_DOCUMENT'
-        ? { documentRef: action.document.createRef(), type: 'EDIT_DOCUMENT' }
+        ? {
+            documentRef: createDocumentRef(action.documentLocal),
+            type: 'EDIT_DOCUMENT',
+          }
         : state;
+    }
+
+    case 'SET_EDIT_MODE': {
+      return action.editMode;
     }
 
     default:

@@ -1,14 +1,14 @@
 import * as t from 'io-ts';
-import nullthrows from 'nullthrows';
-import uuid from 'uuid/v4';
 
 import {
-  ModelBase,
-  ModelLocal,
-  ModelPersisted,
-  ModelRef,
-  tModelLocal,
-  tModelPersisted,
+  createLocal as _createLocal,
+  Local as _Local,
+  Model as _Model,
+  Persisted as _Persisted,
+  Ref as _Ref,
+  tLocal as _tLocal,
+  tPersisted as _tPersisted,
+  tRef as _tRef,
 } from './core';
 
 export type DocumentContent = string;
@@ -19,7 +19,23 @@ export const MODEL_TYPE = 'Document';
 // Ref
 // -----------------------------------------------------------------------------
 
-export type Ref = ModelRef<typeof MODEL_TYPE>;
+export type Ref = _Ref<typeof MODEL_TYPE>;
+
+export const tRef = _tRef('Document');
+
+export function createRef(val: string | Model): Ref {
+  if (typeof val === 'string') {
+    return { refID: val, refType: MODEL_TYPE, type: 'REF' };
+  }
+
+  switch (val.type) {
+    case 'MODEL':
+      return { refID: val.id, refType: MODEL_TYPE, type: 'REF' };
+
+    case 'MODEL_LOCAL':
+      return { refID: val.localID, refType: MODEL_TYPE, type: 'REF' };
+  }
+}
 
 // -----------------------------------------------------------------------------
 // Local
@@ -30,15 +46,22 @@ export interface LocalStub {
   name: string;
 }
 
-export type Local = ModelLocal<typeof MODEL_TYPE> & LocalStub;
+export type Local = _Local<typeof MODEL_TYPE> & LocalStub;
 
 export const tLocal = t.intersection([
-  tModelLocal(MODEL_TYPE),
+  _tLocal(MODEL_TYPE),
   t.type({
     groups: t.array(t.string),
     name: t.string,
   }),
 ]);
+
+export function createLocal(stub: LocalStub): Local {
+  return {
+    ..._createLocal(MODEL_TYPE),
+    ...stub,
+  };
+}
 
 // -----------------------------------------------------------------------------
 // Persisted
@@ -49,10 +72,10 @@ export interface PersistedStub {
   groups: string[];
 }
 
-export type Persisted = ModelPersisted<typeof MODEL_TYPE> & PersistedStub;
+export type Persisted = _Persisted<typeof MODEL_TYPE> & PersistedStub;
 
 export const tPersisted: t.Type<Persisted> = t.intersection([
-  tModelPersisted(MODEL_TYPE),
+  _tPersisted(MODEL_TYPE),
   t.type({
     groups: t.array(t.string),
     name: t.string,
@@ -63,48 +86,4 @@ export const tPersisted: t.Type<Persisted> = t.intersection([
 // Model
 // -----------------------------------------------------------------------------
 
-export class Model extends ModelBase<typeof MODEL_TYPE, Local, Persisted> {
-  public static createRef(id: string): Ref {
-    return {
-      refID: id,
-      refType: MODEL_TYPE,
-      type: 'REF',
-    };
-  }
-
-  public static createLocal(stub: LocalStub): Model {
-    const local: Local = {
-      localID: `local-${uuid()}`,
-      modelType: MODEL_TYPE,
-      type: 'MODEL_LOCAL',
-      ...stub,
-    };
-    return new Model(local, null);
-  }
-
-  public createRef(): Ref {
-    return Model.createRef(this.id);
-  }
-
-  public get name(): string {
-    return this.persisted ? this.persisted.name : nullthrows(this.local).name;
-  }
-
-  public setName(name: string): Model {
-    const local = this.local && { ...this.local, name };
-    const persisted = this.persisted && { ...this.persisted, name };
-    return new Model(local, persisted);
-  }
-
-  public get groups(): string[] {
-    return this.persisted
-      ? this.persisted.groups
-      : nullthrows(this.local).groups;
-  }
-
-  public setGroups(groups: string[]): Model {
-    const local = this.local && { ...this.local, groups };
-    const persisted = this.persisted && { ...this.persisted, groups };
-    return new Model(local, persisted);
-  }
-}
+export type Model = Local | Persisted;

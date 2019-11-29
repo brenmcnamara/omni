@@ -1,4 +1,9 @@
-import { Model as Document, Ref as DocumentRef } from './Document.model';
+import {
+  createRef as createDocumentRef,
+  Model as Document,
+  Ref as DocumentRef,
+} from './Document.model';
+import { matchesRef } from './core';
 import { PureAction } from './actions';
 
 export type DocTree = DocTree$Atomic | DocTree$Composite;
@@ -29,7 +34,7 @@ export default function docTree(
 ): State {
   switch (action.type) {
     case 'ADD_DOCUMENT': {
-      return addDocument(state, action.document);
+      return addDocument(state, action.documentLocal);
     }
 
     case 'SET_DOCUMENT': {
@@ -50,7 +55,7 @@ function addDocument(state: State, document: Document): State {
     // Put document at the root of the tree.
     const tree = state.tree.slice();
     tree.unshift({
-      documentRef: document.createRef(),
+      documentRef: createDocumentRef(document),
       name: document.name,
       type: 'ATOMIC',
     });
@@ -87,7 +92,7 @@ function addDocument(state: State, document: Document): State {
 
     // After drilling down to the nodes, add the file to the list.
     nodes.unshift({
-      documentRef: document.createRef(),
+      documentRef: createDocumentRef(document),
       name: document.name,
       type: 'ATOMIC',
     });
@@ -109,7 +114,7 @@ function setDocument(state: State, document: Document): State {
   let next: DocTree | undefined;
 
   while ((next = stack.pop())) {
-    if (next.type === 'ATOMIC' && document.matchesRef(next.documentRef)) {
+    if (next.type === 'ATOMIC' && matchesRef(document, next.documentRef)) {
       next.name = document.name;
       break;
     }

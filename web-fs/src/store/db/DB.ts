@@ -8,6 +8,7 @@ import {
   Persisted as DocumentPersisted,
   tPersisted as tDocumentPersisted,
 } from '../Document.model';
+import { State as EditMode, tState as tEditMode } from '../editMode.reducer';
 
 class DB {
   private indexCache = new LocalCache<string[]>(
@@ -31,6 +32,32 @@ class DB {
     Document: 'v1',
     DocumentContent: 'v1',
   };
+
+  // ---------------------------------------------------------------------------
+  // CONFIGURATIONS
+  // ---------------------------------------------------------------------------
+
+  private editModeCache = new LocalCache<EditMode>(
+    `${DB.version}.editMode`,
+    tEditMode,
+  );
+
+  public genFetchEditMode(): Promise<EditMode> {
+    return new Promise(resolve => {
+      const editMode = this.editModeCache.get('onlyOne') || {
+        type: 'NEW_DOCUMENT',
+      };
+
+      resolve(editMode);
+    });
+  }
+
+  public genSetEditMode(editMode: EditMode): Promise<EditMode> {
+    return new Promise(resolve => {
+      this.editModeCache.set('onlyOne', editMode);
+      resolve(editMode);
+    });
+  }
 
   // ---------------------------------------------------------------------------
   // DOCUMENT
