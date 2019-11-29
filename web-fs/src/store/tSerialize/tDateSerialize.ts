@@ -2,7 +2,7 @@ import * as t from 'io-ts';
 
 import { either } from 'fp-ts/lib/Either';
 
-export default new t.Type<Date, string, string>(
+export default new t.Type<Date, string, unknown>(
   'DateSerialize',
   (u): u is Date => u instanceof Date,
   (u, c) =>

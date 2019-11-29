@@ -1,4 +1,7 @@
 import * as t from 'io-ts';
+import tBooleanSerialize from './tSerialize/tBooleanSerialize';
+import tDateSerialize from './tSerialize/tDateSerialize';
+import tStringSerialize from './tSerialize/tStringSerialize';
 import uuid from 'uuid/v4';
 
 export const tDate = new t.Type<Date>(
@@ -45,6 +48,14 @@ export function tLocal<TType extends string>(modelType: TType) {
   });
 }
 
+export function tLocalSerialize<TType extends string>(modelType: TType) {
+  return t.type({
+    id: tStringSerialize,
+    modelType: t.literal(modelType),
+    type: t.literal('MODEL_LOCAL'),
+  });
+}
+
 export interface Persisted<TType extends string> {
   createdAt: Date;
   id: string;
@@ -63,6 +74,17 @@ export function tPersisted<TType extends string>(modelType: TType) {
     modelType: t.literal(modelType),
     type: t.literal('MODEL'),
     updatedAt: tDate,
+  });
+}
+
+export function tPersistedSerialize<TType extends string>(modelType: TType) {
+  return t.type({
+    createdAt: tDateSerialize,
+    id: tStringSerialize,
+    isDeleted: tBooleanSerialize,
+    modelType: t.literal(modelType),
+    type: t.literal('MODEL'),
+    updatedAt: tDateSerialize,
   });
 }
 

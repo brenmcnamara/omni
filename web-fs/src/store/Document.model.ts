@@ -1,4 +1,5 @@
 import * as t from 'io-ts';
+import tStringSerialize from './tSerialize/tStringSerialize';
 
 import {
   createLocal as _createLocal,
@@ -7,7 +8,9 @@ import {
   Persisted as _Persisted,
   Ref as _Ref,
   tLocal as _tLocal,
+  tLocalSerialize as _tLocalSerialize,
   tPersisted as _tPersisted,
+  tPersistedSerialize as _tPersistedSerialize,
   tRef as _tRef,
 } from './core';
 
@@ -63,6 +66,14 @@ export function createLocal(stub: LocalStub): Local {
   };
 }
 
+export const tLocalSerialize = t.intersection([
+  _tLocalSerialize(MODEL_TYPE),
+  t.type({
+    groups: t.array(tStringSerialize),
+    name: tStringSerialize,
+  }),
+]);
+
 // -----------------------------------------------------------------------------
 // Persisted
 // -----------------------------------------------------------------------------
@@ -82,8 +93,20 @@ export const tPersisted: t.Type<Persisted> = t.intersection([
   }),
 ]);
 
+export const tPersistedSerialize = t.intersection([
+  _tPersistedSerialize(MODEL_TYPE),
+  t.type({
+    groups: t.array(tStringSerialize),
+    name: tStringSerialize,
+  }),
+]);
+
 // -----------------------------------------------------------------------------
 // Model
 // -----------------------------------------------------------------------------
 
 export type Model = Local | Persisted;
+
+export const tModel = t.union([tLocal, tPersisted]);
+
+export const tModelSerialize = t.union([tLocal, tPersisted]);

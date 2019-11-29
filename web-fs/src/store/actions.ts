@@ -1,4 +1,3 @@
-import { Action } from './Store';
 import {
   DocumentContent,
   Local as DocumentLocal,
