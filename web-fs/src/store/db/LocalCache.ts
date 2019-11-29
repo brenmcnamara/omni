@@ -42,7 +42,7 @@ export default class LocalCache<T> {
 }
 
 function serialize(data: any): string {
-  if (typeof data !== 'object') {
+  if (!data || typeof data !== 'object' || Array.isArray(data)) {
     // NOTE: We are making an assumption that a date is not a nested
     // type anywhere within this array.
     return JSON.stringify(data);
@@ -63,7 +63,7 @@ function serialize(data: any): string {
 
 function parse(serial: string): any {
   const json: any = JSON.parse(serial);
-  if (json && typeof json !== 'object') {
+  if (!json || typeof json !== 'object' || Array.isArray(json)) {
     return json;
   }
 
