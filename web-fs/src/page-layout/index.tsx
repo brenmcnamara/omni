@@ -1,8 +1,9 @@
+import * as t from 'io-ts';
 import classnames from 'classnames';
 import Icon from '../Icon';
 import LeftPane from './LeftPane';
 import pageLayoutStyles from './PageLayout.module.css';
-import React, { useState } from 'react';
+import React from 'react';
 import RightPane from './RightPane';
 import Toolbar from './Toolbar';
 import ToolbarButton from './ToolbarButton';
@@ -10,6 +11,7 @@ import ToolbarButton from './ToolbarButton';
 import { bars } from '../icons';
 import { getThemeInfo } from '../store/selectors';
 import { useSelector } from '../store';
+import { useLocalStorage } from '../store/LocalStorage';
 
 interface Props {
   Left: JSX.Element;
@@ -19,7 +21,12 @@ interface Props {
 
 const App: React.FC<Props> = (props: Props) => {
   const theme = useSelector(state => getThemeInfo(state)).theme;
-  const [isLeftPaneHidden, setIsLeftPaneHidden] = useState(false);
+  const [isLeftPaneHidden, setIsLeftPaneHidden] = useLocalStorage<boolean>(
+    'isLeftPaneHidden',
+    'v1.0',
+    t.boolean,
+    false,
+  );
 
   return (
     <div

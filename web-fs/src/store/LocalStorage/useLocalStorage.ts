@@ -30,7 +30,8 @@ export default function useLocalStorage<T>(
   namespace: string,
   version: string,
   tSerial: t.Type<T>,
-): [T | undefined, Setter<T>] {
+  defaultValue: T,
+): [T, Setter<T>] {
   const cache = useMemo(() => {
     let cache = namespaceToCache[namespace];
 
@@ -44,9 +45,9 @@ export default function useLocalStorage<T>(
 
     namespaceToCache[namespace] = cache;
     return cache as LocalCache<T>;
-  }, [namespace]);
+  }, [namespace, tSerial]);
 
-  const [value, setValue] = useState(cache.get(version));
+  const [value, setValue] = useState(cache.get(version) || defaultValue);
 
   useEffect(
     function subscribeToStorageChanges() {
