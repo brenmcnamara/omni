@@ -59,7 +59,7 @@ const FileEditorTitle: React.FC<Props> = (props: Props) => {
       }
       element.innerText = props.title;
     },
-    [titleEditorRef.current],
+    [props.title],
   );
 
   return (

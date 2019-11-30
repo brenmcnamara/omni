@@ -2,7 +2,7 @@ import './FileEditor.css';
 
 import classnames from 'classnames';
 import fontStyles from '../text/Font.module.css';
-import React, { useState } from 'react';
+import React from 'react';
 
 import { ContentBlock, Editor, EditorState } from 'draft-js';
 import { useTheme } from '../theme';

@@ -1,4 +1,3 @@
-import { PureAction } from './actions';
 import { Dispatch, StoreState } from './Store';
 import {
   useDispatch as useDispatchUNTYPED,

@@ -67,7 +67,7 @@ export function useThrottle<F extends Procedure>(
     return function cleanup() {
       impl.cancel();
     };
-  }, []);
+  }, [impl]);
 
   // Need to update the throttled function on every call.
   impl.func = func;

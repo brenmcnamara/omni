@@ -107,7 +107,7 @@ function setDocumentContent(
 
 function setDocument(state: State, document: Document): State {
   const id = getID(document);
-  if (state.documents[id] == undefined) {
+  if (state.documents[id] === undefined) {
     throw Error(`Could not find document for id ${id}`);
   }
 

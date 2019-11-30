@@ -4,7 +4,6 @@ import tStringSerialize from './tSerialize/tStringSerialize';
 import {
   createLocal as _createLocal,
   Local as _Local,
-  Model as _Model,
   Persisted as _Persisted,
   Ref as _Ref,
   tLocal as _tLocal,
