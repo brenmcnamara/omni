@@ -18,9 +18,9 @@ const ContentViewer: React.FC = () => {
   const reduxState = useSelection();
   const dispatch = useDispatch();
 
-  const [title, setTitle] = useState(
+  const title = useState(
     reduxState.document ? reduxState.document.name : 'Untitled Document',
-  );
+  )[0];
 
   const [editorState, setEditorState] = useState(
     EditorState.createWithContent(
