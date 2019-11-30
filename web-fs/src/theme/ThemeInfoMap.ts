@@ -68,6 +68,5 @@ function mapObject<TObj, TReturn>(
     // @ts-ignore
     newObj[key] = mapper(key, obj[key]);
   }
-  console.log('NEW OBJ', newObj);
   return newObj;
 }
