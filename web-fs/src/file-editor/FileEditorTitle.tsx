@@ -24,6 +24,21 @@ const FileEditorTitle: React.FC<Props> = (props: Props) => {
 
   const titleEditorRef = useRef<HTMLDivElement | null>(null);
 
+  useEffect(
+    function onReceiveNewTitleFromProps() {
+      setTitle(props.title);
+      setIsValidTitle(calculateIsValidTitle(props.title));
+
+      const element = titleEditorRef.current;
+      if (!element || element.innerText === props.title) {
+        return;
+      }
+
+      element.innerText = props.title;
+    },
+    [props.title],
+  );
+
   function onKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
     if (KeyMap.get(event.keyCode) === 'ENTER') {
       event.preventDefault();
@@ -49,28 +64,13 @@ const FileEditorTitle: React.FC<Props> = (props: Props) => {
     const isValidTitle = calculateIsValidTitle(text);
     setIsValidTitle(isValidTitle);
     if (isValidTitle) {
-      props.onChange(cleanupTitle(text));
+      props.onChange(text);
     }
   }
 
   function onFocus(event: React.FormEvent<HTMLDivElement>) {
     setTitleSelection(titleEditorRef, [0, props.title.length]);
   }
-
-  useEffect(
-    function onReceiveNewTitleFromProps() {
-      setTitle(props.title);
-      setIsValidTitle(calculateIsValidTitle(props.title));
-
-      const element = titleEditorRef.current;
-      if (!element || element.innerText === title) {
-        return;
-      }
-
-      element.innerText = title;
-    },
-    [props.title],
-  );
 
   return (
     <div
@@ -106,10 +106,6 @@ export default FileEditorTitle;
 
 function calculateIsValidTitle(title: string): boolean {
   return title.trim().length > 0 && !title.includes('/');
-}
-
-function cleanupTitle(title: string): string {
-  return title.trim();
 }
 
 // -----------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 import './ContentViewer.css';
 
 import FileEditor from './file-editor';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { addDocument, setDocument, setDocumentContent } from './store/actions';
 import {
@@ -28,6 +28,21 @@ const ContentViewer: React.FC = () => {
     ),
   );
 
+  useEffect(
+    function didChangeDocuemnt() {
+      setTitle(
+        reduxState.document ? reduxState.document.name : 'Untitled Document',
+      );
+
+      setEditorState(
+        EditorState.createWithContent(
+          ContentState.createFromText(reduxState.documentContent),
+        ),
+      );
+    },
+    [reduxState.document],
+  );
+
   const onChangeTitle = (title: string) => {
     setTitle(title);
 
@@ -36,7 +51,7 @@ const ContentViewer: React.FC = () => {
       case 'NEW_DOCUMENT': {
         const documentLocal = createDocumentLocal({
           groups: [],
-          name: title,
+          name: cleanTitle(title),
         });
         dispatch(addDocument(documentLocal, ''));
         break;
@@ -117,4 +132,12 @@ function useSelection(): StateSelection {
 
     return { document, documentContent, editMode };
   });
+}
+
+// -----------------------------------------------------------------------------
+// UTILS
+// -----------------------------------------------------------------------------
+
+function cleanTitle(title: string): string {
+  return title.trim();
 }

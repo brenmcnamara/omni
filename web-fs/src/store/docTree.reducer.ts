@@ -1,6 +1,7 @@
 import * as t from 'io-ts';
 import nullthrows from 'nullthrows';
 import tStringSerialize from './tSerialize/tStringSerialize';
+import uuid from 'uuid/v4';
 
 import {
   createRef as createDocumentRef,
@@ -224,10 +225,8 @@ function setDocument(state: State, document: Document): State {
 // Create ID
 // -----------------------------------------------------------------------------
 
-let idIndex: number = 1;
-
 function createAtomicTreeID(): string {
-  return `ATOMIC_${idIndex}`;
+  return `ATOMIC-${uuid()}`;
 }
 
 function createComposteTreeID(path: string): string {
