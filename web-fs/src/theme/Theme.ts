@@ -1,7 +1,8 @@
 export interface Theme {
   backgroundColorPrimary: string;
   backgroundColorSecondary: string;
-  borderColor: string;
+  borderColorPrimary: string;
+  borderColorAlert: string;
   colorSelectionPrimary: string;
   fontColorPrimary: string;
   fontColorSecondary: string;

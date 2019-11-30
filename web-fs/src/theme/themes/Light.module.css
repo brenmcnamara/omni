@@ -6,8 +6,12 @@
   background-color: #f0f0f0;
 }
 
-.borderColor {
+.borderColorPrimary {
   border-color: #efefef;
+}
+
+.borderColorAlert {
+  border-color: #c0392b;
 }
 
 .colorSelectionPrimary {

@@ -19,7 +19,7 @@ const LeftPane: React.FC<Props> = (props: Props) => {
   return (
     <div
       className={classnames(
-        theme.borderColor,
+        theme.borderColorPrimary,
         pageLayoutStyles.leftPane,
         props.isHidden && 'display-none',
         'border-right-lg',

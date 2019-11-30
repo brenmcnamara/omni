@@ -10,8 +10,12 @@
   background-color: white;
 }
 
-.borderColor {
+.borderColorPrimary {
   border-color: #26292c;
+}
+
+.borderColorAlert {
+  border-color: #e74c3c;
 }
 
 .colorSelectionPrimary {

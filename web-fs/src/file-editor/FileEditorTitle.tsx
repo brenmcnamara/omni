@@ -2,7 +2,7 @@ import './FileEditor.css';
 
 import classnames from 'classnames';
 import fontStyles from '../text/Font.module.css';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import useTheme from '../theme/useTheme';
 
 import { KeyMap } from './Keys';
@@ -15,6 +15,11 @@ interface Props {
 
 const FileEditorTitle: React.FC<Props> = (props: Props) => {
   const { theme } = useTheme()[0];
+
+  const [title, setTitle] = useState(props.title);
+  const [isValidTitle, setIsValidTitle] = useState(
+    calculateIsValidTitle(props.title),
+  );
 
   const titleEditorRef = useRef<HTMLDivElement | null>(null);
 
@@ -31,7 +36,20 @@ const FileEditorTitle: React.FC<Props> = (props: Props) => {
     if (!element) {
       return;
     }
-    props.onChange(element.innerText);
+
+    const text = element.innerText;
+
+    if (title === text) {
+      return;
+    }
+
+    setTitle(text);
+
+    const isValidTitle = calculateIsValidTitle(text);
+    setIsValidTitle(isValidTitle);
+    if (isValidTitle) {
+      props.onChange(cleanupTitle(text));
+    }
   }
 
   function onFocus(event: React.FormEvent<HTMLDivElement>) {
@@ -39,23 +57,27 @@ const FileEditorTitle: React.FC<Props> = (props: Props) => {
   }
 
   useEffect(
-    function onChangeTitleRef() {
+    function onReceiveNewTitleFromProps() {
+      setTitle(props.title);
+      setIsValidTitle(calculateIsValidTitle(props.title));
+
       const element = titleEditorRef.current;
       if (!element || element.innerText === props.title) {
         return;
       }
-      element.innerText = props.title;
+      element.innerText = title;
     },
     [props.title],
   );
 
   return (
     <div
-      className={classnames(
-        theme.borderColor,
-        'FileEditor-titleEditorContainer',
-        'border-bottom',
-      )}
+      className={classnames({
+        'FileEditor-titleEditorContainer': true,
+        'border-bottom': true,
+        [theme.borderColorPrimary]: isValidTitle,
+        [theme.borderColorAlert]: !isValidTitle,
+      })}
     >
       <div
         className={classnames(
@@ -75,6 +97,18 @@ const FileEditorTitle: React.FC<Props> = (props: Props) => {
 };
 
 export default FileEditorTitle;
+
+// -----------------------------------------------------------------------------
+// UTILS
+// -----------------------------------------------------------------------------
+
+function calculateIsValidTitle(title: string): boolean {
+  return title.trim().length > 0 && !title.includes('/');
+}
+
+function cleanupTitle(title: string): string {
+  return title.trim();
+}
 
 // -----------------------------------------------------------------------------
 // SELECTION UTILS
@@ -118,14 +152,12 @@ function getTitleSelection(ref: TitleRef): TitleSelection | undefined {
 function setTitleSelection(ref: TitleRef, selection: TitleSelection) {
   const nativeSelection = window.getSelection();
   if (!nativeSelection) {
-    console.log('no selection');
     return;
   }
 
   const { current } = ref;
 
   if (!current) {
-    console.log('no current');
     return;
   }
 
@@ -138,7 +170,6 @@ function setTitleSelection(ref: TitleRef, selection: TitleSelection) {
     selection[1] < min ||
     selection[1] > max
   ) {
-    console.log('out of range');
     return;
   }
 
