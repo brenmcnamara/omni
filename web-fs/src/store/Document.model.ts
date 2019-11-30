@@ -67,7 +67,7 @@ export function createLocal(stub: LocalStub): Local {
   };
 }
 
-export const tLocalSerialize = t.intersection([
+export const tLocalSerialize: t.Type<Local, any, unknown> = t.intersection([
   _tLocalSerialize(MODEL_TYPE),
   t.type({
     groups: t.array(tStringSerialize),
@@ -94,7 +94,11 @@ export const tPersisted: t.Type<Persisted> = t.intersection([
   }),
 ]);
 
-export const tPersistedSerialize = t.intersection([
+export const tPersistedSerialize: t.Type<
+  Persisted,
+  any,
+  unknown
+> = t.intersection([
   _tPersistedSerialize(MODEL_TYPE),
   t.type({
     groups: t.array(tStringSerialize),
@@ -110,4 +114,7 @@ export type Model = Local | Persisted;
 
 export const tModel = t.union([tLocal, tPersisted]);
 
-export const tModelSerialize = t.union([tLocal, tPersisted]);
+export const tModelSerialize: t.Type<Model, any, unknown> = t.union([
+  tLocal,
+  tPersisted,
+]);

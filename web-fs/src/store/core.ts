@@ -50,7 +50,7 @@ export function createLocal<TType extends string>(
 }
 export function tLocal<TType extends string>(modelType: TType) {
   return t.type({
-    id: t.string,
+    localID: t.string,
     modelType: t.literal(modelType),
     type: t.literal('MODEL_LOCAL'),
   });
@@ -58,7 +58,7 @@ export function tLocal<TType extends string>(modelType: TType) {
 
 export function tLocalSerialize<TType extends string>(modelType: TType) {
   return t.type({
-    id: tStringSerialize,
+    localID: tStringSerialize,
     modelType: t.literal(modelType),
     type: t.literal('MODEL_LOCAL'),
   });

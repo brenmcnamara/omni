@@ -2,9 +2,9 @@ import * as t from 'io-ts';
 
 export default class LocalCache<T> {
   private namespace: string;
-  private tSerial: t.Type<T, string, unknown>;
+  private tSerial: t.Type<T, any, unknown>;
 
-  constructor(namespace: string, tSerial: t.Type<T, string, unknown>) {
+  constructor(namespace: string, tSerial: t.Type<T, any, unknown>) {
     this.namespace = namespace;
     this.tSerial = tSerial;
   }
