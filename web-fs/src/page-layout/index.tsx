@@ -6,9 +6,10 @@ import React, { useState } from 'react';
 import RightPane from './RightPane';
 import Toolbar from './Toolbar';
 import ToolbarButton from './ToolbarButton';
-import useTheme from '../theme/useTheme';
 
 import { bars } from '../icons';
+import { getThemeInfo } from '../store/selectors';
+import { useSelector } from '../store';
 
 interface Props {
   Left: JSX.Element;
@@ -17,14 +18,14 @@ interface Props {
 }
 
 const App: React.FC<Props> = (props: Props) => {
-  const themeInfo = useTheme()[0];
+  const theme = useSelector(state => getThemeInfo(state)).theme;
   const [isLeftPaneHidden, setIsLeftPaneHidden] = useState(false);
 
   return (
     <div
       className={classnames(
         pageLayoutStyles.root,
-        themeInfo.theme.backgroundColorPrimary,
+        theme.backgroundColorPrimary,
       )}
     >
       <Toolbar>

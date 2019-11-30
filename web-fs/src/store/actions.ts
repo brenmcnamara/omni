@@ -6,12 +6,14 @@ import {
   Ref as DocumentRef,
 } from './Document.model';
 import { State as EditMode } from './editMode.reducer';
+import { ThemeType } from '../theme';
 
 export type PureAction =
   | Action$AddDocument
   | Action$SetDocument
   | Action$SetDocumentContent
-  | Action$SetEditMode;
+  | Action$SetEditMode
+  | Action$SetThemeType;
 
 export interface Action$AddDocument extends _Action<'ADD_DOCUMENT'> {
   documentLocal: DocumentLocal;
@@ -65,5 +67,17 @@ export function setEditMode(editMode: EditMode): Action$SetEditMode {
   return {
     editMode,
     type: 'SET_EDIT_MODE',
+  };
+}
+
+interface Action$SetThemeType extends _Action<'SET_THEME_TYPE'> {
+  themeType: ThemeType;
+  type: 'SET_THEME_TYPE';
+}
+
+export function setThemeType(themeType: ThemeType): Action$SetThemeType {
+  return {
+    themeType,
+    type: 'SET_THEME_TYPE',
   };
 }

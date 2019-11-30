@@ -1,6 +1,7 @@
 import { DocumentContent } from './DocumentContent';
 import { Model as Document, Ref as DocumentRef } from './Document.model';
 import { StoreState } from './Store';
+import { getThemeInfoMap, ThemeInfo } from '../theme';
 
 export function getDocument(
   state: StoreState,
@@ -34,4 +35,8 @@ export function getDocumentContent(
   }
 
   return undefined;
+}
+
+export function getThemeInfo(state: StoreState): ThemeInfo {
+  return getThemeInfoMap()[state.configuration.themeType];
 }

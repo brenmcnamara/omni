@@ -4,10 +4,11 @@ import classnames from 'classnames';
 import Icon from '../Icon';
 import React from 'react';
 import Text from '../text';
-import useTheme from '../theme/useTheme';
 
 import { arrowDown, arrowRight, ellipsisH } from '../icons';
 import { ClassValue } from 'classnames/types';
+import { getThemeInfo } from '../store/selectors';
+import { useSelector } from '../store';
 
 interface Classes {
   root?: ClassValue;
@@ -23,7 +24,7 @@ interface Props {
 const INDENT_SIZE_PX = 24;
 
 const GroupTreeItem: React.FC<Props> = (props: Props) => {
-  const { theme } = useTheme()[0];
+  const theme = useSelector(state => getThemeInfo(state).theme);
 
   return (
     <div

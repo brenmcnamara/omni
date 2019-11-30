@@ -3,7 +3,8 @@ import React from 'react';
 
 import { ClassValue } from 'classnames/types';
 import { Theme } from './theme/Theme';
-import { useTheme } from './theme';
+import { getThemeInfo } from './store/selectors';
+import { useSelector } from './store';
 
 const IconSizeClassNameMap = {
   4: 'icon-size-4',
@@ -32,7 +33,7 @@ interface Props {
 }
 
 const Icon: React.FC<Props> = (props: Props) => {
-  const { theme } = useTheme()[0];
+  const theme = useSelector(state => getThemeInfo(state).theme);
 
   return (
     <span

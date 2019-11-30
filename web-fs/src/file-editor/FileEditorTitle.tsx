@@ -3,9 +3,10 @@ import './FileEditor.css';
 import classnames from 'classnames';
 import fontStyles from '../text/Font.module.css';
 import React, { useEffect, useRef, useState } from 'react';
-import useTheme from '../theme/useTheme';
 
 import { KeyMap } from './Keys';
+import { useSelector } from '../store';
+import { getThemeInfo } from '../store/selectors';
 
 interface Props {
   onChange: (title: string) => void;
@@ -14,7 +15,7 @@ interface Props {
 }
 
 const FileEditorTitle: React.FC<Props> = (props: Props) => {
-  const { theme } = useTheme()[0];
+  const theme = useSelector(state => getThemeInfo(state).theme);
 
   const [title, setTitle] = useState(props.title);
   const [isValidTitle, setIsValidTitle] = useState(

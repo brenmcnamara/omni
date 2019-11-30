@@ -3,21 +3,25 @@ import Icon from '../Icon';
 import React, { useEffect } from 'react';
 import styles from './DarkLightModeToolbarButton.module.css';
 import ToolbarButton from '../page-layout/ToolbarButton';
-import useTheme from '../theme/useTheme';
 
 import { adjust } from '../icons';
+import { getThemeInfo } from '../store/selectors';
+import { setThemeType } from '../store/actions';
+import { useDispatch, useSelector } from '../store';
 
 interface Props {}
 
 const DarkLightModeToolbarButton: React.FC<Props> = (props: Props) => {
-  const [themeInfo, setThemeType] = useTheme();
+  const themeInfo = useSelector(state => getThemeInfo(state));
+  const dispatch = useDispatch();
+
   const { themeType } = themeInfo;
   const isDarkMode = themeType === 'Dark';
 
   useEffect(() => {
     const newThemeType = isDarkMode ? 'Dark' : 'Light';
     if (themeType !== newThemeType) {
-      setThemeType(newThemeType);
+      dispatch(setThemeType(newThemeType));
     }
   });
 
@@ -30,7 +34,7 @@ const DarkLightModeToolbarButton: React.FC<Props> = (props: Props) => {
           [styles.root_isLightMode]: !isDarkMode,
         }),
       }}
-      onClick={() => setThemeType(isDarkMode ? 'Light' : 'Dark')}
+      onClick={() => dispatch(setThemeType(isDarkMode ? 'Light' : 'Dark'))}
     >
       <Icon icon={adjust} iconColor="primary" size={16} />
     </ToolbarButton>
