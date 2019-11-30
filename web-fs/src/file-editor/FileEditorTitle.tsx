@@ -62,9 +62,10 @@ const FileEditorTitle: React.FC<Props> = (props: Props) => {
       setIsValidTitle(calculateIsValidTitle(props.title));
 
       const element = titleEditorRef.current;
-      if (!element || element.innerText === props.title) {
+      if (!element || element.innerText === title) {
         return;
       }
+
       element.innerText = title;
     },
     [props.title],
