@@ -1,12 +1,16 @@
 import * as t from 'io-ts';
 
 export default class LocalCache<T> {
+  private _tSerial: t.Type<T, any, unknown>;
   private namespace: string;
-  private tSerial: t.Type<T, any, unknown>;
 
   constructor(namespace: string, tSerial: t.Type<T, any, unknown>) {
     this.namespace = namespace;
-    this.tSerial = tSerial;
+    this._tSerial = tSerial;
+  }
+
+  public get tSerial(): t.Type<T, any, unknown> {
+    return this._tSerial;
   }
 
   public get(key: string): T | undefined {
