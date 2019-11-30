@@ -35,26 +35,13 @@ const FileEditorTitle: React.FC<Props> = (props: Props) => {
   }
 
   function onFocus(event: React.FormEvent<HTMLDivElement>) {
-    const element = titleEditorRef.current;
-    if (!element) {
-      return;
-    }
-
-    const selection = window.getSelection();
-    if (!selection) {
-      return;
-    }
-
-    const range = document.createRange();
-    range.selectNodeContents(element);
-    selection.removeAllRanges();
-    selection.addRange(range);
+    setTitleSelection(titleEditorRef, [0, props.title.length]);
   }
 
   useEffect(
     function onChangeTitleRef() {
       const element = titleEditorRef.current;
-      if (!element) {
+      if (!element || element.innerText === props.title) {
         return;
       }
       element.innerText = props.title;
@@ -88,3 +75,77 @@ const FileEditorTitle: React.FC<Props> = (props: Props) => {
 };
 
 export default FileEditorTitle;
+
+// -----------------------------------------------------------------------------
+// SELECTION UTILS
+// -----------------------------------------------------------------------------
+
+type TitleSelection = [number, number];
+
+type TitleRef = React.RefObject<HTMLDivElement>;
+
+function getTitleSelection(ref: TitleRef): TitleSelection | undefined {
+  const { current } = ref;
+  if (!current) {
+    return undefined;
+  }
+
+  const selection = window.getSelection();
+  if (!selection || selection.type === 'None') {
+    return undefined;
+  }
+
+  const { anchorNode, focusNode } = selection;
+  if (!anchorNode || !focusNode) {
+    return undefined;
+  }
+
+  const isSelectingTitle =
+    (anchorNode === current || anchorNode.parentNode === current) &&
+    (focusNode === current || focusNode.parentNode === current);
+
+  if (!isSelectingTitle) {
+    return undefined;
+  }
+
+  const start = anchorNode === current ? 0 : selection.anchorOffset;
+  const end =
+    focusNode === current ? current.innerText.length : selection.focusOffset;
+
+  return [start, end];
+}
+
+function setTitleSelection(ref: TitleRef, selection: TitleSelection) {
+  const nativeSelection = window.getSelection();
+  if (!nativeSelection) {
+    console.log('no selection');
+    return;
+  }
+
+  const { current } = ref;
+
+  if (!current) {
+    console.log('no current');
+    return;
+  }
+
+  const min = 0;
+  const max = current.innerText.length;
+
+  if (
+    selection[0] < min ||
+    selection[0] > max ||
+    selection[1] < min ||
+    selection[1] > max
+  ) {
+    console.log('out of range');
+    return;
+  }
+
+  const range = document.createRange();
+  range.setStart(current.childNodes[0], selection[0]);
+  range.setEnd(current.childNodes[0], selection[1]);
+
+  nativeSelection.removeAllRanges();
+  nativeSelection.addRange(range);
+}

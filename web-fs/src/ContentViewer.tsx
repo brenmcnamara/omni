@@ -18,9 +18,9 @@ const ContentViewer: React.FC = () => {
   const reduxState = useSelection();
   const dispatch = useDispatch();
 
-  const title = useState(
+  const [title, setTitle] = useState(
     reduxState.document ? reduxState.document.name : 'Untitled Document',
-  )[0];
+  );
 
   const [editorState, setEditorState] = useState(
     EditorState.createWithContent(
@@ -29,6 +29,8 @@ const ContentViewer: React.FC = () => {
   );
 
   const onChangeTitle = (title: string) => {
+    setTitle(title);
+
     const { editMode } = reduxState;
     switch (editMode.type) {
       case 'NEW_DOCUMENT': {
