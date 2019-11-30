@@ -1,5 +1,4 @@
 import * as t from 'io-ts';
-import nullthrows from 'nullthrows';
 import tStringSerialize from './tSerialize/tStringSerialize';
 
 import {

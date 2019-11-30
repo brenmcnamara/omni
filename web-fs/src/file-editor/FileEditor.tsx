@@ -8,6 +8,7 @@ import React from 'react';
 import { EditorState } from 'draft-js';
 
 interface Props {
+  editorState: EditorState;
   onChangeEditorState: (editorState: EditorState) => void;
   onChangeTitle: (title: string) => void;
   title: string;
@@ -23,7 +24,10 @@ const FileEditor: React.FC<Props> = (props: Props) => {
         onEnter={onEnterTitle}
         title={props.title}
       />
-      <FileEditorContent onChange={props.onChangeEditorState} />
+      <FileEditorContent
+        editorState={props.editorState}
+        onChange={props.onChangeEditorState}
+      />
     </div>
   );
 };

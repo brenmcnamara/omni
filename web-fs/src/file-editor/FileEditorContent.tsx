@@ -9,16 +9,12 @@ import { useTheme } from '../theme';
 
 interface Props {
   editorRef?: React.RefObject<Editor>;
+  editorState: EditorState;
   onChange: (state: EditorState) => void;
 }
 
 const FileEditorContent: React.FC<Props> = (props: Props) => {
-  const [editorState, setEditorState] = useState<EditorState>(
-    EditorState.createEmpty(),
-  );
-
   function onChangeEditorState(editorState: EditorState) {
-    setEditorState(editorState);
     props.onChange(editorState);
   }
 
@@ -38,7 +34,7 @@ const FileEditorContent: React.FC<Props> = (props: Props) => {
     >
       <Editor
         blockStyleFn={blockStyleFn}
-        editorState={editorState}
+        editorState={props.editorState}
         onChange={onChangeEditorState}
         ref={props.editorRef}
       />

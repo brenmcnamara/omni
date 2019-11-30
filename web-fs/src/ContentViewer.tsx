@@ -9,17 +9,24 @@ import {
   Model as Document,
 } from './store/Document.model';
 import { DocumentContent } from './store/DocumentContent';
-import { EditorState } from 'draft-js';
+import { ContentState, EditorState } from 'draft-js';
 import { getDocument, getDocumentContent } from './store/selectors';
 import { State as State$EditMode } from './store/editMode.reducer';
 import { useDispatch, useSelector } from './store';
-import { useThrottle } from './throttle';
 
 const ContentViewer: React.FC = () => {
-  const [title, setTitle] = useState('Untitled Document');
-
   const reduxState = useSelection();
   const dispatch = useDispatch();
+
+  const [title, setTitle] = useState(
+    reduxState.document ? reduxState.document.name : 'Untitled Document',
+  );
+
+  const [editorState, setEditorState] = useState(
+    EditorState.createWithContent(
+      ContentState.createFromText(reduxState.documentContent),
+    ),
+  );
 
   const onChangeTitle = (title: string) => {
     const { editMode } = reduxState;
@@ -42,7 +49,9 @@ const ContentViewer: React.FC = () => {
     }
   };
 
-  const onChangeEditorState = useThrottle(1000, (editorState: EditorState) => {
+  const onChangeEditorState = (editorState: EditorState) => {
+    setEditorState(editorState);
+
     const { editMode } = reduxState;
     const documentContent = editorState.getCurrentContent().getPlainText();
 
@@ -64,11 +73,12 @@ const ContentViewer: React.FC = () => {
         break;
       }
     }
-  });
+  };
 
   return (
     <div className="ContentViewer-root">
       <FileEditor
+        editorState={editorState}
         onChangeEditorState={onChangeEditorState}
         onChangeTitle={onChangeTitle}
         title={title}
