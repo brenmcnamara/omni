@@ -8,6 +8,7 @@ import Text from '../text';
 
 import { DocTree, State as State$DocTree } from '../store/docTree.reducer';
 import { fileWord } from '../icons';
+import { getSelectedNodeIDs } from '../store/selectors';
 import { selectDocument } from '../store/actions';
 import { State as State$EditMode } from '../store/editMode.reducer';
 import { useDispatch, useSelector } from '../store';
@@ -15,7 +16,7 @@ import { useDispatch, useSelector } from '../store';
 interface Props {}
 
 const FileTree: React.FC<Props> = (props: Props) => {
-  const { docTree } = useSelection();
+  const { docTree, selectedNodeIDs } = useSelection();
   const dispatch = useDispatch();
 
   if (Object.keys(docTree.tree).length === 0) {
@@ -56,7 +57,7 @@ const FileTree: React.FC<Props> = (props: Props) => {
           nodeID={id}
           nodeMap={docTree.tree}
           onClickNode={onClickNode}
-          selectedNodeIDs={[]}
+          selectedNodeIDs={selectedNodeIDs}
         />
       ))}
     </div>
@@ -116,14 +117,20 @@ function FileTreeRecurse(props: RecurseProps) {
   }
 }
 
+// -----------------------------------------------------------------------------
+// Selection
+// -----------------------------------------------------------------------------
+
 interface Selection {
   docTree: State$DocTree;
   editMode: State$EditMode;
+  selectedNodeIDs: string[];
 }
 
 function useSelection(): Selection {
   return useSelector(state => ({
     docTree: state.docTree,
     editMode: state.editMode,
+    selectedNodeIDs: getSelectedNodeIDs(state),
   }));
 }

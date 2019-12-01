@@ -1,4 +1,5 @@
 import { DocumentContent } from './DocumentContent';
+import { matchesRef } from './core';
 import { Model as Document, Ref as DocumentRef } from './Document.model';
 import { StoreState } from './Store';
 import { getThemeInfoMap, ThemeInfo } from '../theme';
@@ -39,4 +40,21 @@ export function getDocumentContent(
 
 export function getThemeInfo(state: StoreState): ThemeInfo {
   return getThemeInfoMap()[state.configuration.themeType];
+}
+
+export function getSelectedNodeIDs(state: StoreState): string[] {
+  const { documentRef } = state.editMode;
+  const document = documentRef && getDocument(state, documentRef);
+
+  if (document === undefined) {
+    return [];
+  }
+
+  const selectedNodeIDs: string[] = [];
+  for (const node of Object.values(state.docTree.tree)) {
+    if (node.type === 'ATOMIC' && matchesRef(document, node.documentRef)) {
+      selectedNodeIDs.push(node.id);
+    }
+  }
+  return selectedNodeIDs;
 }
