@@ -11,47 +11,29 @@ import { PureAction } from './actions';
 // EditMode
 // -----------------------------------------------------------------------------
 
-interface EditMode$NewDocument {
-  type: 'NEW_DOCUMENT';
+interface EditMode {
+  documentRef: DocumentRef | undefined;
 }
 
-const tEditMode$NewDocument = t.type({
-  type: t.literal('NEW_DOCUMENT'),
+const tEditMode = t.type({
+  documentRef: t.union([tDocumentRef, t.undefined]),
 });
 
-const tEditModeSerialize$NewDocument = t.type({
-  type: t.literal('NEW_DOCUMENT'),
-});
-
-interface EditMode$EditDocument {
-  documentRef: DocumentRef;
-  type: 'EDIT_DOCUMENT';
-}
-
-const tEditMode$EditDocument = t.type({
-  documentRef: tDocumentRef,
-  type: t.literal('EDIT_DOCUMENT'),
-});
-
-const tEditModeSerialize$EditDocument = t.type({
-  documentRef: tDocumentRefSerialize,
-  type: t.literal('EDIT_DOCUMENT'),
+const tEditModeSerialize = t.type({
+  documentRef: t.union([tDocumentRefSerialize, t.undefined]),
 });
 
 // -----------------------------------------------------------------------------
 // State
 // -----------------------------------------------------------------------------
 
-export type State = EditMode$EditDocument | EditMode$NewDocument;
+export type State = EditMode;
 
-export const tState = t.union([tEditMode$NewDocument, tEditMode$EditDocument]);
+export const tState = tEditMode;
 
-export const tStateSerialize = t.union([
-  tEditModeSerialize$EditDocument,
-  tEditModeSerialize$NewDocument,
-]);
+export const tStateSerialize = tEditModeSerialize;
 
-export const DefaultState: State = { type: 'NEW_DOCUMENT' };
+export const DefaultState: State = { documentRef: undefined };
 
 // -----------------------------------------------------------------------------
 // Reducer
@@ -62,17 +44,8 @@ export default function editMode(
   action: PureAction,
 ): State {
   switch (action.type) {
-    case 'ADD_DOCUMENT': {
-      return state.type === 'NEW_DOCUMENT'
-        ? {
-            documentRef: createDocumentRef(action.documentLocal),
-            type: 'EDIT_DOCUMENT',
-          }
-        : state;
-    }
-
-    case 'SET_EDIT_MODE': {
-      return action.editMode;
+    case 'SELECT_DOCUMENT': {
+      return { ...state, documentRef: action.documentRef };
     }
 
     default:

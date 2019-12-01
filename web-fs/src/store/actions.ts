@@ -12,7 +12,7 @@ export type PureAction =
   | Action$AddDocument
   | Action$SetDocument
   | Action$SetDocumentContent
-  | Action$SetEditMode
+  | Action$SelectDocument
   | Action$SetThemeType;
 
 export interface Action$AddDocument extends _Action<'ADD_DOCUMENT'> {
@@ -59,14 +59,16 @@ export function setDocumentContent(
   };
 }
 
-interface Action$SetEditMode extends _Action<'SET_EDIT_MODE'> {
-  editMode: EditMode;
+interface Action$SelectDocument extends _Action<'SELECT_DOCUMENT'> {
+  documentRef: DocumentRef | undefined;
 }
 
-export function setEditMode(editMode: EditMode): Action$SetEditMode {
+export function selectDocument(
+  documentRef: DocumentRef | undefined,
+): Action$SelectDocument {
   return {
-    editMode,
-    type: 'SET_EDIT_MODE',
+    documentRef,
+    type: 'SELECT_DOCUMENT',
   };
 }
 

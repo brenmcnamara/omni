@@ -19,6 +19,7 @@ interface Props {
   indent: number;
   isOpen: boolean;
   name: string;
+  onClick: () => void;
 }
 
 const INDENT_SIZE_PX = 24;
@@ -35,6 +36,7 @@ const GroupTreeItem: React.FC<Props> = (props: Props) => {
         'margin-horiz-8',
         'padding-horiz-8',
       )}
+      onClick={props.onClick}
     >
       <div
         className={classnames(

@@ -20,6 +20,7 @@ interface Props {
   indent: number;
   isSelected: boolean;
   name: string;
+  onClick: () => void;
 }
 
 const INDENT_SIZE_PX = 24;
@@ -36,6 +37,7 @@ const FileTreeItem: React.FC<Props> = (props: Props) => {
         'margin-horiz-8': true,
         'padding-horiz-8': true,
       })}
+      onClick={props.onClick}
     >
       <div
         className={classnames(

@@ -1,4 +1,4 @@
-import ContentViewer from './ContentViewer';
+import ContentViewer from './content-viewer';
 import FileTree from './file-tree/FileTree';
 import PageLayout from './page-layout';
 import React from 'react';
