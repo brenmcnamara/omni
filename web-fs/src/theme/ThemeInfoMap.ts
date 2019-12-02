@@ -31,7 +31,7 @@ export const getThemeInfoMap = memoize(() =>
   mapObject(
     ThemeMap,
     (themeType, theme): ThemeInfo => ({
-      theme: addTransitions(theme),
+      theme: addThemeClassNames(theme),
       themeIdentifier: `Theme-${themeType}`,
       themeWithoutTransitions: theme,
       themeType,
@@ -43,14 +43,14 @@ export const getThemeInfoMap = memoize(() =>
 // UTILS
 // -----------------------------------------------------------------------------
 
-function addTransitions(theme: Theme): Theme {
+function addThemeClassNames(theme: Theme): Theme {
   // @ts-ignore
   let themeWithTransitions: Theme = {};
 
   for (const key in theme) {
     // @ts-ignore
     const val: string = theme[key];
-    const classNames = classnames(val, 'transitions-all-200ms');
+    const classNames = classnames(val, 'contains-theme');
     // @ts-ignore
     themeWithTransitions[key] = classNames;
   }

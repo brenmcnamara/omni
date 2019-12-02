@@ -6,15 +6,18 @@ import Store from './store';
 import ToolbarButtons from './toolbar-buttons/ToolbarButtons';
 
 import { Provider } from 'react-redux';
+import { ThemeManager } from './theme';
 
 const App: React.FC = () => {
   return (
     <Provider store={Store}>
-      <PageLayout
-        Left={<FileTree />}
-        Right={<ContentViewer />}
-        ToolbarButtons={<ToolbarButtons />}
-      />
+      <ThemeManager>
+        <PageLayout
+          Left={<FileTree />}
+          Right={<ContentViewer />}
+          ToolbarButtons={<ToolbarButtons />}
+        />
+      </ThemeManager>
     </Provider>
   );
 };

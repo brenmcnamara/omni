@@ -20,24 +20,6 @@ p {
   display: none !important;
 }
 
-/* TRANSITIONS */
-
-.transitions-all-200ms {
-  transition: background-color 200ms, color 200ms, border-color 200ms;
-}
-
-.transition-backgroundColor-200ms {
-  transition: background-color 200ms;
-}
-
-.transition-color-200ms {
-  transition: color 20ms;
-}
-
-.transition-borderColor-200ms {
-  transition: border-color 20ms;
-}
-
 /* MARGINS */
 
 .margin-all-20 {

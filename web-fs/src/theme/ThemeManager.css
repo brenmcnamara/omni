@@ -1,0 +1,6 @@
+.ThemeManager-root {
+}
+
+.ThemeManager-root-enableThemeTransitions .contains-theme {
+  transition: background-color 200ms, color 200ms, border-color 200ms;
+}
