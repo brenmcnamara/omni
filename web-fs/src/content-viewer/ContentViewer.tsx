@@ -20,6 +20,9 @@ const ContentViewer: React.FC = () => {
     calculateFullEditingState(reduxState),
   );
 
+  // TODO: This useEffect hook isn't properly defined. The dependencies listed
+  // aren't the only parameters being used. Need a way of properly defining
+  // this.
   useEffect(
     function didChangeDocument() {
       setFullEditingState(calculateFullEditingState(reduxState));

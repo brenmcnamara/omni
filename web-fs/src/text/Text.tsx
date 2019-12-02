@@ -3,9 +3,7 @@ import FontMap, { Font } from './FontMap';
 import React from 'react';
 
 import { ClassValue } from 'classnames/types';
-import { getThemeInfo } from '../store/selectors';
-import { Theme } from '../theme/Theme';
-import { useSelector } from '../store';
+import { Theme, useTheme } from '../theme';
 
 type FontColor = 'primary' | 'secondary' | 'tertiary' | 'black' | 'white';
 
@@ -21,7 +19,7 @@ interface Props {
 }
 
 const Text = (props: Props) => {
-  const theme = useSelector(state => getThemeInfo(state).theme);
+  const { theme } = useTheme()[0];
 
   return (
     <span

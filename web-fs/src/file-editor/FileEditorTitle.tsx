@@ -5,8 +5,7 @@ import fontStyles from '../text/Font.module.css';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { KeyMap } from './Keys';
-import { useSelector } from '../store';
-import { getThemeInfo } from '../store/selectors';
+import { useTheme } from '../theme';
 
 interface Props {
   onChange: (title: string) => void;
@@ -15,7 +14,7 @@ interface Props {
 }
 
 const FileEditorTitle: React.FC<Props> = (props: Props) => {
-  const theme = useSelector(state => getThemeInfo(state).theme);
+  const { theme } = useTheme()[0];
 
   const [title, setTitle] = useState(props.title);
   const [isValidTitle, setIsValidTitle] = useState(
@@ -116,36 +115,36 @@ type TitleSelection = [number, number];
 
 type TitleRef = React.RefObject<HTMLDivElement>;
 
-function getTitleSelection(ref: TitleRef): TitleSelection | undefined {
-  const { current } = ref;
-  if (!current) {
-    return undefined;
-  }
+// function getTitleSelection(ref: TitleRef): TitleSelection | undefined {
+//   const { current } = ref;
+//   if (!current) {
+//     return undefined;
+//   }
 
-  const selection = window.getSelection();
-  if (!selection || selection.type === 'None') {
-    return undefined;
-  }
+//   const selection = window.getSelection();
+//   if (!selection || selection.type === 'None') {
+//     return undefined;
+//   }
 
-  const { anchorNode, focusNode } = selection;
-  if (!anchorNode || !focusNode) {
-    return undefined;
-  }
+//   const { anchorNode, focusNode } = selection;
+//   if (!anchorNode || !focusNode) {
+//     return undefined;
+//   }
 
-  const isSelectingTitle =
-    (anchorNode === current || anchorNode.parentNode === current) &&
-    (focusNode === current || focusNode.parentNode === current);
+//   const isSelectingTitle =
+//     (anchorNode === current || anchorNode.parentNode === current) &&
+//     (focusNode === current || focusNode.parentNode === current);
 
-  if (!isSelectingTitle) {
-    return undefined;
-  }
+//   if (!isSelectingTitle) {
+//     return undefined;
+//   }
 
-  const start = anchorNode === current ? 0 : selection.anchorOffset;
-  const end =
-    focusNode === current ? current.innerText.length : selection.focusOffset;
+//   const start = anchorNode === current ? 0 : selection.anchorOffset;
+//   const end =
+//     focusNode === current ? current.innerText.length : selection.focusOffset;
 
-  return [start, end];
-}
+//   return [start, end];
+// }
 
 function setTitleSelection(ref: TitleRef, selection: TitleSelection) {
   const nativeSelection = window.getSelection();

@@ -1,9 +1,5 @@
 import * as t from 'io-ts';
 
-import configuration, {
-  State as State$Configuration,
-  tStateSerialize as tStateSerialize$Configuration,
-} from './configurations.reducer';
 import docTree, {
   State as State$DocTree,
   tStateSerialize as tStateSerialize$DocTree,
@@ -30,7 +26,6 @@ import { createMiddleware as createLocalStorageMiddleware } from './LocalStorage
 import { PureAction } from './actions';
 
 const rootReducer = combineReducers({
-  configuration,
   documents,
   docTree,
   editMode,
@@ -52,14 +47,12 @@ export type PureDispatch = (action: PureAction) => PureAction;
 export type Dispatch = (action: Action) => Action;
 
 export interface StoreState {
-  configuration: State$Configuration;
   docTree: State$DocTree;
   documents: State$Documents;
   editMode: State$EditMode;
 }
 
 export const tStoreStateSerialize = t.type({
-  configuration: tStateSerialize$Configuration,
   docTree: tStateSerialize$DocTree,
   documents: tStateSerialize$Documents,
   editMode: tStateSerialize$EditMode,

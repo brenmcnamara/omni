@@ -5,8 +5,7 @@ import React from 'react';
 import ToolbarButton from './ToolbarButton';
 
 import { bars } from '../icons';
-import { useSelector } from '../store';
-import { getThemeInfo } from '../store/selectors';
+import { useTheme } from '../theme';
 
 interface Props {
   children?: React.ReactNode;
@@ -15,7 +14,7 @@ interface Props {
 }
 
 const LeftPane: React.FC<Props> = (props: Props) => {
-  const theme = useSelector(state => getThemeInfo(state).theme);
+  const { theme } = useTheme()[0];
 
   return (
     <div

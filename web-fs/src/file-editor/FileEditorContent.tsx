@@ -5,8 +5,7 @@ import fontStyles from '../text/Font.module.css';
 import React from 'react';
 
 import { ContentBlock, Editor, EditorState } from 'draft-js';
-import { useSelector } from '../store';
-import { getThemeInfo } from '../store/selectors';
+import { useTheme } from '../theme';
 
 interface Props {
   editorRef?: React.RefObject<Editor>;
@@ -23,7 +22,7 @@ const FileEditorContent: React.FC<Props> = (props: Props) => {
     return fontStyles.docP;
   }
 
-  const theme = useSelector(state => getThemeInfo(state).theme);
+  const { theme } = useTheme()[0];
 
   return (
     <div

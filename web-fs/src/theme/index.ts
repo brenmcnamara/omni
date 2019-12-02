@@ -1,3 +1,5 @@
+import useTheme from './useTheme';
+
 import {
   getThemeInfoMap,
   ThemeInfo,
@@ -12,3 +14,4 @@ export type ThemeType = ThemeType;
 
 export { getThemeInfoMap };
 export { tThemeType };
+export { useTheme };

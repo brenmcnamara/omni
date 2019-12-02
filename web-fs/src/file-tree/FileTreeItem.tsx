@@ -7,8 +7,7 @@ import Text from '../text';
 
 import { ClassValue } from 'classnames/types';
 import { ellipsisH } from '../icons';
-import { getThemeInfo } from '../store/selectors';
-import { useSelector } from '../store';
+import { useTheme } from '../theme';
 
 interface Classes {
   root?: ClassValue;
@@ -26,7 +25,7 @@ interface Props {
 const INDENT_SIZE_PX = 24;
 
 const FileTreeItem: React.FC<Props> = (props: Props) => {
-  const theme = useSelector(state => getThemeInfo(state).theme);
+  const { theme } = useTheme()[0];
 
   return (
     <div

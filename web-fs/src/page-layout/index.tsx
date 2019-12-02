@@ -9,9 +9,8 @@ import Toolbar from './Toolbar';
 import ToolbarButton from './ToolbarButton';
 
 import { bars } from '../icons';
-import { getThemeInfo } from '../store/selectors';
-import { useSelector } from '../store';
 import { useLocalStorage } from '../store/LocalStorage';
+import { useTheme } from '../theme';
 
 interface Props {
   Left: JSX.Element;
@@ -20,7 +19,8 @@ interface Props {
 }
 
 const App: React.FC<Props> = (props: Props) => {
-  const theme = useSelector(state => getThemeInfo(state)).theme;
+  const { theme } = useTheme()[0];
+
   const [isLeftPaneHidden, setIsLeftPaneHidden] = useLocalStorage<boolean>(
     'isLeftPaneHidden',
     'v1.0',

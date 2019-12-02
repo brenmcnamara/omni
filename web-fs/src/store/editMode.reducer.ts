@@ -1,6 +1,5 @@
 import * as t from 'io-ts';
 import {
-  createRef as createDocumentRef,
   Ref as DocumentRef,
   tRef as tDocumentRef,
   tRefSerialize as tDocumentRefSerialize,

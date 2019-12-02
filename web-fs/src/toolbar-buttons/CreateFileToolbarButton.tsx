@@ -8,7 +8,7 @@ import {
   createRef as createDocumentRef,
 } from '../store/Document.model';
 import { plus } from '../icons';
-import { useDispatch, useSelector } from '../store';
+import { useDispatch } from '../store';
 
 interface Props {}
 

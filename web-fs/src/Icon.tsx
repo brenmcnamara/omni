@@ -2,9 +2,7 @@ import classnames from 'classnames';
 import React from 'react';
 
 import { ClassValue } from 'classnames/types';
-import { Theme } from './theme/Theme';
-import { getThemeInfo } from './store/selectors';
-import { useSelector } from './store';
+import { useTheme, Theme } from './theme';
 
 const IconSizeClassNameMap = {
   4: 'icon-size-4',
@@ -33,7 +31,7 @@ interface Props {
 }
 
 const Icon: React.FC<Props> = (props: Props) => {
-  const theme = useSelector(state => getThemeInfo(state).theme);
+  const { theme } = useTheme()[0];
 
   return (
     <span
