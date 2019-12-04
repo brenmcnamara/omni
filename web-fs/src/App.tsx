@@ -1,4 +1,4 @@
-import ContentViewer from './content-viewer';
+import ContentEditor from './content-editor';
 import FileTree from './file-tree/FileTree';
 import PageLayout from './page-layout';
 import React from 'react';
@@ -14,7 +14,7 @@ const App: React.FC = () => {
       <ThemeManager>
         <PageLayout
           Left={<FileTree />}
-          Right={<ContentViewer />}
+          Right={<ContentEditor />}
           ToolbarButtons={<ToolbarButtons />}
         />
       </ThemeManager>

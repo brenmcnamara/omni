@@ -1,11 +1,11 @@
 import './FileEditor.css';
 
 import classnames from 'classnames';
-import fontStyles from '../text/Font.module.css';
+import fontStyles from '../../text/Font.module.css';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { KeyMap } from './Keys';
-import { useTheme } from '../theme';
+import { useTheme } from '../../theme';
 
 interface Props {
   onChange: (title: string) => void;

@@ -1,13 +1,12 @@
-import './ContentViewer.css';
-
+import contentEditorStyles from './ContentEditor.module.css';
 import React from 'react';
 import Text from '../text/Text';
 
 interface Props {}
 
-const ContentViewerEmpty: React.FC<Props> = (props: Props) => {
+const ContentEditorEmpty: React.FC<Props> = (props: Props) => {
   return (
-    <div className="ContentViewer-empty">
+    <div className={contentEditorStyles.root}>
       <Text font="primary" fontColor="primary">
         {'No Document is selected'}
       </Text>
@@ -15,4 +14,4 @@ const ContentViewerEmpty: React.FC<Props> = (props: Props) => {
   );
 };
 
-export default ContentViewerEmpty;
+export default ContentEditorEmpty;

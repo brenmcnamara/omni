@@ -69,7 +69,7 @@ export function useRegisterThemeManager(
       willChangeThemeCallback = undefined;
       didChangeThemeCallback = undefined;
     };
-  }, []);
+  }, [onDidChange, onWillChange]);
 }
 
 // -----------------------------------------------------------------------------

@@ -1,7 +1,6 @@
-import './ContentViewer.css';
-
-import ContentViewerEmpty from './ContentViewerEmpty';
-import FileEditor from '../file-editor';
+import ContentEditorEmpty from './ContentEditorEmpty';
+import contentEditorStyles from './ContentEditor.module.css';
+import FileEditor from './file-editor';
 import nullthrows from 'nullthrows';
 import React, { useState, useEffect } from 'react';
 
@@ -16,7 +15,7 @@ import { setDocument, setDocumentContent } from '../store/actions';
 import { useDispatch, useSelector, StoreState } from '../store';
 import { createSelector } from 'reselect';
 
-const ContentViewer: React.FC = () => {
+const ContentEditor: React.FC = () => {
   const selection = useSelection();
   const dispatch = useDispatch();
 
@@ -33,8 +32,8 @@ const ContentViewer: React.FC = () => {
 
   if (fullEditingState.type === 'EMPTY') {
     return (
-      <div className="ContentViewer-root">
-        <ContentViewerEmpty />
+      <div className={contentEditorStyles.root}>
+        <ContentEditorEmpty />
       </div>
     );
   }
@@ -57,7 +56,7 @@ const ContentViewer: React.FC = () => {
   };
 
   return (
-    <div className="ContentViewer-root">
+    <div className={contentEditorStyles.root}>
       <FileEditor
         editorState={nonEmptyEditingState.editorState}
         onChangeEditorState={onChangeEditorState}
@@ -68,7 +67,7 @@ const ContentViewer: React.FC = () => {
   );
 };
 
-export default ContentViewer;
+export default ContentEditor;
 
 // -----------------------------------------------------------------------------
 // Full Editing State

@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import { DocumentContent } from './DocumentContent';
 import { DocTree } from './docTree.reducer';
 import { matchesRef } from './core';
 import { Model as Document, Ref as DocumentRef } from './Document.model';

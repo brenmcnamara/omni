@@ -1,11 +1,11 @@
 import './FileEditor.css';
 
 import classnames from 'classnames';
-import fontStyles from '../text/Font.module.css';
+import fontStyles from '../../text/Font.module.css';
 import React from 'react';
 
 import { ContentBlock, Editor, EditorState } from 'draft-js';
-import { useTheme } from '../theme';
+import { useTheme } from '../../theme';
 
 interface Props {
   editorRef?: React.RefObject<Editor>;
