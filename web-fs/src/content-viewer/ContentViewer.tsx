@@ -5,29 +5,30 @@ import FileEditor from '../file-editor';
 import nullthrows from 'nullthrows';
 import React, { useState, useEffect } from 'react';
 
-import { DocumentContent } from '../store/DocumentContent';
 import { ContentState, EditorState } from 'draft-js';
-import { getDocument, getDocumentContent } from '../store/selectors';
+import { DocumentContent } from '../store/DocumentContent';
+import {
+  selectActiveDocument,
+  selectActiveDocumentContents,
+} from '../store/selectors';
 import { Model as Document, Ref as DocumentRef } from '../store/Document.model';
 import { setDocument, setDocumentContent } from '../store/actions';
-import { useDispatch, useSelector } from '../store';
+import { useDispatch, useSelector, StoreState } from '../store';
+import { createSelector } from 'reselect';
 
 const ContentViewer: React.FC = () => {
-  const reduxState = useSelection();
+  const selection = useSelection();
   const dispatch = useDispatch();
 
   const [fullEditingState, setFullEditingState] = useState(
-    calculateFullEditingState(reduxState),
+    calculateFullEditingState(selection),
   );
 
-  // TODO: This useEffect hook isn't properly defined. The dependencies listed
-  // aren't the only parameters being used. The problem here is that reduxState
-  // is not properly memoized.
   useEffect(
     function didChangeDocument() {
-      setFullEditingState(calculateFullEditingState(reduxState));
+      setFullEditingState(calculateFullEditingState(selection));
     },
-    [reduxState.documentRef],
+    [selection],
   );
 
   if (fullEditingState.type === 'EMPTY') {
@@ -43,7 +44,7 @@ const ContentViewer: React.FC = () => {
   const onChangeTitle = (title: string) => {
     setFullEditingState({ ...nonEmptyEditingState, title });
 
-    const document = nullthrows(reduxState.document);
+    const document = nullthrows(selection.document);
     dispatch(setDocument({ ...document, name: title }));
   };
 
@@ -111,22 +112,30 @@ interface StateSelection {
   documentContent: DocumentContent | undefined;
 }
 
+const getSelection = createSelector(
+  (state: StoreState) => state.editMode.documentRef,
+  selectActiveDocument,
+  selectActiveDocumentContents,
+  (
+    documentRef: DocumentRef | undefined,
+    document: Document | undefined,
+    documentContent: DocumentContent | undefined,
+  ) => ({
+    document,
+    documentContent,
+    documentRef,
+  }),
+);
+
 function useSelection(): StateSelection {
-  return useSelector(state => {
-    const { editMode } = state;
-
-    const document =
-      editMode.documentRef !== undefined
-        ? getDocument(state, editMode.documentRef)
-        : undefined;
-
-    const documentContent =
-      editMode.documentRef !== undefined
-        ? getDocumentContent(state, editMode.documentRef) || ''
-        : '';
-
-    return { document, documentRef: editMode.documentRef, documentContent };
-  });
+  // NOTE: We are limiting redux updates to when the document ref changes.
+  // Once a document is being edited, we will not accept updates outside of the
+  // component.
+  return useSelector(
+    getSelection,
+    (lhs: StateSelection, rhs: StateSelection) =>
+      lhs.documentRef === rhs.documentRef,
+  );
 }
 
 // -----------------------------------------------------------------------------

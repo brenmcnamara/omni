@@ -17,7 +17,7 @@ interface Props {
   classes?: Classes;
   icon: string;
   indent: number;
-  isSelected: boolean;
+  isActive: boolean;
   name: string;
   onClick: () => void;
 }
@@ -31,7 +31,7 @@ const FileTreeItem: React.FC<Props> = (props: Props) => {
     <div
       className={classnames(props.classes && props.classes.root, {
         'FileTreeItem-root': true,
-        'FileTreeItem-selected': props.isSelected,
+        'FileTreeItem-selected': props.isActive,
         'margin-bottom-4': true,
         'margin-horiz-8': true,
         'padding-horiz-8': true,
@@ -54,15 +54,12 @@ const FileTreeItem: React.FC<Props> = (props: Props) => {
         <div className="FileTreeItem-iconContainer">
           <Icon
             icon={props.icon}
-            iconColor={props.isSelected ? 'white' : 'primary'}
+            iconColor={props.isActive ? 'white' : 'primary'}
             size={16}
           />
         </div>
         <div className={classnames('margin-left-12', 'FileTreeItem-name')}>
-          <Text
-            font="primary"
-            fontColor={props.isSelected ? 'white' : 'primary'}
-          >
+          <Text font="primary" fontColor={props.isActive ? 'white' : 'primary'}>
             {props.name}
           </Text>
         </div>

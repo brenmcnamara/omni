@@ -10,6 +10,7 @@ export function useDispatch(): Dispatch {
 
 export function useSelector<TResult>(
   selector: (state: StoreState) => TResult,
+  equalityFn?: (lhs: TResult, rhs: TResult) => boolean,
 ): TResult {
-  return useSelectorUNTYPED(selector);
+  return useSelectorUNTYPED(selector, equalityFn);
 }

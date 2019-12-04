@@ -8,15 +8,16 @@ import Text from '../text';
 
 import { DocTree, State as State$DocTree } from '../store/docTree.reducer';
 import { fileWord } from '../icons';
-import { getSelectedNodeIDs } from '../store/selectors';
+import { selectActiveNodeIDs } from '../store/selectors';
 import { selectDocument } from '../store/actions';
 import { State as State$EditMode } from '../store/editMode.reducer';
-import { useDispatch, useSelector } from '../store';
+import { useDispatch, useSelector, StoreState } from '../store';
+import { createSelector } from 'reselect';
 
 interface Props {}
 
 const FileTree: React.FC<Props> = (props: Props) => {
-  const { docTree, selectedNodeIDs } = useSelection();
+  const { activeNodeIDs, docTree } = useSelection();
   const dispatch = useDispatch();
 
   if (Object.keys(docTree.tree).length === 0) {
@@ -57,7 +58,7 @@ const FileTree: React.FC<Props> = (props: Props) => {
           nodeID={id}
           nodeMap={docTree.tree}
           onClickNode={onClickNode}
-          selectedNodeIDs={selectedNodeIDs}
+          activeNodeIDs={activeNodeIDs}
         />
       ))}
     </div>
@@ -67,11 +68,11 @@ const FileTree: React.FC<Props> = (props: Props) => {
 export default FileTree;
 
 interface RecurseProps {
+  activeNodeIDs: string[];
   indent: number;
   nodeID: string;
   nodeMap: { [id: string]: DocTree };
   onClickNode: (nodeID: string) => void;
-  selectedNodeIDs: string[];
 }
 
 function FileTreeRecurse(props: RecurseProps) {
@@ -85,7 +86,7 @@ function FileTreeRecurse(props: RecurseProps) {
         <FileTreeItem
           icon={fileWord}
           indent={indent}
-          isSelected={props.selectedNodeIDs.includes(nodeID)}
+          isActive={props.activeNodeIDs.includes(nodeID)}
           name={node.name}
           onClick={() => props.onClickNode(node.id)}
         />
@@ -103,12 +104,12 @@ function FileTreeRecurse(props: RecurseProps) {
           />
           {node.orderedChildNodeIDs.map(id => (
             <FileTreeRecurse
+              activeNodeIDs={props.activeNodeIDs}
               indent={indent + 1}
               key={id}
               nodeID={id}
               nodeMap={nodeMap}
               onClickNode={props.onClickNode}
-              selectedNodeIDs={props.selectedNodeIDs}
             />
           ))}
         </>
@@ -122,15 +123,28 @@ function FileTreeRecurse(props: RecurseProps) {
 // -----------------------------------------------------------------------------
 
 interface Selection {
+  activeNodeIDs: string[];
   docTree: State$DocTree;
   editMode: State$EditMode;
-  selectedNodeIDs: string[];
 }
 
+const getSelection = createSelector(
+  selectActiveNodeIDs,
+  (state: StoreState) => state.docTree,
+  (state: StoreState) => state.editMode,
+  (
+    activeNodeIDs: string[],
+    docTree: State$DocTree,
+    editMode: State$EditMode,
+  ) => {
+    return {
+      activeNodeIDs,
+      docTree,
+      editMode,
+    };
+  },
+);
+
 function useSelection(): Selection {
-  return useSelector(state => ({
-    docTree: state.docTree,
-    editMode: state.editMode,
-    selectedNodeIDs: getSelectedNodeIDs(state),
-  }));
+  return useSelector(getSelection);
 }
