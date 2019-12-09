@@ -26,7 +26,6 @@ const FileEditor: React.FC<Props> = (props: Props) => {
         onEnter={onEnterTitle}
         title={props.title}
       />
-      <GroupEditor groups={props.groups} onChange={props.onChangeGroups} />
       <FileEditorContent
         editorState={props.editorState}
         onChange={props.onChangeEditorState}

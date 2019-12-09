@@ -6,5 +6,6 @@ export const edit = 'fas fa-edit';
 export const ellipsisH = 'ellipsis-h';
 export const fileWord = 'far fa-file-word';
 export const folder = 'far fa-folder';
+export const hashTag = 'fas fa-hashtag';
 export const plus = 'fas fa-plus';
 export const sketch = 'fab fa-sketch';

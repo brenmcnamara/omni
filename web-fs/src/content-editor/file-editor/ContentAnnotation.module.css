@@ -1,0 +1,10 @@
+.root {
+}
+
+.typeTag {
+  /* NOTE: Hard-coded to line up with paragraph font size text. */
+  line-height: 21px;
+}
+
+.typeP {
+}

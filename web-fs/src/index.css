@@ -234,6 +234,10 @@ p {
   padding-bottom: 20px;
 }
 
+.padding-left-12 {
+  padding-left: 12px;
+}
+
 @media (min-width: 600px) {
   .padding-all-4-md {
     padding: 4px;
@@ -288,6 +292,10 @@ p {
 
   .padding-bottom-20-md {
     padding-bottom: 20px;
+  }
+
+  .padding-left-12-md {
+    padding-left: 12px;
   }
 }
 
@@ -345,6 +353,10 @@ p {
 
   .padding-bottom-20-lg {
     padding-bottom: 20px;
+  }
+
+  .padding-left-12-lg {
+    padding-left: 12px;
   }
 }
 
