@@ -47,6 +47,8 @@ const ContentEditor: React.FC = () => {
     dispatch(setDocument({ ...document, name: title }));
   };
 
+  const onChangeGroups = (groups: string[]) => {};
+
   const onChangeEditorState = (editorState: EditorState) => {
     setFullEditingState({ ...nonEmptyEditingState, editorState });
 
@@ -59,7 +61,9 @@ const ContentEditor: React.FC = () => {
     <div className={contentEditorStyles.root}>
       <FileEditor
         editorState={nonEmptyEditingState.editorState}
+        groups={[]}
         onChangeEditorState={onChangeEditorState}
+        onChangeGroups={onChangeGroups}
         onChangeTitle={onChangeTitle}
         title={nonEmptyEditingState.title}
       />

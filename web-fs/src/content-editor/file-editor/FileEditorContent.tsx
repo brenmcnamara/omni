@@ -1,6 +1,6 @@
-import './FileEditor.css';
-
 import classnames from 'classnames';
+import ContentAnnotationGutter from './ContentAnnotationGutter';
+import fileEditorStyles from './FileEditor.module.css';
 import fontStyles from '../../text/Font.module.css';
 import React from 'react';
 
@@ -27,11 +27,12 @@ const FileEditorContent: React.FC<Props> = (props: Props) => {
   return (
     <div
       className={classnames(
-        'FileEditor-contentContainer',
+        fileEditorStyles.contentContainer,
         theme.fontColorPrimary,
         'padding-vert-20',
       )}
     >
+      <ContentAnnotationGutter />
       <Editor
         blockStyleFn={blockStyleFn}
         editorState={props.editorState}

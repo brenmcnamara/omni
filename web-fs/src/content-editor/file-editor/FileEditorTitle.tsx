@@ -1,6 +1,5 @@
-import './FileEditor.css';
-
 import classnames from 'classnames';
+import fileEditorStyles from './FileEditor.module.css';
 import fontStyles from '../../text/Font.module.css';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -74,8 +73,8 @@ const FileEditorTitle: React.FC<Props> = (props: Props) => {
   return (
     <div
       className={classnames({
-        'FileEditor-titleEditorContainer': true,
         'border-bottom': true,
+        [fileEditorStyles.titleEditorContainer]: true,
         [theme.borderColorPrimary]: isValidTitle,
         [theme.borderColorAlert]: !isValidTitle,
       })}
@@ -84,7 +83,7 @@ const FileEditorTitle: React.FC<Props> = (props: Props) => {
         className={classnames(
           fontStyles.docH3,
           theme.fontColorPrimary,
-          'FileEditor-titleEditor',
+          fileEditorStyles.titleEditor,
           'padding-bottom-12',
         )}
         contentEditable

@@ -1,14 +1,14 @@
-.FileEditor-root {
+.root {
 }
 
-.FileEditor-titleEditorContainer {
+.titleEditorContainer {
 }
 
-.FileEditor-titleEditor {
+.titleEditor {
   outline: none;
 }
 
-.FileEditor-titleEditor:focus {
+.titleEditor:focus {
 }
 
 /**
@@ -16,5 +16,7 @@
  * for the fact that in the text editor, we don't have full control over
  * re-rendering text blocks (for perf reasons).
  */
-.FileEditor-contentContainer {
+.contentContainer {
+  display: flex;
+  flex-direction: row;
 }
